@@ -36,7 +36,13 @@
     yarn install
     ```
 
-3. 安装完成过后执行脚本：`run-zero.sh / run-zero.bat` 启动前端框架。
+3. 将根目录下的 `.env.development.tpl` 重命名，并结合自己的环境设置相关值
+
+   ```shell
+   mv .env.development.tpl .env.development
+   ```
+
+4. 安装完成过后执行脚本：`run-zero.sh / run-zero.bat` 启动前端框架。
 
 ### 2.2. 更新Zero UI
 

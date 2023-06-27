@@ -97,6 +97,14 @@ const aiForm = (reference, values, configuration = {}) => {
         }
     }
     if (form) attrs.form = form;
+    // 超出范围的专用配置
+    if (configuration.maxHeight) {
+        if (!attrs.style) {
+            attrs.style = {};
+        }
+        attrs.style.maxHeight = configuration.maxHeight;
+        attrs.style.overflowY = "scroll";
+    }
     return (
         <Form {...attrs} ref={reference.formRef}>
             {/** 隐藏组件 hidden **/}

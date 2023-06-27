@@ -13,9 +13,9 @@ export default Ui.smartList({
     Options: {
         rm: [
             "form.filter",      // 关闭高级搜索表单
-            "op.extra.export",  // 按钮：导出
-            "op.extra.import",  // 按钮：导入
-            "op.batch.delete",  // 按钮：批量删除
+            // "op.extra.export",  // 按钮：导出
+            // "op.extra.import",  // 按钮：导入
+            // "op.batch.delete",  // 按钮：批量删除
             "op.batch.edit",    // 按钮：批量编辑
         ]
     },

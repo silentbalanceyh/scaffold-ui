@@ -198,6 +198,22 @@
             ],
             [
                 "remark,项目备注,24,,aiTextArea,rows=2"
+            ],
+            [
+                {
+                    "metadata": "files,项目附件,18,,aiFileBatch,text=上传",
+                    "optionJsx.accept": "*/*",
+                    "optionJsx.config.filekey": "key",
+                    "optionJsx.config.limit": 10240,
+                    "optionJsx.config.reduce": true,
+                    "optionJsx.ajax.uri": "/api/file/upload/:identifier?directory=:directory",
+                    "optionJsx.ajax.download": "/api/file/download/:key",
+                    "optionJsx.ajax.params": {
+                        "identifier": "FIX:res.project",
+                        "directory": "/系统文档/项目管理",
+                        "formula": "/${name}"
+                    }
+                }
             ]
         ],
         "hidden": [

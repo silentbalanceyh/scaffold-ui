@@ -47,7 +47,6 @@ const configuration = {
     ...Ex.parserOfColor("OxCategory").component(),
     type: "Control"
 };
-const {Panel} = Collapse;
 
 @Ex.ox(configuration)
 class Component extends React.PureComponent {
@@ -84,7 +83,7 @@ class Component extends React.PureComponent {
             treeData.forEach(item => {
                 const child = {};
                 child.showArrow = false;
-                child.header = item.text;
+                child.label = item.text;
                 child.key = item.key;
                 child.children = Ux.aiTree(item.children, attrsTree);
                 items.push(child);

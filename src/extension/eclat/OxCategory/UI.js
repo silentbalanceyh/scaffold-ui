@@ -47,7 +47,6 @@ const configuration = {
     ...Ex.parserOfColor("OxCategory").component(),
     type: "Control"
 };
-const {Panel} = Collapse;
 
 @Ex.ox(configuration)
 class Component extends React.PureComponent {
@@ -77,9 +76,20 @@ class Component extends React.PureComponent {
             attrsTree.disabled = $disabled;     // 关闭树的选择功能
 
             const attrsCat = Sk.mixOx("OxCategory");
-            return (
-                <div {...attrsCat}>
-                    <Collapse defaultActiveKey={defaultActiveKey}>
+            /*
+             * items 处理，针对 Antd 4 的 Collapse 的核心改动
+             */
+            const items = [];
+            treeData.forEach(item => {
+                const child = {};
+                child.showArrow = false;
+                child.label = item.text;
+                child.key = item.key;
+                child.children = Ux.aiTree(item.children, attrsTree);
+                items.push(child);
+            });
+            /*
+                    <Collapse>
                         {treeData.map(item => (
                             <Panel key={item.key} header={item.text}
                                    showArrow={false}>
@@ -87,6 +97,10 @@ class Component extends React.PureComponent {
                             </Panel>
                         ))}
                     </Collapse>
+             */
+            return (
+                <div {...attrsCat}>
+                    <Collapse defaultActiveKey={defaultActiveKey} items={items}/>
                     {Ux.anchorTree(this)}
                 </div>
             );

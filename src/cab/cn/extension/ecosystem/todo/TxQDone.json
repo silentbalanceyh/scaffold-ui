@@ -60,6 +60,7 @@
             ],
             "criteria": {
                 "sigma": "PROP:app.sigma",
+                "flowDefinitionKey": "ROUTE:name",
                 "": true
             }
         },

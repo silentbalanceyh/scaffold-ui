@@ -15,6 +15,12 @@ class Component extends React.PureComponent {
                 Ux.of(this).in(state).ready().done();
                 //state.$ready = true;
                 //this.?etState(state);
+            }).catch(error => {
+                const {data} = error;
+                if (410 === data.status) {
+                    // 410 返回
+                    Ux.toOriginal(this);
+                }
             })
         } else {
             console.warn("无法读取 `_tid`，参数缺失！");

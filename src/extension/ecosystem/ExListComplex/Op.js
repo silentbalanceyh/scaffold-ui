@@ -5,7 +5,6 @@ import ExEditorBatch from "../ExEditorBatch/UI";
 import ExEditorColumn from "../ExEditorColumn/UI";
 import ExEditorImport from "../ExEditorImport/UI";
 import ExEditorView from "../ExEditorView/UI";
-import pluginExtension from "plugin";
 
 const pluginComponent = {
     ExEditorExport,
@@ -172,11 +171,16 @@ const componentState = (reference) => {
     }
 }
 const __componentInit = (reference, initState = {}) => {
-    const {config = {}} = reference.props;
+    const {config = {}, $pluginExtension = {}} = reference.props;
     return Ex.yiListOp(reference, {
         ...config,
         pluginComponent,
-        pluginExtension
+        /**
+         * 为了防止全局污染，插件从原始的 ExListComplex 内部切换到外部传入
+         * 早期使用 import pluginExtension from "plugin" 的方式，但是这种方式会导致
+         * 所有模块全部被污染，所以现阶段改成从外部传入，这样可以避免全局污染。
+         */
+        pluginExtension: $pluginExtension,
     }, initState)
         .then(op => Ux.promise(initState, 'op', op))
         /* 动态列 */

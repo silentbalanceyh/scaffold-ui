@@ -78,6 +78,8 @@ class OxList extends React.PureComponent {
                 inherit.$plugins = {};
             }
             inherit.$plugins.pluginFieldFn = Plugin.pluginField;
+            // 新版批量更新插件
+            inherit.$pluginExtension = Plugin.Extension;
             const attrsOx = Sk.mixOx("OxList");
             return (
                 <div {...attrsOx}>

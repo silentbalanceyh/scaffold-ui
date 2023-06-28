@@ -4,7 +4,7 @@ import Ux from 'ux';
 const yiListOp = (reference, config = {}, state) => {
     const {
         pluginComponent = {},
-        pluginExtension: Plugin = {}
+        pluginExtension = {}
     } = config;
     const {options = {}, component = {}} = config;
     const eventParser = __PR.parserOfEvent(reference);
@@ -13,8 +13,8 @@ const yiListOp = (reference, config = {}, state) => {
     /*
      * 扩展包 Plugin.Extension 中的插件会覆盖标准插件
      */
-    Object.keys(Plugin.Extension).filter(field => field.startsWith("Ex"))
-        .forEach(field => plugin[field] = Plugin.Extension[field]);
+    Object.keys(pluginExtension).filter(field => field.startsWith("Ex"))
+        .forEach(field => plugin[field] = pluginExtension[field]);
     const $options = Object.assign({}, options, state.options);
     return buttonParser.parseOp(config, $options)
         /* 按钮配置解析 */

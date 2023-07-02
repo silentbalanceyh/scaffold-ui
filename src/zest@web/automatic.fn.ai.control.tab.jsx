@@ -67,6 +67,9 @@ const __aiTabExtraContent = (reference, configuration = {}) => {
     const componentJsx = $renders[componentFn];
     if ("drawer" === type) {
         const className = config.className ? config.className : "";
+        // 流畅度和更新率
+        winConfig.destroyOnClose = true;
+        winConfig.maskClosable = true;
         return (
             <Drawer {...winConfig} className={className}>
                 {__Zn.isFunction(componentJsx) ? componentJsx(data, config, reference) : false}

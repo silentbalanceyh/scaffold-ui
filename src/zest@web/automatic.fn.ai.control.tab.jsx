@@ -69,7 +69,6 @@ const __aiTabExtraContent = (reference, configuration = {}) => {
         const className = config.className ? config.className : "";
         // 流畅度和更新率
         winConfig.destroyOnClose = true;
-        winConfig.maskClosable = true;
         return (
             <Drawer {...winConfig} className={className}>
                 {__Zn.isFunction(componentJsx) ? componentJsx(data, config, reference) : false}

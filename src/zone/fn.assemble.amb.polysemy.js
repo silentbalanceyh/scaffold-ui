@@ -139,14 +139,19 @@ const ambFn = (reference, name, propFirst = true) => {
 }
 const ambDatetime = (input, fields = [], source) => {
     if (!input) {
-        return input;
+        // 由于是时间格式，所以只能返回 null
+        return undefined === input ? null : input;
     }
     const $source = source ? source : input;
     fields.forEach(field => {
-        if (__Is.isMoment($source[field])) {
-            input[field] = $source[field];
-        } else {
-            input[field] = __V.valueDatetime($source[field]);
+        const value = $source[field];
+        // Fix: 非法时间对象 dayjs ，不可转
+        if (value) {
+            if (__Is.isMoment($source[field])) {
+                input[field] = $source[field];
+            } else {
+                input[field] = __V.valueDatetime($source[field]);
+            }
         }
     })
     return input;

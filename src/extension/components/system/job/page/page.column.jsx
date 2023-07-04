@@ -22,8 +22,9 @@ const OP = {
 };
 
 const renderBar = (reference, config = {}, item, onClick) => {
-    const {text, ...rest} = config;
+    const {text, icon, ...rest} = config;
     const attrs = Ux.clone(rest);
+    attrs.icon = Ux.v4Icon(icon);
     if (text) {
         /* Confirm */
         return (

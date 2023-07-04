@@ -4,6 +4,7 @@ import React from "react";
 import renderTool from "./page.main.tool";
 import renderMenu from './page.main.menu';
 import {ExDeploy} from "ei";
+import __ from '../Cab.module.scss';
 
 export default (reference) => {
     const {
@@ -17,7 +18,7 @@ export default (reference) => {
     Ux.configScroll(configTable, $data, reference);
     configTable.pagination = $pagination;
     return (
-        <div>
+        <div className={__.upg_system_job}>
             <ExDeploy alert={alert} $width={1050} step={4}/>
             {renderTool(reference)}
             <Row>

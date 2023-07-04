@@ -112,7 +112,8 @@
                     "PLAN": "轮询任务,clock-circle,,#1874CD",
                     "ONCE": "一次性任务,thunderbolt,,#D02090",
                     "FIXED": "定时任务,calendar,,#228B22"
-                }
+                },
+                "width": 132
             },
             {
                 "metadata": "duration,间隔时间",

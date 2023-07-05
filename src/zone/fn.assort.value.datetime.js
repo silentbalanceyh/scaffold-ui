@@ -13,7 +13,8 @@ const valueDatetime = (value, format) => {
         }
         return value;
     } else {
-        __E.fxTerminal(true, 10028, value);
+        return null;
+        // __E.fxTerminal(true, 10028, value);
     }
 };
 const valueJDatetime = (data = {}, ...fields) => {

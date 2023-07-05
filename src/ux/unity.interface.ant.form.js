@@ -148,6 +148,35 @@ const formRow = (reference, request = {}, config) =>
 const formHit = (reference, key, value = undefined) =>
     __Zo.formHit(reference, key, value);
 /**
+ * ## 「标准」`Ux.formInit`
+ *
+ * 该函数为表单重设专用函数，和 resetFields 不同的点在于，此处会直接从 props 中的 $inited 提取初始化数据，并且多做一层
+ * 直接在整个流程中可调用额外的 initFn 来执行初始值的二次初始化，initFn 的函数原型如：
+ *
+ * ```js
+ * const initFn = (reference, values) => {
+ *
+ * }
+ * ```
+ *
+ * 在上述 initFn 函数中
+ *
+ * - reference 表示当前 React 组件引用
+ * - values 则表示当前表单的初始值 reference.props.$inited
+ *
+ * > 上述代码执行完成之后，表单的 form.isFieldsTouched() 会返回 false，这是最关键的一点，初始化必须保证表单的内置状态，所以内部调用了
+ * > 两层：
+ * >
+ * > 1. 调用 form.setFieldsValue($inited) 设置表单值。
+ * > 2. 调用 form.resetFields() 重置表单状态。
+ *
+ * @memberOf module:form/zodiac
+ * @param {Object|ReactComponent} reference React组件引用，必须绑定过 Ant 中的 Form。
+ * @param {Function} initFn 表单初始值函数
+ */
+const formInit = (reference, initFn = {}) =>
+    __Zo.formInit(reference, initFn);
+/**
  * ## 「标准」`Ux.formLinker`
  *
  * > 该函数主要使用在`ListSelector、TreeSelector`这种复杂的自定义组件中。
@@ -208,6 +237,7 @@ export default {
     formReset,
     formRow,
     // Hit
+    formInit,
     formHit,
     formHits,
     formLinker,

@@ -2,7 +2,7 @@ import React from 'react'
 import Ex from "ex";
 import Ux from 'ux';
 import {Form} from "antd";
-
+import Op from './Op';
 /**
  * ## 「组件」`ExForm`
  *
@@ -86,17 +86,7 @@ class Component extends React.PureComponent {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        /*
-         * 必须要传入了 $refresh 的时候才会生效
-         * 如果没有传入 $refresh 时，这个过程不生效
-         */
-        const $checked = Ex.upValue(this.state, prevState, "$up");
-        if ($checked) {
-            /*
-             * 如果检测到变更，则需要按照 $inited 中的值重新刷新表单数据
-             * 并且在刷新的时提供 undefined 值
-             */
-        }
+        Op.componentUp(this, {props: prevProps, state: prevState});
     }
 
     render() {

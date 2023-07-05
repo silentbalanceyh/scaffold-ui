@@ -57,6 +57,23 @@ const formHit = (reference, key, value = undefined) => {
         }
     }
 };
+const formInit = (reference, initFn) => {
+    const form = __Fr.v4FormRef(reference);
+    __Zn.fxTerminal(!form, 10020, form);
+    if (form) {
+        let {$inited = {}} = reference.props;
+        $inited = __Zn.clone($inited);
+        if (__Zn.isFunction(initFn)) {
+            /**
+             * 可绑定 aiInit，直接同步数据，防止过多的参数切换
+             * 函数签名：(reference, values)
+             */
+            $inited = initFn(reference, $inited);
+        }
+        form.setFieldsValue($inited);
+        form.resetFields();
+    }
+}
 const formHits = (reference, values = {}) => {
     // 旧代码：const {form} = reference.props;
     const form = __Fr.v4FormRef(reference);
@@ -162,4 +179,6 @@ export default {
     formClear,
     // 行添加
     formRow,
+    // 表单重设（重新设置初始值）
+    formInit,
 }

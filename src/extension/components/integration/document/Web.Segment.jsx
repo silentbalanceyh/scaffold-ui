@@ -111,12 +111,20 @@ const renderKitTrash = (reference) => {
                     const disabled = 0 === $selectedKeys.length;
                     if (disabled) {
                         const attrs = Ux.clone(rest);
+                        // v4
+                        if (attrs.icon) {
+                            attrs.icon = Ux.v4Icon(attrs.icon);
+                        }
                         attrs.disabled = true;
                         return (
                             <Button {...attrs}>{text}</Button>
                         )
                     } else {
                         const attrs = Ux.clone(rest);
+                        // v4
+                        if (attrs.icon) {
+                            attrs.icon = Ux.v4Icon(attrs.icon);
+                        }
                         if (Ux.isFunction(toolbar[attrs.key])) {
                             attrs.onClick = toolbar[attrs.key]
                         }

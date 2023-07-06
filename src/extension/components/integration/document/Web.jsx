@@ -35,6 +35,17 @@ const renderNav = (reference) => {
         if ($directory) {
             navigation = $directory.navigation ? $directory.navigation : []
         }
+        const $navItems = [];
+        navigation.forEach(nav => {
+            const item = {};
+            item.key = nav.key;
+            item.children = (
+                <a href={""} onClick={Op.rxNavClick(reference, nav)}>
+                    {nav.name}
+                </a>
+            )
+            $navItems.push(item);
+        })
         return (
             <Row className={"navigation"}>
                 <Col span={3}>
@@ -48,15 +59,7 @@ const renderNav = (reference) => {
                     <Divider type={"vertical"}/>
                 </Col>
                 <Col span={21}>
-                    <Breadcrumb>
-                        {navigation.map(nav => (
-                            <Breadcrumb.Item key={nav.key}>
-                                <a href={""} onClick={Op.rxNavClick(reference, nav)}>
-                                    {nav.name}
-                                </a>
-                            </Breadcrumb.Item>
-                        ))}
-                    </Breadcrumb>
+                    <Breadcrumb items={$navItems}/>
                 </Col>
             </Row>
         );

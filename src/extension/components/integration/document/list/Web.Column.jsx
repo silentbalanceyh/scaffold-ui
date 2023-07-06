@@ -96,7 +96,7 @@ const renderSize = (reference) => (text) => {
 const renderDirDrop = (reference, config, record) => {
     const action = rxExecutor(reference, record);
     return (
-        <Dropdown trigger={['hover']} overlay={
+        <Dropdown trigger={['hover']} menus={
             <Menu>
                 <Menu.Item>
                     <a {...Ux.toCssA(action.renameDir)}>
@@ -120,7 +120,7 @@ const renderDirDrop = (reference, config, record) => {
 const renderFileDrop = (reference, config, record) => {
     const action = rxExecutor(reference, record);
     return (
-        <Dropdown trigger={['hover']} overlay={
+        <Dropdown trigger={['hover']} menus={
             <Menu>
                 <Menu.Item>
                     <a {...Ux.toCssA(action.renameFile)}>

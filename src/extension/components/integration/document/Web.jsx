@@ -39,7 +39,7 @@ const renderNav = (reference) => {
         navigation.forEach(nav => {
             const item = {};
             item.key = nav.key;
-            item.children = (
+            item.title = (
                 <a href={""} onClick={Op.rxNavClick(reference, nav)}>
                     {nav.name}
                 </a>

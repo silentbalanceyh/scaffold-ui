@@ -96,20 +96,26 @@ const renderSize = (reference) => (text) => {
 const renderDirDrop = (reference, config, record) => {
     const action = rxExecutor(reference, record);
     return (
-        <Dropdown trigger={['hover']} menus={
-            <Menu>
-                <Menu.Item>
-                    <a {...Ux.toCssA(action.renameDir)}>
-                        {Ux.v4Icon("edit")}&nbsp;{config.rename}
-                    </a>
-                </Menu.Item>
-                <Menu.Item>
-                    <a {...Ux.toCssA(action.remove)}>
-                        {Ux.v4Icon("delete")}&nbsp;{config.remove}
-                    </a>
-                </Menu.Item>
-            </Menu>
-        }>
+        <Dropdown trigger={['hover']} menu={{
+            items: [
+                {
+                    key: 'itemDirEdit',
+                    label: (
+                        <a {...Ux.toCssA(action.renameDir)}>
+                            {Ux.v4Icon("edit")}&nbsp;{config.rename}
+                        </a>
+                    )
+                },
+                {
+                    key: 'itemDirDelete',
+                    label: (
+                        <a {...Ux.toCssA(action.remove)}>
+                            {Ux.v4Icon("delete")}&nbsp;{config.remove}
+                        </a>
+                    )
+                }
+            ]
+        }}>
             <a {...Ux.toCssA()}>
                 {config.more}
             </a>
@@ -120,20 +126,26 @@ const renderDirDrop = (reference, config, record) => {
 const renderFileDrop = (reference, config, record) => {
     const action = rxExecutor(reference, record);
     return (
-        <Dropdown trigger={['hover']} menus={
-            <Menu>
-                <Menu.Item>
-                    <a {...Ux.toCssA(action.renameFile)}>
-                        {Ux.v4Icon("edit")}&nbsp;{config.rename}
-                    </a>
-                </Menu.Item>
-                <Menu.Item>
-                    <a {...Ux.toCssA(action.remove)}>
-                        {Ux.v4Icon("delete")}&nbsp;{config.remove}
-                    </a>
-                </Menu.Item>
-            </Menu>
-        }>
+        <Dropdown trigger={['hover']} menu={{
+            items: [
+                {
+                    key: 'itemFileEdit',
+                    label: (
+                        <a {...Ux.toCssA(action.renameFile)}>
+                            {Ux.v4Icon("edit")}&nbsp;{config.rename}
+                        </a>
+                    )
+                },
+                {
+                    key: 'itemFileDelete',
+                    label: (
+                        <a {...Ux.toCssA(action.remove)}>
+                            {Ux.v4Icon("delete")}&nbsp;{config.remove}
+                        </a>
+                    )
+                }
+            ]
+        }}>
             <a {...Ux.toCssA()}>
                 {config.more}
             </a>

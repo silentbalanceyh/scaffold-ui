@@ -132,12 +132,12 @@
                     "metadata": "runComponent,目录执行器,16,99%,aiSelect",
                     "optionJsx.config.items": [
                         {
-                            "key": "io.vertx.tp.is.uca.command.FsDefault",
-                            "label": "本地目录（io.vertx.tp.is.uca.command.FsDefault）"
+                            "key": "io.vertx.mod.is.uca.command.FsDefault",
+                            "label": "本地目录（io.vertx.mod.is.uca.command.FsDefault）"
                         },
                         {
-                            "key": "io.vertx.tp.is.uca.command.FsReadOnly",
-                            "label": "只读目录（io.vertx.tp.is.uca.command.FsReadOnly）"
+                            "key": "io.vertx.mod.is.uca.command.FsReadOnly",
+                            "label": "只读目录（io.vertx.mod.is.uca.command.FsReadOnly）"
                         }
                     ]
                 }

@@ -65,7 +65,7 @@
             "active": "BOOL:true",
             "appId": "PROP:app.key",
             "owner": "USER:key",
-            "runComponent": "FIX:io.vertx.tp.is.uca.command.FsDefault"
+            "runComponent": "FIX:io.vertx.mod.is.uca.command.FsDefault"
         },
         "hidden": [
             "active",

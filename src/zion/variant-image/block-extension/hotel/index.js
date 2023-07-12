@@ -3,6 +3,7 @@ import BLOCK_HT from './BLOCK_HT.png';
 import BLOCK_HT_APPR from './BLOCK_HT_APPR.png';
 import BLOCK_HT_CHECK from './BLOCK_HT_CHECK.png';
 import BLOCK_HT_FAN from './BLOCK_HT_FAN.png';
+import BLOCK_HT_FANI from './BLOCK_HT_FANI.png';
 import BLOCK_HT_ORDER from './BLOCK_HT_ORDER.png';
 import BLOCK_HT_SCH from './BLOCK_HT_SCH.png';
 
@@ -36,6 +37,7 @@ export default {
     BLOCK_HT_CHECK,
     BLOCK_HT_APPR,
     BLOCK_HT_FAN,
+    BLOCK_HT_FANI,
     BLOCK_HT_ORDER,
     BLOCK_HT_SCH,
     // BLOCK

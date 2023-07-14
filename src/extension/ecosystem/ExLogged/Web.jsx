@@ -78,10 +78,6 @@ const renderSetting = (reference, menu = [], params = {}) => {
             Ux.of(reference).in({
                 $visibleSetting
             }).hide().done();
-            // reference.?etState({
-            //     $visibleSetting,
-            //     $visible: false,
-            // })
         }
         const {$visibleSetting = false} = reference.state;
         dropAttrs.visible = $visibleSetting;
@@ -92,10 +88,6 @@ const renderSetting = (reference, menu = [], params = {}) => {
                     Ux.of(reference).in({
                         $visibleSetting: false
                     }).hide().done();
-                    // reference.?etState({
-                    //     $visibleSetting: false,
-                    //     $visible: false
-                    // })
                 }
             });
         } else {

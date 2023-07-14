@@ -296,54 +296,6 @@ const xtDialogClick = (reference, config = {}) => (event) => {
             })
         });
     })
-    // 初始化数据
-    // reference.?etState({
-    //     $loading: true,             // 是否在加载
-    //     $visible: true,             // 窗口是否显示
-    //     $data: [],                  // 当前窗口的数据信息
-    //     $tableKey: __Zn.randomUUID(), // 专用的表格绑定的key信息
-    // });
-    //
-    // /*
-    //  * 解析 ajax 参数信息
-    //  */
-    // let params = __LL.xtLazyAjax(reference, config);
-    //
-    // const {$filters = {}} = reference.state;
-    // if (!__Zn.isEmpty($filters)) {
-    //     params = __SP.qrCombine(params, reference, $filters);
-    // }
-    // const {value} = reference.props;
-    // /*
-    //  * 加载表格数据
-    //  */
-    // __Zn.asyncData(config.ajax, params, ($data) => {
-    //     const state = {$data, $loading: false};
-    //     return __XP.xtTableLazy(reference, state, $data).then(state => {
-    //         // selected 专用
-    //         let $selected;
-    //         if (config.selection && config.selection.multiple) {
-    //             // 多选
-    //             if (__Zn.isArray(value)) {
-    //                 $selected = value;
-    //             }
-    //         } else {
-    //             // 单选
-    //             if (value) {
-    //                 // 有值
-    //                 const {$keySet} = reference.state;
-    //                 if ($keySet) {
-    //                     $selected = $keySet;
-    //                 }
-    //             } else {
-    //                 // 无值
-    //                 $selected = undefined;
-    //             }
-    //         }
-    //         state.$keySet = $selected;
-    //         reference.?etState(state);
-    //     })
-    // });
 }
 export default {
     xtDialogCombine,

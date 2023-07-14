@@ -29,7 +29,15 @@ const __xtLazyConfiguration = (reference, configuration) => {
             throw new Error("编程模式配置丢失！")
         }
     } else {
+        /*
+         * 此处 config 中只包含了 ajax 和 linker 相关配置，还需要追加一份配置
+         * depend 的配置需要引入到 config 中
+         */
         config = reference.props.config;
+        const depend = reference?.props?.depend;
+        if (depend) {
+            config.depend = __Zn.clone(depend);
+        }
     }
     return config;
 }

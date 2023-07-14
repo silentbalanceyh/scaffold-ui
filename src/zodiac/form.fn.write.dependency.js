@@ -60,6 +60,11 @@ const writeLinker = (formValues = {}, config = {}, rowSupplier) => {
             formValues[formField] = value;                      // linker 赋值
         });
     __Zn.dgDebug({linker, formValues}, "触发 linker 结果！", "#104E8B");
+    // linker 中追加 optionJsx.depend.impact 配置处理 reset
+    const reset = config?.depend?.impact?.reset;
+    if (__Zn.isArray(reset)) {
+        reset.forEach(field => formValues[field] = undefined);
+    }
     return formValues;
 };
 // eslint-disable-next-line import/no-anonymous-default-export

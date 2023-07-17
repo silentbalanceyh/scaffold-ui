@@ -92,12 +92,18 @@ const sexMessage = (reference, key = "", duration = 1.2) => {
     if (__Zn.isObject(seek)) {
         const {type, ...config} = seek;
         const ms = __Zn.v4Message();
-        message.destroy();
-        message.config({maxCount: 1});
+        message.destroy('sexMessage');
+        message.config({maxCount: 1, duration});
         if ("error" === type) {
-            ms.error(config.content, duration);
+            ms.error({
+                content: config.content,
+                key: 'sexMessage'
+            });
         } else if ("success" === type) {
-            ms.success(config.content, duration);
+            ms.success({
+                content: config.content,
+                key: 'sexMessage'
+            });
         }
     } else {
         console.error("[ Ox ] 缺少窗口配置：_modal 或者配置解析出错！")

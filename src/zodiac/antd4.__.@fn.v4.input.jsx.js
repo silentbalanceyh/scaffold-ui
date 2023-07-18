@@ -28,5 +28,9 @@ export default (values = {}, configuration = {}) => {
     __v4Renders(optionJsx, renders, cell);
     /* reference 绑定 */
     optionJsx.reference = reference;
+    const disabled = cell.optionJsx?.disabled;
+    if (disabled) {
+        optionJsx.disabled = true;
+    }
     return optionJsx;
 }

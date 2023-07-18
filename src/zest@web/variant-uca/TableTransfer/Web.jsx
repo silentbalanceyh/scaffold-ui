@@ -52,6 +52,9 @@ export default {
         const field = config.checkable;
         $data.forEach(each => {
             each.checkable = !!each[field];
+            if(each.checkable){
+                each.className = "tree_node_checked"
+            }
             each.selectable = false;
         })
         const treeData = __Zn.toTree($data, config.tree);
@@ -59,18 +62,23 @@ export default {
         const checked = value
             .map(item => item.key)
             .filter(key => dataKeys.includes(key));
+
+        const treeAttrs = {};
+        treeAttrs.defaultExpandAll = true;
+        treeAttrs.checkable = true;
+        treeAttrs.showLine = false;
         return (
-            <Tree treeData={treeData} defaultExpandAll
+            <Tree treeData={treeData}
                   checkedKeys={checked}
                   onCheck={Op.rxTree(reference)}
-                  checkable/>
+                  {...treeAttrs}/>
         )
     },
     renderTable: (reference) => {
         const {config, value = []} = reference.props;
         const {table = {}} = config;
         const $table = __Zn.clone(table);
-        $table.className = "ux_table";
+        $table.className = "ux_table_transfer";
         $table.pagination = false;
         $table.columns = __Zn.configColumn(reference, $table.columns);
         $table.columns.forEach(column => {
@@ -83,7 +91,9 @@ export default {
                             <Popconfirm title={confirm}
                                         onConfirm={Op.rxDelete(reference, key)}>
                                 {/* eslint-disable-next-line */}
-                                <a href={""}>{text}</a>
+                                <a href={""} onClick={event => {
+                                    __Zn.prevent(event);
+                                }}>{text}</a>
                             </Popconfirm>
                         )
                     } else {

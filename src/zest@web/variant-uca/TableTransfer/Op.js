@@ -3,9 +3,9 @@ import __Zn from '../zero.uca.dependency';
 const rxTree = (reference) => ($keySet = []) => {
     const {data = [], config = {}, value = []} = reference.props;
     // fix: https://github.com/silentbalanceyh/hotel/issues/391
-    const valueKeys = value.map(item => item.key);
+    // const valueKeys = value.map(item => item.key);
     const items = data
-        .filter(item => $keySet.includes(item.key) || valueKeys.includes(item.key));
+        .filter(item => $keySet.includes(item.key));
     const {initialize = {}} = config;
     items.forEach(item => {
         const found = __Zn.elementUnique(value, 'key', item.key);

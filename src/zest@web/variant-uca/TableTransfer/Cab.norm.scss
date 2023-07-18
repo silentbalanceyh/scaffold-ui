@@ -1,12 +1,23 @@
 .uca {
   &_TableTransfer {
     .search {
+      margin-top: $uni_font * 0.3;
       width: 100%;
     }
 
     .tree {
+      margin-top: $uni_font * 0.6;
       max-height: 280px;
-      overflow-y: auto;
+      max-width: 235px;
+      overflow: auto;
+      .ant-tree{
+        min-width: 300px;
+      }
+      .tree_node_checked{
+        .ant-tree-switcher{
+          display: none;
+        }
+      }
     }
 
     .content {
@@ -17,11 +28,27 @@
         overflow-y: auto;
       }
 
-      .ant-table {
+      .ux_table_transfer{
+        table{
+          padding: 0;
 
-        table > tbody > tr > td {
-          padding-top: 3px;
-          padding-bottom: 3px;
+          td {
+            padding: $uni_font * 0.3 12px;
+          }
+
+          th {
+            padding: $uni_font * 0.6 12px;
+          }
+        }
+        .ant-table-cell{
+
+          a {
+            color: $uni_color;
+
+            &:hover {
+              opacity: 0.8;
+            }
+          }
         }
       }
     }

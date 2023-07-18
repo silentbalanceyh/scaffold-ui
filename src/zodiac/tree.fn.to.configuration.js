@@ -55,6 +55,9 @@ const toTreeArray = (data = [], config = {}) => {
     data.filter(item => !!item[config.key]).forEach(each => {
         const processed = {};
         processed.data = __Zn.clone(each);   // 数据节点
+        if (each.className) {
+            processed.className = each.className;
+        }
         __Zn.itObject(config, (to, from) => {
             if (undefined !== each[from]) {
                 processed[to] = each[from]; // 只取合法值

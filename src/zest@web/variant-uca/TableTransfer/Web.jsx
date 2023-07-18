@@ -70,7 +70,7 @@ export default {
         const {config, value = []} = reference.props;
         const {table = {}} = config;
         const $table = __Zn.clone(table);
-        $table.className = "ux_table table";
+        $table.className = "ux_table";
         $table.pagination = false;
         $table.columns = __Zn.configColumn(reference, $table.columns);
         $table.columns.forEach(column => {

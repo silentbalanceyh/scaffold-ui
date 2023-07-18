@@ -3,9 +3,37 @@
 
 .ux {
   &_table {
+
+    // 最后一行滚动条
+    .ant-table-scroll-horizontal {
+      .ant-table-tbody {
+        tr:last-child {
+          .ant-table-cell {
+            padding: $uni_font * 0.628 $uni_font $uni_font * 1.128 $uni_font;
+          }
+        }
+      }
+    }
+
     // ux_table_secondary
     &_secondary {
+      .ant-table {
+        table {
+          padding: 0;
 
+          td {
+            padding: $uni_font * 0.8 12px;
+          }
+
+          th {
+            padding: $uni_font * 0.8 12px;
+          }
+        }
+      }
+    }
+
+    // ux_table_black
+    &_black {
     }
 
     // ux_table_editor
@@ -89,7 +117,7 @@
           }
 
           th {
-            padding: $uni_font * 0.8 12px;
+            padding: $uni_font * 0.6 12px;
           }
         }
       }
@@ -118,7 +146,7 @@
       overflow-y: scroll;
     }
 
-    // Ant Table
+    // ux_table = .ant-table
     .ant-table {
 
       // Revert Color
@@ -141,17 +169,6 @@
             &:hover {
               opacity: 0.8;
             }
-          }
-        }
-      }
-    }
-
-    // 最后一行滚动条
-    .ant-table-scroll-horizontal {
-      .ant-table-tbody {
-        tr:last-child {
-          .ant-table-cell {
-            padding: $uni_font * 0.628 $uni_font $uni_font * 1.128 $uni_font;
           }
         }
       }

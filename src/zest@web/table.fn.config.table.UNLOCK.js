@@ -1,4 +1,4 @@
-import RENDERS from './variant-column/column.v.render.define.UNLOCK';
+import RENDERS from './variant-column/column.v.render.define';
 
 import __ROBIN from './table.__.fn.config.column.robin';
 

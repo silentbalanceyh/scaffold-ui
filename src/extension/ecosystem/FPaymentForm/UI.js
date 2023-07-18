@@ -32,18 +32,21 @@ class Component extends React.PureComponent {
                             paymentA.push(payment);
                             request.payment = paymentA;
                             request.finished = paymentA.map(payment => payment.settlementId);// [payment.settlementId];
-                            // debugger
-                            if (parseInt(request.amount) === request.amountLeft || parseInt(request.amount) < request.amountLeft) {
+
+                            const amount = parseFloat(request.amount).toFixed(2);
+                            const amountLeft = parseFloat(request.amountLeft).toFixed(2);
+                            if (amount === amountLeft || amount < amountLeft) {
+                                request.amount = amount; // 使用处理后的金额值
                                 return Ux.ajaxPost("/api/payment/create", request)
-                                    .then(data => Ux.ajaxDialog(reference, {data, key: "single"}))
+                                    .then(data => Ux.ajaxDialog(reference, { data, key: "single" }))
                                     .then(response => Ux.of(reference)._.close(response))
                                     .catch(error => Ux.ajaxError(reference, error));
                             }
-                            if (request.amount > request.amountLeft || request.amount < 0) {
-                                Ux.ajaxDialog(reference, {key: "defeated"})
-                                    .then(response => Ux.of(reference)._.close(response))
-                                    .catch(error => Ux.ajaxError(reference, error))
 
+                            if (amount > amountLeft || amount < 0) {
+                                Ux.ajaxDialog(reference, { key: "defeated" })
+                                    .then(response => Ux.of(reference)._.close(response))
+                                    .catch(error => Ux.ajaxError(reference, error));
                             }
                         },
                         $opBatch: (reference) => (params) => {

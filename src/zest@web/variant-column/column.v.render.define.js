@@ -3,6 +3,7 @@ import ROW from './render.__.fn._.row';
 import CONNECT from './render.__.fn._.connect';
 import EDITOR from './render.__.fn._.editor';
 import CURRENCY from './render.__.fn._.currency';
+import DOWNLOAD from './render.__.fn._.download';
 import DATE from './render.__.fn._.date';
 import DATUM from './render.__.fn._.datum';
 import DICT from './render.__.fn._.dict';
@@ -20,6 +21,7 @@ import ARRAY from './render.__.fn._.array';
 import RENDERS from './render.__.fn._.renders';
 
 export default {
+    ...DOWNLOAD,
     /*
      * 「编程模式」列配置
      * {

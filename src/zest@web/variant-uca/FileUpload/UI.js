@@ -2,11 +2,13 @@ import React from 'react';
 import {uca} from "zi";
 import Rdr from './Web';
 import __Zn from '../zero.uca.dependency';
-
+import "./Cab.norm.scss";
+import Sk from "skin";
 // =====================================================
 // componentInit/componentUp
 // =====================================================
 const UCA_NAME = "FileUpload";
+
 @uca({
     "i18n.cab": require('./Cab.json'),
     "i18n.name": "UI",
@@ -17,6 +19,7 @@ const UCA_NAME = "FileUpload";
 })
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         const {ajax = {}} = this.props;
         __Zn.xtUploadInit(this, ajax, (fileList) => {
@@ -38,8 +41,10 @@ class Component extends React.PureComponent {
         const {readOnly = false} = this.props;
         const isSingle = !readOnly;
         const WebField = __Zn.V4InputGroup;
+        const attrInput = Sk.mixUca(UCA_NAME, null,
+            isSingle ? {className: "single"} : {});
         return (
-            <WebField className={`web-file-upload ${isSingle ? "web-file-upload-single" : ""}`}>
+            <WebField {...attrInput}>
                 {Rdr.renderFile(this)}
                 {Rdr.renderPreview(this)}
             </WebField>

@@ -2,7 +2,7 @@
   &_FileUpload {
 
     .ant-upload-list {
-      height: 39px;
+      height: 32px;
       min-width: 80%;
 
       &-text {
@@ -65,8 +65,12 @@
     // line-height 链接
     .ant-upload-wrapper .ant-upload-list {
       .ant-upload-list-item .ant-upload-list-item-name {
-        line-height: 28px;
+        line-height: 24px;
       }
+    }
+
+    .ant-upload-wrapper .ant-upload-select {
+      float: left;
     }
   }
 }

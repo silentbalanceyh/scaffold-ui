@@ -2,62 +2,71 @@
   &_FileUpload {
     padding-top: 3px;
 
-    :global {
+    .ant-upload-list {
+      height: 39px;
+      min-width: 80%;
 
-      .ant-upload-list {
-        height: 39px;
-        min-width: 80%;
+      &-text {
+        display: inline-block;
       }
+    }
 
-      .ant-upload-list-item {
+    .ant-upload-list-item {
+      height: 28px;
+      line-height: 28px;
+      margin-top: 3px;
+      margin-left: 6px;
+
+      .range {
+        width: 28px;
         height: 28px;
         line-height: 28px;
-        margin-top: 3px;
-        margin-left: 6px;
+      }
 
-        .range {
+      &-card-actions {
+        margin-left: 80px;
+        min-width: 32px;
+        text-align: center;
+
+        a {
           width: 28px;
           height: 28px;
           line-height: 28px;
-        }
-
-        &-card-actions {
-          margin-left: 80px;
-          min-width: 32px;
+          padding-top: 3px;
+          padding-left: 3px;
+          display: inline-block;
           text-align: center;
 
-          a {
-            .range
-          ;
-            padding-top: 3px;
-            padding-left: 3px;
-            display: block;
-            text-align: center;
-
-            i {
-              svg {
-                width: 21px;
-                height: 21px;
-              }
+          i {
+            svg {
+              width: 21px;
+              height: 21px;
             }
-
           }
-        }
 
-        &-name {
-          height: 28px;
-          line-height: 28px;
-        }
-
-        &-info {
-          height: 28px;
-          line-height: 28px;
         }
       }
 
-      .ant-upload-list-item-name:hover {
-        text-decoration: underline;
-        cursor: pointer;
+      &-name {
+        display: inline-block;
+        height: 28px;
+        line-height: 28px;
+      }
+
+      &-info {
+        height: 28px;
+      }
+    }
+
+    .ant-upload-list-item-name:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    // line-height 链接
+    .ant-upload-wrapper .ant-upload-list {
+      .ant-upload-list-item .ant-upload-list-item-name {
+        line-height: 28px;
       }
     }
   }

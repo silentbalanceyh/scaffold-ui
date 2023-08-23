@@ -24,42 +24,6 @@ const componentInit = (reference) => {
         const {$app} = reference.props;
         const sigma = $app._("sigma");
         state.$loginUser = Ux.isLogged();
-        Ux.ajaxPost("/api/xc/ci.device/search").then(response => {
-            state.$cidevice = Ux.valueArray(response);
-            return Ux.promise(state);
-        }).then(state => {
-            const usedata = {};
-            const assData = {};
-            state.$cidevice.forEach(citemp => {
-                // 使用人
-                if (citemp['userId'] === state.$loginUser['workNumber']) {
-                    let useNum = usedata[citemp['categoryThird']] ? usedata[citemp['categoryThird']] : 0;
-                    useNum += 1;
-                    usedata[citemp['categoryThird']] = useNum;
-                }
-                if (citemp['ownerId'] === state.$loginUser['workNumber']) {
-                    let assigneNum = assData[citemp['categoryThird']] ? assData[citemp['categoryThird']] : 0;
-                    assigneNum += 1;
-                    assData[citemp['categoryThird']] = assigneNum;
-                }
-            });
-
-            const categorys = {}
-            Ux.onDatum({state}, "data.category").forEach(cat => {
-                categorys[cat['key']] = cat['name'];
-            })
-
-            state.$ciUse = {data: [], config: {}};
-            for (let i in usedata) {
-                state.$ciUse.data.push({key:i, name:categorys[i], value:usedata[i]});
-            }
-
-            state.$ciAss = {data: [], config: {}};
-            for (let i in assData) {
-                state.$ciAss.data.push({key:i, name:categorys[i], value:assData[i]});
-            }
-            return Ux.promise(state);
-        }).then(Ux.ready).then(Ux.pipe(reference));
 
         Ux.ajaxPost("/api/up/report/list", {criteria: {sigma}}).then(response => {
             state.$data = Ux.valueArray(response);

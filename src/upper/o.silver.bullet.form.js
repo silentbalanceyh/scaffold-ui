@@ -25,9 +25,10 @@ const form = (reference) => ({
         const api = __dataApi(uri, config);
 
         // 请求
-        let request = __dataInput(params, reference);
+        const $params = Ux.clone(params);
         const {$addKey} = reference.props;
-        request.key = $addKey;
+        $params.key = $addKey;
+        let request = __dataInput($params, reference);
 
         // 预处理部分
         if (Ux.isFunction(preAdd)) {

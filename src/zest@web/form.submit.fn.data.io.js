@@ -1,114 +1,8 @@
 import __Zn from './zero.module.dependency';
+import preFn from './form.submit.fn.__.io.pre';
+import inputFn from './form.submit.fn.__.io.input';
 
 const Cv = __Zn.Env;
-
-const __dataIngest = (sourceData, config = {}, reference) => {
-    const {
-        inPath,
-        outType,
-    } = config;
-    if (__Zn.isArray(sourceData)) {
-        return sourceData
-            .map(each => __dataIngest(each, config, reference))
-            .filter(each => !!each);
-    } else if (__Zn.isObject(sourceData)) {
-        /*
-         * inPath 类型判断转换成统一的 path
-         * 1. 包含了 : （多值结果集）
-         * 2. 不包含 : （单值结果集）
-         */
-        if (0 <= inPath.indexOf(":")) {
-            /*
-             *  参考下边的示例程序
-             *  source:{
-             *      "a": {
-             *          "key": "key1",
-             *          "a": true,
-             *      },
-             *      "b": {
-             *          "key": "key2",
-             *          "b": true,
-             *      },
-             *      "c": {
-             *          "key": "key3",
-             *          "c": false
-             *      }
-             *  }
-             * 1.1. inPath = :field.key
-             *      outType = ARRAY
-             *      => [key1, key2, key3]
-             *
-             * 1.2. inPath = :field.key
-             *      outType = ARRAY
-             *      => {
-             *         "a": "key1",
-             *         "b": "key2",
-             *         "c": "key3"
-             *      }
-             *
-             * 2.1. inPath = :field.:field
-             *      outType = ARRAY
-             *      => [true, true, true]
-             *
-             * 2.2. inPath = :field.:field
-             *      outType = Object
-             *      => {
-             *          "a": true,
-             *          "b": true,
-             *          "c": true
-             *      }
-             */
-            if ("ARRAY" === outType) {
-                // 只关注路径下的值，构造完成的 Array 返回
-                const result = [];
-                Object.keys(sourceData).forEach(field => {
-                    const path = __Zn.formatExpr(inPath, {field}, true);
-                    if (path) {
-                        result.push(__Zn.valuePath(sourceData, path));
-                    }
-                })
-                return result;
-            } else if ("OBJECT" === outType) {
-                // 同时关注路径下的键值
-                const result = {};
-                Object.keys(sourceData).forEach(field => {
-                    const path = __Zn.formatExpr(inPath, {field}, true);
-                    if (path) {
-                        result[field] = __Zn.valuePath(sourceData, path);
-                    }
-                })
-                return result;
-            }
-        } else {
-            // 单值结果集
-            return __Zn.valuePath(sourceData, inPath);
-        }
-    }
-}
-
-const __dataPre = (request = {}, config = {}) => {
-    const {
-        inPre
-    } = config;
-    if (inPre) {
-        let checked = true;
-        Object.keys(inPre).forEach(field => {
-            let expected = inPre[field];
-            let actual = request[field];
-            if (String(expected) !== String(actual)) {
-                /*
-                 * 深度检查，如 undefined, false, 0, "" 表示相同意思
-                 */
-                expected = !!expected;
-                actual = !!actual;
-                if (expected !== actual) {
-                    checked = false;
-                }
-            }
-        });
-        return checked;
-    } else return true;
-}
 
 const dataIo = (request = {}, config = {}, reference) => {
     /*
@@ -121,7 +15,7 @@ const dataIo = (request = {}, config = {}, reference) => {
         outType,
     } = config;
     // inPre 检查
-    if (inSource && __dataPre(request, config, reference)) {
+    if (preFn(request, config, reference)) {
         // sourceData
         const sourceData = request[inSource];
         // 1. sourceData 无值
@@ -131,7 +25,7 @@ const dataIo = (request = {}, config = {}, reference) => {
         }
         // 2. 有 inPath，则直接解析
         if (inPath) {
-            return __dataIngest(sourceData, {
+            return inputFn(sourceData, {
                 inPath,     // 数据采集路径
                 outType,    // 输出类型：ARRAY / OBJECT
             }, reference);
@@ -142,16 +36,39 @@ const dataIo = (request = {}, config = {}, reference) => {
 }
 const dataWrite = (request = {}, io = {}, reference) => {
     const {writer = {}} = io;
-    if (__Zn.isNotEmpty(writer)) {
-        __Zn.dgDebug(writer, "[Data Writer] 转换器", "#008B00");
-        Object.keys(writer).forEach(field => {
-            const config = writer[field];
+    if (__Zn.isEmpty(writer)) {
+        // 跳过，没有定义 writer
+        return;
+    }
+    /*
+     * 若 writer 中出现了 key = value，value 为 String 类型
+     * 自动转换
+     * {
+     *     "key": "field"
+     * }
+     * 这种直接转换成
+     * {
+     *     "key": {
+     *         "inSource": "field",
+     *         "inPath": null
+     *     }
+     * }
+     */
+    __Zn.dgDebug(writer, "[Data Writer] 转换器", "#008B00");
+    Object.keys(writer).forEach(field => {
+        const config = writer[field];
+        if ("string" === typeof config) {
+            request[field] = dataIo(request, {
+                inField: config,
+                inPath: null
+            }, reference);
+        } else {
             request[field] = dataIo(request, {
                 ...config,
                 inField: field,
             }, reference);
-        })
-    }
+        }
+    })
 }
 const dataRead = ($inited = {}, config = {}, reference) => {
 

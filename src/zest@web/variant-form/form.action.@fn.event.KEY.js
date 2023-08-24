@@ -7,7 +7,8 @@ export default (reference, config = {}, redux = false) => (event) => {
 
 
         const eventFn = __Ft.runEventFn(reference, config);
-        return eventFn({key: data.key});
+        const {optionJsx = {}} = config;
+        return eventFn({key: data.key}, optionJsx);
     }).then(response => {
 
 

@@ -1,55 +1,93 @@
 import Ux from 'ux';
 
+const __dataApi = (uri, config = {}) => {
+    if (uri) {
+        return uri;
+    }
+    return config.api;
+}
+
+const __dataInput = (params = {}, reference) => {
+    const $request = Ux.clone(params);
+    {
+        const {config} = reference.props;
+        const {io = {}} = config?.form;
+        Ux.dataWrite($request, io, reference);
+    }
+    let request = Ux.valueRequest($request);
+    request = Ux.valueValid(request);
+    return request;
+}
+
 const form = (reference) => ({
-    addFn: (uri, preAdd) => (params) => {
-        let request = Ux.valueRequest(params);
+    addFn: (uri, preAdd) => (params, config = {}) => {
+        // 接口
+        const api = __dataApi(uri, config);
+
+        // 请求
+        let request = __dataInput(params, reference);
         const {$addKey} = reference.props;
         request.key = $addKey;
-        request = Ux.valueValid(request);
+
+        // 预处理部分
         if (Ux.isFunction(preAdd)) {
             request = preAdd(request, reference);
         }
+
+        // 提交部分
         if (request) {
-            return Ux.ajaxPost(uri, request);
+            return Ux.ajaxPost(api, request);
         } else {
             console.error("不触发后端请求开发调试！！Add")
         }
     },
-    saveFn: (uri, preEdit) => (params) => {
+    saveFn: (uri, preEdit) => (params, config = {}) => {
+        // 接口
+        const api = __dataApi(uri, config);
+
+        // 请求，先将表单有的值合并到初始值
         const {$inited = {}} = reference.props;
-        // 先将表单有的值合并到初始值
         const input = Object.assign({}, $inited, params);
-        let request = Ux.valueRequest(input);
-        request = Ux.valueValid(request);
+        let request = __dataInput(input, reference);
+
+        // 预处理
         if (Ux.isFunction(preEdit)) {
             request = preEdit(request, reference);
         }
+
+        // 提交部分
         if (request) {
-            return Ux.ajaxPut(uri, request);
+            return Ux.ajaxPut(api, request);
         } else {
             console.error("不触发后端请求开发调试！！Edit")
         }
     },
-    removeFn: (uri) => (params) => {
+    removeFn: (uri) => (params, config = {}) => {
+        // 接口
+        const api = __dataApi(uri, config);
+
+        // 请求
         const input = {key: params.key};
-        return Ux.ajaxDelete(uri, input)
+
+        return Ux.ajaxDelete(api, input)
     },
     add: (params = {}, config = {}) => {
-        let request = Ux.valueRequest(params);
+
+        const request = __dataInput(params, reference);
         const {$addKey} = reference.props;
         request.key = $addKey;
-        request = Ux.valueValid(request);
+
         return Ux.ajaxPost(config.uri, request)
             .then(Ux.ajax2Dialog(reference, config.dialog))
             .then(response => Ux.of(reference)._.close(response))
             .catch(error => Ux.ajaxError(reference, error));
     },
     save: (params = {}, config = {}) => {
-        const {$inited = {}} = reference['props'];
         // 先将表单有的值合并到初始值
+        const {$inited = {}} = reference.props;
         const input = Object.assign({}, $inited, params);
-        let request = Ux.valueRequest(input);
-        request = Ux.valueValid(request);
+        const request = __dataInput(input, reference);
+
         return Ux.ajaxPut(config.uri, request)
             .then(Ux.ajax2Dialog(reference, config.dialog))
             .then(response => Ux.of(reference)._.close(response))

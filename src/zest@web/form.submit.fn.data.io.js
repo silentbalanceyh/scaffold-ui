@@ -59,7 +59,7 @@ const dataWrite = (request = {}, io = {}, reference) => {
         const config = writer[field];
         if ("string" === typeof config) {
             request[field] = dataIo(request, {
-                inField: config,
+                inSource: config,
                 inPath: null
             }, reference);
         } else {

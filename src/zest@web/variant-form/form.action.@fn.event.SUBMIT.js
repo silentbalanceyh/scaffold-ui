@@ -6,13 +6,14 @@ export default (reference, config = {}, redux = false) => (event) => {
     return __Ft.runSubmit(reference, redux).then(data => {
 
         const eventFn = __Ft.runEventFn(reference, config);
-        return eventFn(data);
+        const {optionJsx = {}} = config;
+        return eventFn(data, optionJsx);
     }).then(response => {
 
 
         return __Ft.runCallback(reference, config, response);
     }).catch(error => {
-        
+
 
         return __Zn.ajaxError(reference, error);
     })

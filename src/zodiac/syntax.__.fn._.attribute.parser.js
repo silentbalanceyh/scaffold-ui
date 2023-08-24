@@ -139,4 +139,5 @@ export default {
      */
     closable: jsxBoolean("closable"),
     callback: jsxValue("callback"),
+    api: jsxValue("api"),
 }

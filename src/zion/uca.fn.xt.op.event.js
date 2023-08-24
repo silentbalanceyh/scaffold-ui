@@ -50,6 +50,7 @@ const xtChecked = ($keySet, reference, configuration) => {
     }
     return $selectedKeys;
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     xtChecked,
     xtTransfer,

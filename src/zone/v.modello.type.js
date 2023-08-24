@@ -49,7 +49,10 @@ export default {
         "aiDialogEditor",
         "aiMatrixSelector",
         "aiDatePicker",
-        "aiTimePicker"
+        "aiTimePicker",
+        "aiFileUpload",
+        "aiFileBatch",
+        "aiFileLogo"
     ],
     TYPE_JSX_RENDERS: [
         "aiDialogEditor"

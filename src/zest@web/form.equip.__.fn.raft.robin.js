@@ -163,7 +163,10 @@ const configForm = (form, addOn = {}, containerFn, ucaFn) => {
         if (form.metadata) {
             const $metadata = __Zn.clone(form.metadata);
             $metadata.error_notify = metadata.error_notify.concat($metadata.error_notify);
-            $metadata.search = Object.assign($metadata.search, metadata.search);
+            // search 判断
+            if ($metadata.search && metadata.search) {
+                $metadata.search = Object.assign($metadata.search, metadata.search);
+            }
             raft.metadata = $metadata;
         } else {
             raft.metadata = metadata;

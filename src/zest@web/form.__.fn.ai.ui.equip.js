@@ -5,10 +5,18 @@ const aiErrorFocus = (reference, item) => {
     if (item.field) {
         if (item.optionConfig && item.optionConfig.hasOwnProperty("rules")) {
             if (!item.optionJsx) item.optionJsx = {};
-            // onFocus
-            item.optionJsx.onFocus = __Zn.htmlErrorFocus(item);
-            // onBlur
-            item.optionJsx.onBlur = __Zn.htmlErrorBlur(item);
+            if (Cv.TYPE_JSX_VALIDATE.includes(item.render)) {
+                // onFocus -> Error
+                item.optionJsx.onFocus = __Zn.htmlErrorFocus(item);
+                // onBlur -> Error
+                item.optionJsx.onBlur = __Zn.htmlErrorFocus(item);
+            } else {
+
+                // onFocus -> Error
+                item.optionJsx.onFocus = __Zn.htmlErrorFocus(item);
+                // onBlur
+                item.optionJsx.onBlur = __Zn.htmlErrorBlur(item);
+            }
         }
     }
 }
@@ -17,7 +25,11 @@ const aiValidation = (reference = {}, item = {}) => {
         const rules = item.optionConfig.rules;
         // 触发条件设置，默认onBlur，符合大多数习惯
         if (!item.optionConfig.hasOwnProperty("validateTrigger")) {
-            item.optionConfig.validateTrigger = "onBlur";
+            if (Cv.TYPE_JSX_VALIDATE.includes(item.render)) {
+                item.optionConfig.validateTrigger = "onChange";
+            } else {
+                item.optionConfig.validateTrigger = "onBlur";
+            }
         }
         // 解析 rules ( For 4.0 )
         // item.optionItem.rules = aiValidator(reference, rules, item.optionJsx);

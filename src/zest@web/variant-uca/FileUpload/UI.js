@@ -43,8 +43,10 @@ class Component extends React.PureComponent {
         const WebField = __Zn.V4InputGroup;
         const attrInput = Sk.mixUca(UCA_NAME, null,
             isSingle ? {className: "single"} : {});
+        const attrs = __Zn.yoLimit(this.props);
         return (
-            <WebField {...attrInput}>
+            <WebField {...attrs} {...attrInput}>
+                {__Zn.aiErrorInput(this)}
                 {Rdr.renderFile(this)}
                 {Rdr.renderPreview(this)}
             </WebField>

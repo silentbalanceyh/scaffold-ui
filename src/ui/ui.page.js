@@ -135,8 +135,11 @@ const smartForm = (configurationForm = {}, mode) => {
                     if (Ux.isFunction(yoOp)) {
                         form.$op = yoOp(this);
                     } else if (Ux.isObject(yoOp)) {
-                        form.$op = smartOp(this, yoOp)
+                        form.$op = smartOp(this, yoOp);
+                    } else {
+                        form.$op = smartOp(this, {});
                     }
+                    
                     if (Ux.isFunction(yoJsx)) {
                         form.$renders = yoJsx(this);
                     } else if (Ux.isObject(yoJsx)) {

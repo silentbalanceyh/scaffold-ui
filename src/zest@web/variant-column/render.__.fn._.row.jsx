@@ -22,7 +22,8 @@ export default {
                     $jsx.value = text;
                 }
                 return executor(reference, $jsx, (data) => {
-                    record[column.dataIndex] = data;
+                    // [object Object] Issue
+                    record[column.dataIndex] = __Zn.ambEvent(data);
                     const $value = __Zn.clone(value);
                     let foundIndex = __Zn.elementIndex(value, fieldCond, record[fieldKey]);
                     if (0 <= foundIndex) {

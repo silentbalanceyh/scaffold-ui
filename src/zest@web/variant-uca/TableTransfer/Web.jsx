@@ -70,7 +70,7 @@ export default {
         return (
             <Tree treeData={treeData}
                   checkedKeys={checked}
-                  onCheck={Op.rxTree(reference)}
+                  onCheck={Op.rxTree(reference, $data)}
                   {...treeAttrs}/>
         )
     },

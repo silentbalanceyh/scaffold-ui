@@ -1,5 +1,4 @@
 import __Zn from './zero.module.dependency';
-import {message} from "antd";
 
 const messageConfirm = (content, onOk, width = 600) => {
     const md = __Zn.v4Modal()
@@ -9,11 +8,16 @@ const messageConfirm = (content, onOk, width = 600) => {
         onOk
     })
 };
+const ID_MSG_SUCCESS = "ZERO_MSG_SUCCESS";
+const ID_MSG_FAILURE = "ZERO_MSG_FAILURE";
 const messageSuccess = (content = "", duration = 1.628) => {
     if ("string" === typeof content) {
         const ms = __Zn.v4Message();
-        message.config({maxCount: 1});
-        ms.success(content, duration);
+        ms.destroy(ID_MSG_SUCCESS);
+        ms.success({
+            key: ID_MSG_SUCCESS,
+            content
+        }, duration);
     } else if (__Zn.isObject(content)) {
         const {modal: {success = {}}} = content;
         /*
@@ -30,8 +34,11 @@ const messageSuccess = (content = "", duration = 1.628) => {
 const messageFailure = (content = "", duration = 1.628) => {
     if ("string" === typeof content) {
         const ms = __Zn.v4Message();
-        message.config({maxCount: 1});
-        ms.error(content, duration);
+        ms.destroy(ID_MSG_FAILURE);
+        ms.error({
+            key: ID_MSG_FAILURE,
+            content,
+        }, duration);
     } else if (__Zn.isObject(content)) {
         const {modal} = content;
         /*

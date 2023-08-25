@@ -66,10 +66,46 @@ const __PARSER = {
      */
     FORM: (expression, reference, addOn = {}) => fnPredicate("FORM", expression, () => {
         let formValue = __FORM.formGet(reference, expression, false);
+        /*
+        旧代码：
         if (!formValue) {
             // 有可能是无值处理，只有无值的时候处理第一下拉表
             const {initialize = {}} = addOn;
             formValue = initialize[expression];
+        }
+         * FIX: https://e.gitee.com/wei-code/issues/table?issue=I7MGKS
+         * 此处为 Ant V4 引起的表单数据无法提取的问题，旧代码的问题：只解决了 formValue 无值的情况，对于 formValue 有值时
+         * 需执行判断查看 initialize 中的值是否有更新，此处 initialize 是可以定义为值得信赖的。
+         * 1）如果 formValue 无值，所有的级联部分的取值都是可靠的，不会有任何问题（Ok）。
+         * 2）如果 formValue 有值，且和 initialize 中的值不同（Bug）。
+         * 此处新版代码解决的就是第二个Bug，这种场景通常出现于外部更新过程中既更新了主字段，又更新了级联字段，会导致主字段引起的级联
+         * 字段的数据源无法实时更新，下拉就出现了乱码。
+         *
+         * 注意：尽量将提取的值控制在一个很小的范围内，优先级如：
+         * 1）表单提取数据优先级最高
+         * 2）其次是根据外层控制执行计算
+         */
+        // 提取最新初始化数据，从 initialize 中加载
+        const {initialize = {}} = addOn;
+        const valueUp = initialize[expression];
+        if (formValue) {
+            /*
+             * 更新流程
+             * formValue 有值，valueUp 如果有值，证明 valueUp 是最新的，二者不相等的话，就需要重新
+             * 赋值，将 formValue 的值和 valueUp 同步。
+             */
+            if (!!valueUp && formValue !== valueUp) {
+                formValue = valueUp;
+            }
+        } else {
+            /*
+             * 添加流程
+             * 如果 formValue 不是 undefined 的时，提取值信息，此处还需要注意 null, false 这两种值
+             * 在表单级是合法的
+             */
+            if (undefined === formValue) {
+                formValue = valueUp;
+            }
         }
         return formValue;
     }),

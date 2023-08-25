@@ -167,11 +167,28 @@ const __parseOptionFilter = (reference, config = {}) => {
          */
         const cascade = config['cascade'];
         const expr = cascade.target;
+        /*
+        CODE-bqXhQLDkPwRB / 旧代码（CASCADE）
         const {initialize = {}} = config;
         const value = __Pr.parseValue(expr, reference, {
             initialize,       // 补救方案，处理 Ant V4 专用
         });
+         */
         fnCascade = item => {
+            /*
+             * CODE-bqXhQLDkPwRB / 新代码（CASCADE），改动理由，fnCascade 执行过程中的生命周期和最开始渲染组件的生命周期
+             * 位于不同的生命周期，为了保证提取到的数据 initialize 是最新的，所以此处将本身选项的过滤
+             * 转移到函数内部，每次执行函数时就会去做一次解析，而不是组件最初始化周期执行一次。
+             * - 初始化周期：代码本身滞后，只会执行一次。
+             * - 渲染周期：执行 fnCascade 函数的周期每次有变更都会执行，如此才会导致每次执行时执行过滤
+             * 一般的最佳实践推荐：
+             * 1）配置部分直接在 初始化周期 处理
+             * 2）数据部分则直接在 渲染周期 处理
+             */
+            const {initialize = {}} = config;
+            const value = __Pr.parseValue(expr, reference, {
+                initialize,       // 补救方案，处理 Ant V4 专用
+            });
             if (value) {
                 /*
                  * Cascade 计算

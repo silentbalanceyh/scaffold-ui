@@ -78,13 +78,28 @@ const toLogout = (cleanApp = true) => {
         _Storage.remove(Cv.X_APP_KEY);
         /* 删除菜单和关联应用 */
         _Session.remove([
-            Cv.PAGE_MENU,
-            Cv.PAGE_APP,
+            Cv.PAGE_MENU,       // <NAME>/DATA
+            Cv.PAGE_APP,        // <NAME>/APP
+            Cv.X_APP_ID,        // <NAME>/ID
+            Cv.X_SIGMA,         // <NAME>/SIGMA
         ]);
         const app = _Session.get(Cv.KEY_APP);
-        if (app && app['appKey']) {
-            delete app['appKey'];
-            _Storage.put(Cv.KEY_APP, app);
+        if (app) {
+            const $app = {};
+            Object.keys(app).forEach(field => {
+                const value = app[field];
+                if (!__Zn.isObject(value)) {
+                    $app[field] = value;
+                }
+            });
+            
+            /**
+             * bags / 删除模块信息
+             * appKey / 删除应用加密信息
+             */
+            if ($app['appKey']) delete $app['appKey'];
+            if ($app.bags) delete $app.bags;
+            _Storage.put(Cv.KEY_APP, $app);
         }
     }
     return true;

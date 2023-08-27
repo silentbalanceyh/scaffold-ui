@@ -21,6 +21,11 @@ export default {
                 if (text) {
                     $jsx.value = text;
                 }
+
+                // disabled 状态同步到组件
+                const {disabled = false} = reference.props;
+                $jsx.disabled = disabled;
+
                 return executor(reference, $jsx, (data) => {
                     // [object Object] Issue
                     record[column.dataIndex] = __Zn.ambEvent(data);

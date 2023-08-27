@@ -2,7 +2,11 @@ import Ux from "ux";
 import Types from "./Types";
 import I from "./interface.ajax";
 
-const procApp = (data) => ({app: Ux.storeApp(data)});
+const procApp = (data) => {
+    // 刷新时屏蔽 appKey / bags
+    Ux.Storage.remove(Ux.Env.KEY_APP);
+    return {app: Ux.storeApp(data)}
+};
 const procInit = (data = []) => {
     const result = {};
     if (data[0]) {

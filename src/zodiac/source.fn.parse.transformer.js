@@ -94,9 +94,10 @@ const __PARSER = {
              * formValue 有值，valueUp 如果有值，证明 valueUp 是最新的，二者不相等的话，就需要重新
              * 赋值，将 formValue 的值和 valueUp 同步。
              */
-            if (!!valueUp && formValue !== valueUp) {
-                formValue = valueUp;
-            }
+            return formValue;
+            // if (!!valueUp && formValue !== valueUp) {
+            //     formValue = valueUp;
+            // }
         } else {
             /*
              * 添加流程

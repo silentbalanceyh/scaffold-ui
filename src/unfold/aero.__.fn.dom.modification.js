@@ -23,12 +23,13 @@ const domItemIcon = (item, dom) => {
     ), {
         key: `${dom.key}/icon/${item.key}`
     });
+    const children = dom?.props?.children;
     return React.cloneElement(dom, {
         children: [
             // 针对每个子元素都需要包含 `key` 属性，这是 React 决定的
             iconJsx ? iconJsx : null,
             /* 原始的 title */
-            dom?.props?.title
+            children[1],
         ]
     });
 }

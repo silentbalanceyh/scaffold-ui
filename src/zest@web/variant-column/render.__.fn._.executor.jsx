@@ -5,8 +5,6 @@ import React from 'react';
 import __T from '../equip.fn.plugin.extension';
 import Opt from './option.__.render.executor';
 
-const Cv = __Zn.Env;
-
 const Cmn = {
     ...__JSX,
     ...__NORM,

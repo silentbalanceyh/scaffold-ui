@@ -30,5 +30,6 @@
     "ts-pnp": "1.2.0",
     "url-loader": "4.1.1",
     "redux-observable": "^2.0.0",
-    "chalk": "4.1.2"
+    "chalk": "4.1.2",
+    "@antv/g2": "4.2.10"
 }

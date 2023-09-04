@@ -79,7 +79,8 @@ const uiButton = (actions, executor = {}, reference) => {
         }
     })
 }
-const uiModal = (config = {}, fnChild, reference) => {
+const uiModal = (configuration = {}, fnChild, reference) => {
+    const {state = {}, ...config} = configuration;
     const modal = __Ct.configDialog(reference, config);
     const dialog = __Zn.clone(modal);
     const {$visible = false} = reference.state;
@@ -87,13 +88,8 @@ const uiModal = (config = {}, fnChild, reference) => {
     dialog.open = $visible;
     // children 专用
     const attrs = {};
-    /*
-     * 表单专用属性
-     * - rxClose：关闭窗口
-     */
-    // reference.?etState({$submitting})
-    // 表单关闭方法（带刷新）
     attrs.rxClose = __Br.rxCloseFn(reference, {
+        ...state,
         pRefresh: true      // 关闭窗口时刷新界面
     })
     // 初始值

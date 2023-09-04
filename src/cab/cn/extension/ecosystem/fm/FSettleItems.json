@@ -26,5 +26,9 @@
                 "$format": "YYYY年MM月DD日 HH:mm"
             }
         ]
+    },
+    "_report": {
+        "count": "明细合计：:count条",
+        "amount": "金额合计：￥:amount"
     }
 }

@@ -16,8 +16,29 @@ const componentInit = (reference) => {
     // state.$ready = true;
 }
 
+const yoValue = (reference) => {
+    const {$inited = {}} = reference.props;
+    let values = Ux.clone($inited);
+    values = Ex.inSettlement(values);
+    const {record = {}} = values;
+    // 结算管理存在之后重新计算
+    if (Ux.isEmpty(record)) {
+        // Pure
+        values.linked = "DONE";
+    } else {
+        if (0 < record.amount) {
+            values.linked = "DEBT";
+        } else {
+            values.linked = "REFUND";
+        }
+    }
+    return values;
+}
+
 const renderView = (reference, data = {}) => {
     const inherit = Ex.yoAmbient(reference);
+    const { $inited = {}} = reference.props;
+    inherit.$amount = $inited.amount;
     if ("DEBT" === data.linked) {
         inherit.$inited = data.record;
         return (
@@ -56,22 +77,8 @@ class Component extends React.PureComponent {
 
     render() {
         return Ex.yoRender(this, () => {
-            const {$inited = {}} = this.props;
-            const {items = [], ...initValues} = $inited;
-            let values = Ux.clone(initValues);
-            values = Ex.inSettlement(values);
-            const {record = {}} = values;
-            // 结算管理存在之后重新计算
-            if (Ux.isEmpty(record)) {
-                // Pure
-                values.linked = "DONE";
-            } else {
-                if (0 < record.amount) {
-                    values.linked = "DEBT";
-                } else {
-                    values.linked = "REFUND";
-                }
-            }
+            const $inited = yoValue(this);
+            const {items = [], ...values} = $inited;
             const form = Ex.yoForm(this, null, values);
             const $form = {};
             const inherit = Ex.yoAmbient(this);

@@ -1,6 +1,6 @@
 import React from 'react';
 import Ux from "ux";
-import {Popconfirm, Table} from "antd";
+import {Popconfirm, Table, Row, Col, Tag} from "antd";
 import Ex from "ex";
 
 const UCA_NAME = "FPaymentList";
@@ -36,6 +36,53 @@ const mountOp = (reference, columns = []) => {
     return $columns;
 }
 
+const renderFooter = (reference) => (data = []) => {
+    const params = {};
+    params.count = data.length;
+
+    const { $amount = 0 } = reference.props;
+    params.amount = Ux.formatCurrency($amount);
+    const amountPayed = data.map(item => item.amount).reduce((left, right) => left + right, 0);
+    params.amountPayed = Ux.formatCurrency(amountPayed);
+    params.amountWait = Ux.formatCurrency($amount - amountPayed);
+
+    const report = Ux.inHoc(reference, "report");
+    return (
+        <Row>
+            <Col span={5}>
+                {Ux.formatExpr(report.amount, params)}
+            </Col>
+            <Col span={5}>
+                {Ux.formatExpr(report.count, params)}
+            </Col>
+            <Col span={5}>
+                {Ux.formatExpr(report.payed, params)}
+            </Col>
+            <Col span={5}>
+                {Ux.formatExpr(report.waiting, params)}
+            </Col>
+            <Col span={4}>
+                {(() => {
+                    const { result = {}} = report;
+                    if(amountPayed >= $amount){
+                        return (
+                            <Tag color={"green"}>
+                                {result.finished}
+                            </Tag>
+                        )
+                    }else{
+                        return (
+                            <Tag color={"red"}>
+                                {result.waiting}
+                            </Tag>
+                        )
+                    }
+                })()}
+            </Col>
+        </Row>
+    )
+}
+
 @Ux.zero(Ux.rxEtat(require('./Cab'))
     .cab(UCA_NAME)
     .to()
@@ -67,7 +114,7 @@ class Component extends React.PureComponent {
 
             dataSource = dataSource.sort(Ux.sorterDescFn('updatedAt'))
             return (
-                <Table {...table} dataSource={dataSource}/>
+                <Table {...table} dataSource={dataSource} footer={renderFooter(this)}/>
             )
         }, Ex.parserOfColor(UCA_NAME).control())
     }

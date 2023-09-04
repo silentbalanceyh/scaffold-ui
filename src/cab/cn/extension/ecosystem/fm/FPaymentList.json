@@ -43,5 +43,15 @@
                 "$format": "YYYY-MM-DD HH:mm:ss"
             }
         ]
+    },
+    "_report": {
+        "count": "已付:count笔",
+        "payed": "已付款：￥:amountPayed",
+        "amount": "应付款：￥:amount",
+        "waiting": "待付款：￥:amountWait",
+        "result": {
+            "finished": "已完成",
+            "waiting": "待完成"
+        }
     }
 }

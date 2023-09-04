@@ -81,6 +81,7 @@ class Component extends React.PureComponent {
             const inherit = Ex.yoAmbient(this);
             const tabs = rxTab(this, initValues);
 
+            inherit.$amount = initValues.amount;
             return (
                 <div>
                     <FDebtForm {...inherit} $inited={initValues}/>

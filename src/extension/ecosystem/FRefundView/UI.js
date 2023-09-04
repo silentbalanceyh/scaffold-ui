@@ -82,6 +82,8 @@ class Component extends React.PureComponent {
             const {items = [], payment = [], ...initValues} = $inited;
             const inherit = Ex.yoAmbient(this);
             const tabs = rxTab(this, initValues);
+
+            inherit.$amount = Math.abs(initValues.amount);
             return (
                 <div>
                     <FRefundForm {...inherit} $inited={{

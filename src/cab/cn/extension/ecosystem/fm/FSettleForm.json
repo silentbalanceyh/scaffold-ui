@@ -3,18 +3,28 @@
         "defaultActiveKey": "keyItems",
         "type": "card",
         "items": [
-            "结算明细,keyItems",
-            "关联单,keyRelated"
+            "结算明细,keyItems"
         ]
     },
     "_page": {
-        "Debt": "关联应收单",
-        "Refund": "关联退款单",
         "Pure": "付款明细"
     },
     "_form": {
+        "className": "ux_form settle_form",
         "columns": 3,
         "ui": [
+            [
+                {
+                    "metadata": "$button",
+                    "hidden": true,
+                    "optionJsx.extension": [
+                        "$opSave,保存,SUBMIT"
+                    ]
+                }
+            ],
+            [
+                "title=结算处理"
+            ],
             [
                 "serial,结算单号,,,aiMagic",
                 {
@@ -40,16 +50,6 @@
                     "optionJsx.config.boolean": true
                 },
                 {
-                    "metadata": "rounded,零头处理,,,aiMagic",
-                    "optionJsx.config.items": [
-                        "HALF,四舍五入",
-                        "FLOOR,零头舍弃",
-                        "CEIL,零头入进"
-                    ]
-                }
-            ],
-            [
-                {
                     "metadata": "updatedBy,结算人,,,aiMagic",
                     "optionJsx.config.user": {
                         "uri": "/api/user/:key",
@@ -64,8 +64,144 @@
                 }
             ],
             [
-                "comment,结算备注,24,,aiMagic"
+                {
+                    "metadata": "finishType,结账类型,8,,aiRadio",
+                    "optionJsx.config.items": [
+                        "STANDARD,标准结账",
+                        "RUN_UP,应收/退款"
+                    ],
+                    "optionJsx.depend.impact": {
+                        "reset": [
+                            "rounded",
+                            "runName",
+                            "runId",
+                            "payment"
+                        ]
+                    },
+                    "optionConfig.rules": [
+                        "required,请选择结账类型！"
+                    ]
+                },
+                "comment,备注信息,16,,,placeholder=（结算备注）"
+            ],
+            [
+                {
+                    "metadata": "runName,挂账单位,8,,aiListSelector,placeholder=（挂账单位）",
+                    "optionJsx.config": {
+                        "ajax": {
+                            "metadata": "POST,/api/customer/search,1,10,sorter=name`ASC",
+                            "params.criteria": {
+                                "sigma": "PROP:app.sigma",
+                                "type": "FIX:corporation",
+                                "": "OPERATOR:AND"
+                            }
+                        },
+                        "linker": {
+                            "name": "runName",
+                            "key": "runId",
+                            "contactName": "signName",
+                            "contactPhone": "signMobile"
+                        },
+                        "table": {
+                            "columns": [
+                                "code,客户编号",
+                                "name,名称",
+                                "title,标题",
+                                "contactPhone,联系电话",
+                                "contactName,签单人"
+                            ]
+                        },
+                        "validation": "请选择挂账单位！",
+                        "window": "选择挂账单位,选择,关闭,false,800,false",
+                        "search": {
+                            "name,c": "名称",
+                            "title,c": "标题"
+                        }
+                    },
+                    "optionJsx.depend.enabled": {
+                        "finishType": "RUN_UP"
+                    }
+                },
+                {
+                    "metadata": "signName,结算人/签单人,8,,,placeholder=（结算人姓名）",
+                    "optionConfig.rules": [
+                        "required,请填写结算人/签单人信息！"
+                    ],
+                    "optionJsx.depend.enabled": {
+                        "finishType": "RUN_UP"
+                    }
+                },
+                {
+                    "metadata": "signMobile,联系电话,8,,,placeholder=（结算人联系电话）",
+                    "optionConfig.rules": [
+                        "required,联系电话信息不可为空！"
+                    ],
+                    "optionJsx.depend.enabled": {
+                        "finishType": "RUN_UP"
+                    }
+                }
+            ],
+            [
+                {
+                    "metadata": "rounded,零头处理,16,,aiRadio",
+                    "optionJsx.config.items": [
+                        "HALF,四舍五入",
+                        "FLOOR,零头舍弃",
+                        "CEIL,零头入进"
+                    ],
+                    "optionJsx.depend.enabled": {
+                        "finishType": "STANDARD"
+                    }
+                }
+            ],
+            [
+                {
+                    "metadata": "payment,付款方式,24,,aiTableEditor",
+                    "optionJsx.depend.enabled": {
+                        "finishType": "STANDARD"
+                    },
+                    "optionJsx.config": {
+                        "format": {
+                            "type": "ARRAY",
+                            "keyField": "name"
+                        },
+                        "table": {
+                            "className": "ux_table_secondary",
+                            "columns": [
+                                {
+                                    "metadata": "name,付款码,ROW",
+                                    "width": 240,
+                                    "$config": {
+                                        "field": "aiSelect",
+                                        "jsx": {
+                                            "config": {
+                                                "datum": "source=pay.type,key=code,label=name"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "metadata": "amount,支付金额,ROW",
+                                    "$config": {
+                                        "field": "aiInput",
+                                        "jsx": {
+                                            "addonAfter": "￥"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            [
+                "title=明细详情"
             ]
-        ]
+        ],
+        "metadata": {
+            "error_notify": [
+                "finishType"
+            ]
+        }
     }
 }

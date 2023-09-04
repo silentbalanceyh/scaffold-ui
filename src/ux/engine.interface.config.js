@@ -27,10 +27,11 @@ const configScroll = ($table = {}, data = [], reference) =>
  * @memberOf module:config/zest
  * @param {Object|ReactComponent} reference React对应组件引用。
  * @param {Object} config 窗口配置专用数据。
+ * @param {Object} state 附加状态。
  * @return {Object} 返回处理好的窗口配置。
  */
-const configDialog = (reference, config = {}) =>
-    __Zs.configDialog(reference, config);
+const configDialog = (reference, config = {}, state) =>
+    __Zs.configDialog(reference, config, state);
 /**
  *
  * ## 「引擎」`Ux.configAnchor`

@@ -13,7 +13,7 @@ const Jsx = {
     ...__V4,
 }
 
-const configDialog = (reference, config = {}) => {
+const configDialog = (reference, config = {}, state) => {
     const $dialog = __Zn.aiExprWindow(config);
     /*
      * 使用解析结果来拷贝
@@ -29,8 +29,13 @@ const configDialog = (reference, config = {}) => {
     /*
      * onCancel按钮
      */
-    $dialog.onCancel = () =>
-        __Zn.of(reference).hide().done();
+    $dialog.onCancel = () => {
+        if (state) {
+            __Zn.of(reference).in(state).hide().done();
+        } else {
+            __Zn.of(reference).hide().done();
+        }
+    };
     // reference.?etState({$visible: false});
     $dialog.destroyOnClose = true;
     $dialog.maskClosable = false;

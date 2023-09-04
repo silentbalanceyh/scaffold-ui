@@ -79,18 +79,24 @@ const uiButton = (actions, executor = {}, reference) => {
         }
     })
 }
-const uiModal = (config = {}, fnChild, reference, state = {}) => {
-    const modal = __Ct.configDialog(reference, config);
+const uiModal = (config = {}, fnChild, reference, state) => {
+    const modal = __Ct.configDialog(reference, config, state);
     const dialog = __Zn.clone(modal);
     const {$visible = false} = reference.state;
     // v4
     dialog.open = $visible;
+    /*
+     * 此处针对 state 和 children 要执行特殊处理。
+     * 1. 若传入了 state 则要改写 dialog 中的关闭函数
+     * 2. 若没有传入 state 则只要子类处理就可以
+     * children 和 dialog 的关闭函数应该保持一致，子组件比窗口多一个 pRefresh = true
+     */
+    const stateChild = state ? {state} : {};
+    stateChild.pRefresh = true; // 关闭窗口时刷新界面
+
     // children 专用
     const attrs = {};
-    attrs.rxClose = __Br.rxCloseFn(reference, {
-        ...state,
-        pRefresh: true      // 关闭窗口时刷新界面
-    })
+    attrs.rxClose = __Br.rxCloseFn(reference, stateChild)
     // 初始值
     const {$inited} = reference.state;
     attrs.$inited = $inited;

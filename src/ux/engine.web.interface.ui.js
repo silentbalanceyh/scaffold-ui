@@ -30,10 +30,11 @@ const uiButton = (actions, executor = {}, reference) =>
  * @param config
  * @param fnChild
  * @param reference
+ * @param state
  * @returns {*}
  */
-const uiModal = (config = {}, fnChild, reference) =>
-    __Zs.uiModal(config, fnChild, reference);
+const uiModal = (config = {}, fnChild, reference, state) =>
+    __Zs.uiModal(config, fnChild, reference, state);
 /**
  * 「标准」`Ux.uiQrSearch`
  *

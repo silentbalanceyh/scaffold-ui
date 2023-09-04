@@ -1,6 +1,5 @@
-import React from 'react';
 import Ui from "ui";
-import {FSettleView} from 'ei';
+import {FSettleForm} from 'ei';
 import Ex from 'ex';
 import Ux from "ux";
 
@@ -17,7 +16,6 @@ export default Ui.smartList({
             "op.batch.edit",      // 按钮：批量编辑
             "op.batch.delete",    // 按钮：批量删除
             "op.submit.add",    // 内页：添加提交
-            "op.submit.save",   // 内页：编辑提交
             "op.submit.delete", // 内页：删除提交
             "op.submit.reset",  // 内页：重置
         ]
@@ -25,7 +23,7 @@ export default Ui.smartList({
 
     Form: {
         name: "FSettleView",
-        FormEdit: FSettleView
+        FormEdit: FSettleForm
     },
 
     componentInit: (reference) => {

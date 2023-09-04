@@ -23,9 +23,8 @@
         },
         "options": {
             "search.advanced": false,
-            "op.row.edit": false,
+            "op.row.edit": "处理结算",
             "op.row.delete": false,
-            "op.row.view": "查看详情",
             "tabs.edit": "待结算单据"
         },
         "query": {

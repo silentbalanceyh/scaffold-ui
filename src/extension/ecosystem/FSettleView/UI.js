@@ -18,7 +18,7 @@ const componentInit = (reference) => {
 
 const renderView = (reference, data = {}) => {
     const inherit = Ex.yoAmbient(reference);
-    if ("Debt" === data.linked) {
+    if ("DEBT" === data.linked) {
         inherit.$inited = data.record;
         return (
             <div>
@@ -26,7 +26,7 @@ const renderView = (reference, data = {}) => {
                 <FPaymentList {...inherit} data={data.payment}/>
             </div>
         )
-    } else if ("Refund" === data.linked) {
+    } else if ("REFUND" === data.linked) {
         const adjust = Ux.clone(data.record);
         adjust.amount = Math.abs(adjust.amount);
         inherit.$inited = adjust;
@@ -49,6 +49,7 @@ const renderView = (reference, data = {}) => {
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         componentInit(this)
     }
@@ -60,14 +61,15 @@ class Component extends React.PureComponent {
             let values = Ux.clone(initValues);
             values = Ex.inSettlement(values);
             const {record = {}} = values;
+            // 结算管理存在之后重新计算
             if (Ux.isEmpty(record)) {
                 // Pure
-                values.linked = "Pure";
+                values.linked = "DONE";
             } else {
                 if (0 < record.amount) {
-                    values.linked = "Debt";
+                    values.linked = "DEBT";
                 } else {
-                    values.linked = "Refund";
+                    values.linked = "REFUND";
                 }
             }
             const form = Ex.yoForm(this, null, values);

@@ -79,8 +79,7 @@ const uiButton = (actions, executor = {}, reference) => {
         }
     })
 }
-const uiModal = (configuration = {}, fnChild, reference) => {
-    const {state = {}, ...config} = configuration;
+const uiModal = (config = {}, fnChild, reference, state = {}) => {
     const modal = __Ct.configDialog(reference, config);
     const dialog = __Zn.clone(modal);
     const {$visible = false} = reference.state;

@@ -17,7 +17,7 @@
     },
     "_grid": {
         "module": {
-            "NAME": "结算单",
+            "NAME": "待结算",
             "MODULE": "settlement",
             "IDENTIFIER": "fm.settlement"
         },
@@ -26,7 +26,7 @@
             "op.row.edit": false,
             "op.row.delete": false,
             "op.row.view": "查看详情",
-            "tabs.edit": "结算单详情"
+            "tabs.edit": "待结算单据"
         },
         "query": {
             "projection": [],

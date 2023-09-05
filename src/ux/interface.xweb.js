@@ -307,9 +307,16 @@ const xtFormat = (internal = [], format) =>
 /**
  * 「标准」`Ux.xtRowAdd`
  *
- * 表格中的添加行函数（二维表结构）
+ * 表格中的添加行函数（二维表结构），新版本将此处的函数改成异步模式了，简单说：
+ * 函数操作完成之后直接返回 Promise，而不是像早期的出发函数返回 void，目前的返回值规划
+ *
+ * 1）若 data 是 Array 则直接返回
+ * 2）否则返回 null
+ *
+ * 此处主要是针对 reference.state.data 执行了变更，所以这一系列方法都是针对它的。
  *
  * @memberOf module:xt/zion
+ * @async
  * @param {Object|ReactComponent} reference React组件引用
  * @param {Object} record 记录专用数据
  * @param {Number} index 记录索引
@@ -321,9 +328,11 @@ const xtRowAdd = (reference, record, index) =>
  *
  * 「标准」`Ux.xtRowDel`
  *
- * 表格中的删除行函数（二维表结构）
+ * 表格中的删除行函数（二维表结构），新版本此处的函数改成了异步模式，简单说：
+ * 函数操作完成之后直接转换成 Promise，而不是早期的触发函数返回 void
  *
  * @memberOf module:xt/zion
+ * @async
  * @param {Object|ReactComponent} reference React组件引用
  * @param {Object} record 记录专用数据
  * @param {Number} index 记录索引

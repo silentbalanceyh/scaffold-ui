@@ -1,7 +1,10 @@
 import React from 'react';
 import {Checkbox} from 'antd';
 
-import __Zn from '../zero.uca.dependency';
+import __Zn from '../zero.uca.dependency'
+
+import Sk from 'skin';
+import './Cab.norm.scss';
 
 const UCA_NAME = "CheckJson";
 // =====================================================
@@ -59,8 +62,10 @@ class Component extends React.PureComponent {
             const {$source = []} = this.props;
             const attrs = __Zn.yoLimit(this.props);
             const WebField = __Zn.V4InputGroup;
+
+            const attrStyle = Sk.mixUca(UCA_NAME);
             return (
-                <WebField {...attrs} className={"web-check-json"}>
+                <WebField {...attrs} {...attrStyle}>
                     <Checkbox.Group options={$source}
                                     value={attrs.value ? Object.keys(attrs.value)
                                             .filter(item => attrs.value[item])

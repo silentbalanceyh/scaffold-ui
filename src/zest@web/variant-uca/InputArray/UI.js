@@ -4,6 +4,9 @@ import {Button, Input} from 'antd';
 
 import __Zn from '../zero.uca.dependency';
 
+import Sk from 'skin';
+import './Cab.norm.scss';
+
 const UCA_NAME = "InputArray";
 const componentInit = (reference) => {
     const {value} = reference.props;
@@ -43,6 +46,7 @@ const componentUp = (reference, virtualRef = {}) => {
 
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         componentInit(this);
     }
@@ -60,8 +64,10 @@ class Component extends React.PureComponent {
             for (let idx = 0; idx < $holder; idx++) {
                 input.push(idx);
             }
+
+            const attrs = Sk.mixUca(UCA_NAME);
             return (
-                <div className={"web-input-array"}>
+                <div {...attrs}>
                     {input.map(each => {
                         const key = `${id}-${each}`;
                         const value = data[each];

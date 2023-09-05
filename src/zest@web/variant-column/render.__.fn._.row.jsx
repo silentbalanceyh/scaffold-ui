@@ -18,7 +18,7 @@ const ON_CHANGE = {
         // 行记录设置，此处的属性为 config.field，外层传入的 columnIndex 值
         const valueChanged = __Zn.ambEvent(event);
         record = __Zn.clone(record);
-        record[config.field] = valueChanged;
+        record[config.fieldColumn] = valueChanged;
         /*
          * 按照当前行的基础数据在 value 中查找
          * 1. 查找数据源 reference.props.value
@@ -31,15 +31,12 @@ const ON_CHANGE = {
          */
         const {value = []} = reference.props;
         const $value = __Zn.clone(value);
-        const {
-            fieldCond = 'key',
-            fieldKey = 'key'
-        } = config;
-        let foundIndex = __Zn.elementIndex(value, fieldCond, record[fieldKey]);
-        if (0 <= foundIndex) {
-            $value[foundIndex] = record;
-        }
-        __Zn.fn(reference).onChange($value);
+        $value[config.index] = record;
+        // 内层 data 变更
+        __Zn.of(reference).in({data: $value}).handle(() => {
+            // 外层 onChange
+            __Zn.fn(reference).onChange($value);
+        })
     }
 }
 export default {
@@ -78,9 +75,9 @@ export default {
                         record,             // 行记录
                         text,               // 当前行值
                         config: {           // 所有配置
-                            ...$config,                 // 基础配置
-                            index,                      // 当前行索引
-                            field: column.dataIndex     // 列字段
+                            ...$config,                         // 基础配置
+                            index,                              // 当前行索引
+                            fieldColumn: column.dataIndex       // 列字段
                         }
                     }))
                 } else {

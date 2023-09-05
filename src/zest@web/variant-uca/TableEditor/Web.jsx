@@ -27,6 +27,7 @@ export default (reference) => {
     rest.render = (text, record, index) => {
         const {disabled = false} = reference.props;
         const {add = {}, remove = {}} = config;
+        const {data = []} = reference.state;
         return (
             <Button.Group>
                 <Tooltip title={add.tooltip}>
@@ -36,7 +37,7 @@ export default (reference) => {
                 </Tooltip>
                 <Tooltip title={remove.tooltip}>
                     <Button icon={__Zn.v4Icon(remove.icon)}
-                            disabled={disabled}
+                            disabled={disabled || 1 >= data.length}
                             onClick={removeFn(reference, record, index)}/>
                 </Tooltip>
             </Button.Group>

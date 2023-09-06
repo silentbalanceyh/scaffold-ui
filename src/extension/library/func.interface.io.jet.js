@@ -51,10 +51,49 @@ const inJob = (mission = {}) =>
  */
 const outJob = (params = {}) =>
     __Zp.outJob(params);
+/**
+ * ## 「提交」`Ex.verifyError`
+ *
+ * 提交流程中的异常信息处理，不同执行流程的异常信息处理不同。
+ *
+ * ### 1. 引用查询
+ *
+ * - 优先考虑 reference 引用的核心异常信息提取流程。
+ * - 再考虑 reference 的父引用核心异常信息提取流程。
+ *
+ * ### 2. 异常提取流程
+ *
+ * - 「ERR」若 key 不是 String 则抛出异常：
+ * - 「ERR」若 `reference/ref` 中绑定的异常信息不存在，即缺少了 `_modal` 节点配置
+ * - 二选一的流程
+ *      - 如果 `_modal.error` 中配置了 `error=<key>` 对应节点的异常信息，则以提取配置为第一优先级。
+ *      - 如果 `_modal.error` 中提取失败，则直接使用 `message=<key>`。
+ *
+ * 优先级的判定在于使用者根据自身实际情况配置，简单说您可以优先考虑配置项的键，其次考虑配置项的消息内容。简单说您可以按照如下优先级：
+ *
+ * - 若您的配置中配了内容，则直接传 key 就好。
+ * - 若您的配置中没有配置任何内容，则考虑使用 key 作为消息内容（不得已而处理，或编程直接调用）。
+ *
+ * ### 3. 响应处理
+ *
+ * 响应支持两种模式：同步/异步
+ *
+ * - 若使用同步模式，则直接返回 String 类型的字符串消息内容。
+ * - 若使用异步模式，则直接返回 Promise.reject({data: message})的Promise对象。
+ *
+ * @memberOf module:in/utter
+ * @param reference React组件引用
+ * @param {String} error 异常信息
+ * @param {Boolean} async 异步还是同步
+ */
+const outError = (reference, error, async) =>
+    __Zu.outError(reference, error, async);
 export default {
     // in / out
     inApi,
     inJob,
     outApi,
     outJob,
+    // verify
+    outError,
 }

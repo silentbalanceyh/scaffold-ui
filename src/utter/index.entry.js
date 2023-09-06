@@ -21,6 +21,7 @@ import func_kind_a4_menu_item from './kind.fn.a4.menu.item';
 import func_rapid_sex_ex_action from './rapid.fn.sex.ex.action';
 
 import func_levy_in_economy_remote from './levy.fn.in.economy.remote';
+import func_levy_out_request from './levy.fn.out.request';
 
 import func_pedestal_map_pipeline from './pedestal.fn.map.pipeline';
 import func_pedestal_to_atom from './pedestal.fn.to.atom';
@@ -47,6 +48,7 @@ export default {
      * @module in/utter
      */
     ...func_levy_in_economy_remote, // $DOC
+    ...func_levy_out_request,    // $DOC
     /**
      * # 扩展底座：一阶状态函数
      *

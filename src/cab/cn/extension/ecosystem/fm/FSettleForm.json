@@ -34,9 +34,10 @@
                 {
                     "metadata": "linked,关联单据,,,aiMagic",
                     "optionJsx.config.items": [
-                        "Pure,直接结算:check-circle,16:#268941",
-                        "Debt,含应收:link,16:#ff8626",
-                        "Refund,含退款:link,16:#ff686b"
+                        "DONE,直接结算:check-circle,16:#268941",
+                        "DEBT,含应收:link,16:#ff8626",
+                        "REFUND,含退款:link,16:#ff686b",
+                        "PENDING,未结算:exclamation-circle,16:#0a7bed"
                     ]
                 }
             ],

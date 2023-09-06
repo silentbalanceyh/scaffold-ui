@@ -1,11 +1,36 @@
 import Ux from 'ux';
 import Ex from "ex";
 
+const verifyPayment = (reference, params = {}) => {
+    // 支付手段
+    const finishType = params.finishType;
+    if("STANDARD" === finishType){
+        // 标准结账，标准结账验证 payment
+        return Ex.inPrePay(reference, params, {}, true);
+    }else{
+        // 延迟（应收/退款）
+        return Ux.promise(params);
+    }
+}
 export default {
     actions: {
         $opSave: (reference) => (params) => {
-            console.log(params);
-            return Promise.reject("Hello")
+            // 支付手段
+            const $params = Ux.clone(params);
+
+            // 验证表单
+            const request = {
+                ...$params,
+                amount: Math.abs($params.amount)
+            }
+            return verifyPayment(reference, request)
+                .then(nil => Ux.ajaxPut("/api/settle/finish/:key", {
+                    key: $params.key,
+                    $body: $params
+                }))
+                .then(data => Ux.ajaxDialog(reference, {data, key: "saved"}))
+                .then(response => Ux.of(reference).close(response))
+                .catch(error => Ux.ajaxError(reference, error));
         }
     },
     yoValue: (reference) => {

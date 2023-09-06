@@ -203,6 +203,20 @@
             "error_notify": [
                 "finishType"
             ]
+        },
+        "hidden": [
+            "key",
+            "runId"
+        ]
+    },
+    "_modal": {
+        "error": {
+            "payway": "请检查您的付款方式，付款方式不可为空！",
+            "payment": "请检查您填写的付款方式信息，信息不全！",
+            "pay": "请检查您填写的付款方式中的金额，金额信息和总明细金额不匹配！"
+        },
+        "success": {
+            "saved": "恭喜！您的结算单处理完成，单号:serial。"
         }
     }
 }

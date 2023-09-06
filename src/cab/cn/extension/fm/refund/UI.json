@@ -19,7 +19,7 @@
             "criteria": {
                 "sigma": "PROP:app.sigma",
                 "": true,
-                "amount,<": 0,
+                "type": "FIX:REFUND",
                 "finished": false
             }
         },
@@ -41,7 +41,7 @@
                     "title": "操作",
                     "dataIndex": "key",
                     "fixed": "left",
-                    "width": 80,
+                    "width": 120,
                     "$render": "EXECUTOR",
                     "$option": [
                         {

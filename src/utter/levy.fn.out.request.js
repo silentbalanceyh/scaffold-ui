@@ -21,7 +21,7 @@ const __verifyMessage = (reference, key) => {
     }
     return message;
 }
-const outError = (reference, error, async = false) => {
+const outMessage = (reference, error, async = false) => {
     let message = __verifyMessage(reference, error);
     if (!message) {
         const ref = Ux.onReference(reference, 1);
@@ -34,7 +34,7 @@ const outError = (reference, error, async = false) => {
     }
 }
 
-const __verifyFinal = (reference, data, {pAsync, pFlow = false}) => {
+const outError = (reference, data, {pAsync, pFlow = false}) => {
     if (pAsync) {
         // 异步
         return data;
@@ -73,15 +73,15 @@ const inPrePay = (reference, params = {}, config = {}, pAsync = false) => {
     } = config;
     // 检查 payment.length
     if (0 === payment.length) {
-        const data = outError(reference, eEmpty, pAsync);
-        return __verifyFinal(reference, data, {pFlow, pAsync});
+        const data = outMessage(reference, eEmpty, pAsync);
+        return outError(reference, data, {pFlow, pAsync});
     }
     // 检查 payment 中的 name / amount
     let sum = 0;
     for (let idx = 0; idx < payment.length; idx++) {
         if (!payment[idx].name || !payment[idx].amount) {
-            const data = outError(reference, ePay, pAsync);
-            return __verifyFinal(reference, data, {pFlow, pAsync});
+            const data = outMessage(reference, ePay, pAsync);
+            return outError(reference, data, {pFlow, pAsync});
         }
         sum += Ux.valueFloat(payment[idx].amount, 0.0, pDigit);
     }
@@ -92,12 +92,13 @@ const inPrePay = (reference, params = {}, config = {}, pAsync = false) => {
     const min = Math.ceil(sum - 1);
     const max = Math.floor(sum + 1);
     if (amount < min || amount > max) {
-        const data = outError(reference, eAmount, pAsync);
-        return __verifyFinal(reference, data, {pFlow, pAsync});
+        const data = outMessage(reference, eAmount, pAsync);
+        return outError(reference, data, {pFlow, pAsync});
     }
     return pAsync ? Promise.resolve({}) : false;
 }
 export default {
+    outMessage,
     outError,
     inPrePay
 }

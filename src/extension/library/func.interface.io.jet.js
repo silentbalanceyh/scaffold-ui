@@ -52,7 +52,7 @@ const inJob = (mission = {}) =>
 const outJob = (params = {}) =>
     __Zp.outJob(params);
 /**
- * ## 「提交」`Ex.verifyError`
+ * ## 「提交」`Ex.outMessage`
  *
  * 提交流程中的异常信息处理，不同执行流程的异常信息处理不同。
  *
@@ -86,8 +86,30 @@ const outJob = (params = {}) =>
  * @param {String} error 异常信息
  * @param {Boolean} async 异步还是同步
  */
-const outError = (reference, error, async) =>
-    __Zu.outError(reference, error, async);
+const outMessage = (reference, error, async) =>
+    __Zu.outMessage(reference, error, async);
+/**
+ * ## 「提交」`Ex.outError`
+ *
+ * ### 同步模式
+ *
+ * ```js
+ * Ex.outError(reference, "xxx", { pFlow: true });
+ * ```
+ *
+ * ### 异步模式
+ * ```js
+ * Ex.outError(reference, "xxx", { pAsync: true });
+ * ```
+ *
+ * @memberOf module:in/utter
+ * @param reference
+ * @param error
+ * @param config
+ * @return {boolean}
+ */
+const outError = (reference, error, config) =>
+    __Zp.outError(reference, error, config);
 export default {
     // in / out
     inApi,
@@ -95,5 +117,6 @@ export default {
     outApi,
     outJob,
     // verify
+    outMessage,
     outError,
 }

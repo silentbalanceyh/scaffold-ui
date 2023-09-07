@@ -54,6 +54,7 @@ export {default as Graphic2} from './web@Graphic2/UI';
 export {default as NavSwallow} from './web@NavSwallow/UI';
 export {default as Navigation} from './web@Navigation/UI';
 export {default as PagerHeader} from './web@Navigation/UI';       // 旧版本
+export {default as DocViewer} from './web@DocViewer/UI';
 // row组件
 export {default as RowStar} from './web@RowStar/UI';
 // 新版

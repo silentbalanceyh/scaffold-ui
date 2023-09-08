@@ -96,6 +96,7 @@ function getWebpackAliases(options = {}) {
             environment: path.resolve(__dirname, "../src", "environment"),      // Environment                          标准环境包
 
             // Zero Framework Extension Library
+            eca: path.resolve(__dirname, "../src", "extension/connect"),        // 第三方直接扩展库
             oi: path.resolve(__dirname, "../src", "extension/eclat"),           // Origin X Interface                   「UCA」配置组件
             ei: path.resolve(__dirname, "../src", "extension/ecosystem"),       // Extension Interface                  「UCA」扩展组件
             ex: path.resolve(__dirname, "../src", "extension/library"),         // Extension X                          「Tool」扩展库

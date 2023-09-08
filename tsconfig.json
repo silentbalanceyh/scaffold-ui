@@ -51,9 +51,6 @@
             "ex": [
                 "src/extension/library/"
             ],
-            "eca": [
-                "src/extension/connect/"
-            ],
             "ui": [
                 "src/ui/"
             ],

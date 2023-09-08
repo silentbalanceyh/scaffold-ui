@@ -88,10 +88,7 @@ function getWebpackAliases(options = {}) {
              */
 
             lang: path.resolve(__dirname, "../src", "cab"),                     // Language                             资源包，绑定环境变量 Z_LANGUAGE
-
-
-            // 「对外开放」-----------------------------------------------------------------------------------------------
-            "oua-doc-viewer": path.resolve(__dirname, "../src", "extension/connect/react-doc-viewer"),                  // 第三方直接扩展库
+            
             // 「对外开放」-----------------------------------------------------------------------------------------------
             // Zero Framework Core Library
             web: path.resolve(__dirname, "../src", "economy"),                  // Economy                              「UCA」标准组件包

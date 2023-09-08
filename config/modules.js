@@ -89,6 +89,9 @@ function getWebpackAliases(options = {}) {
 
             lang: path.resolve(__dirname, "../src", "cab"),                     // Language                             资源包，绑定环境变量 Z_LANGUAGE
 
+
+            // 「对外开放」-----------------------------------------------------------------------------------------------
+            "oua-doc-viewer": path.resolve(__dirname, "../src", "extension/connect/react-doc-viewer"),                  // 第三方直接扩展库
             // 「对外开放」-----------------------------------------------------------------------------------------------
             // Zero Framework Core Library
             web: path.resolve(__dirname, "../src", "economy"),                  // Economy                              「UCA」标准组件包
@@ -96,7 +99,6 @@ function getWebpackAliases(options = {}) {
             environment: path.resolve(__dirname, "../src", "environment"),      // Environment                          标准环境包
 
             // Zero Framework Extension Library
-            eca: path.resolve(__dirname, "../src", "extension/connect"),        // 第三方直接扩展库
             oi: path.resolve(__dirname, "../src", "extension/eclat"),           // Origin X Interface                   「UCA」配置组件
             ei: path.resolve(__dirname, "../src", "extension/ecosystem"),       // Extension Interface                  「UCA」扩展组件
             ex: path.resolve(__dirname, "../src", "extension/library"),         // Extension X                          「Tool」扩展库

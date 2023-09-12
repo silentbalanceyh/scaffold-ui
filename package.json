@@ -89,6 +89,7 @@
         "@antv/x6-plugin-dnd": "^2.0.6",
         "@antv/x6-plugin-stencil": "^2.1.4",
         "@antv/x6-react-components": "^2.0.8",
+        "@onlyoffice/document-editor-react": "^1.3.0",
         "antd": "5.8.6",
         "async-validator": "^4.2.5",
         "bpmn-js": "^14.0.0",

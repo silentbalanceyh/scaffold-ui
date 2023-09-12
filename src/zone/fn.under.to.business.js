@@ -31,6 +31,16 @@ const toKey = (key, assist = true) => {
         return `$t_${key.replace(/\./g, '_')}`;
     }
 };
+const toColor = (current, mode = "KFC_8") => {
+    const colorArray = __WT.THEME[mode];
+    if (undefined === current) {
+        const index = __RAND.randomInteger(0, colorArray.length);
+        return colorArray[index];
+    } else {
+        const index = current % colorArray.length;
+        return colorArray[index];
+    }
+};
 
 const toFileSize = (value, unit) => {
     const normalize = __V.valueFloat(value, 0.0);
@@ -49,16 +59,6 @@ const toFileSize = (value, unit) => {
         return result;
     }
 }
-const toColor = (current, mode = "KFC_8") => {
-    const colorArray = __WT.THEME[mode];
-    if (undefined === current) {
-        const index = __RAND.randomInteger(0, colorArray.length);
-        return colorArray[index];
-    } else {
-        const index = current % colorArray.length;
-        return colorArray[index];
-    }
-};
 export default {
     toPagination,
     toMessage,

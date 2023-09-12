@@ -1,0 +1,8 @@
+.uca{
+  &_DocViewer{
+    overflow: scroll;
+    .uca_doc_container{
+      min-width: 960px;
+    }
+  }
+}

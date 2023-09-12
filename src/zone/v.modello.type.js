@@ -77,5 +77,10 @@ export default {
         OP: "OP",       // 静态执行专用，通常：前端 -> 后端调用，identifier
         ATOM: "ATOM",   // 动态执行，一般访问 UI_OP，control
         FLOW: "FLOW",   // 工作流调用
+    },
+    OFFICE_TYPE: {        // 后缀 -> 类型
+        // Word
+        "doc": "word",
+        "docx": "word"
     }
 }

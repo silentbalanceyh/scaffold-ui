@@ -67,4 +67,8 @@ export default {
     // ADD / EDIT / SEARCH / DESIGN
     FORM_MODE: __Zn.Env.FORM_MODE,
     XT_FORMAT: __Zn.Env.XT_FORMAT,
+    // DOC_SERVER
+    DOC_TOKEN: __Zn.Env.DOC_TOKEN,
+    DOC_THEME: __Zn.Env.DOC_THEME,
+    DOC_SERVER: __Zn.Env.DOC_SERVER,
 }

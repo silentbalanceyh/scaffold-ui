@@ -14,4 +14,8 @@ export default {
         BUS_M_6: ["#FABD35", "#ED54A0", "#BC2BDB", "#6A52E1", "#059BC4", "#04AFB7"],
         BUS_H_6: ["#F7AE0E", "#CB4DA3", "#A71BC4", "#5944C4", "#0681A2", "#0A979E"],
     },
+    LOCALE_DOC: {
+        cn: "zh-CN",
+        en: "en",       // 默认
+    }
 }

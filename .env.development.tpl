@@ -12,11 +12,14 @@ WSD_OK=false
 Z_ENDPOINT=http://ox.engine.cn:7085
 # 「后端」Z_APP 对应后端 X_APP 中的 name 配置
 Z_APP=app.micro.scaffold
+
+# ------------------- Office ---------------
 # OnlyOffice Docs
 Z_DOC_SERVER=http://ox.office.cn:5600
-# OnlyOffice Secret
-Z_DOC_SECRET=XXXXXX
-
+# OnlyOffice Token
+# Z_DOC_TOKEN=FYkOV6zCWKipMi7lX9KJwEeUyBdCuI9W
+# OnlyOffice
+# Z_DOC_THEME=theme-dark
 # ------------------- 业务基础配置 ---------------
 # Z_TITLE 头部标题
 Z_TITLE=测试系统

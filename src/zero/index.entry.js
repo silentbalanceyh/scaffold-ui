@@ -1,3 +1,5 @@
+import func_office_index from './office.index';
+
 import func_rapid_sex_batch from './rapid.fn.sex.batch';
 import func_rapid_sex_callback from './rapid.fn.sex.callback';
 import func_rapid_sex_configuration from './rapid.fn.sex.configuration';
@@ -15,6 +17,7 @@ import func_topology_x6o_on_bind from './topology.fn.x6o.on.bind';
 import func_zero_rx_etat_critical from './zero.fn.rx.etat.critical';
 
 export default {
+    ...func_office_index,           // Office
     /**
      * # Zero：快速开发
      *

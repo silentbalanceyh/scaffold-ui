@@ -1,40 +1,42 @@
 import Ux from 'ux';
 
-import Cfg from './config';
 const __ajaxConfiguration = (fileUrl, record = {}, reference) => {
-    if(!Ux.Env.DOC_SERVER){
+    if (!Ux.Env.DOC_SERVER) {
         console.error("请配置 Z_DOC_SERVER");
         return Ux.promise({$error: "Z_DOC_SERVER environment variable missed! "});
     }
     // 参数构造优先
     const parameters = {};
-    return Ux.ajaxDownload(fileUrl, {})
-        .then(blob => {
-            parameters.blob = blob;
-            parameters.record = record;
-            return Ux.promise(parameters);
-        })
-        /*
-         * documentType: "???",
-         * token: "???",
-         * height: "???",
-         * width: "???"
-         */
-        .then(nil => Cfg.configure({}, parameters, reference))
-        /*
-         * document: {
-         *     "fileType": "???",
-         *     "key": "???",
-         *     "title": "???.docx",
-         *     "url": "???"
-         * }
-         */
-        .then(configData => Cfg.configDocument(configData, parameters, reference))
-        /*
-         * editorConfig: {
-         * }
-         */
-        .then(configData => Cfg.configEditor(configData, parameters, reference));
+    return Ux.ajaxDownload(fileUrl, {}).then(blob => {
+        parameters.blob = blob;
+        parameters.record = record;
+        parameters.reference = reference;
+        return Ux.promise({})
+            /*
+             * documentType: "???",
+             * token: "???",
+             */
+            .then(configData => Ux.orkConfig(configData, parameters))
+            /*
+             * width:
+             * height:
+             */
+            .then(configData => Ux.orkPage(configData, parameters))
+            /*
+             * document: {
+             *     "fileType": "???",
+             *     "key": "???",
+             *     "title": "???.docx",
+             *     "url": "???"
+             * }
+             */
+            .then(configData => Ux.orkDocument(configData, parameters))
+            /*
+             * editorConfig: {
+             * }
+             */
+            .then(configData => Ux.orkEditor(configData, parameters));
+    });
 }
 const componentInit = (reference) => {
     const {data} = reference.props;

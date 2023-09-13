@@ -1,4 +1,4 @@
-import __Zn from './zero.module.dependency';
+import __Zn from './zero.office.dependency';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (configuration = {}, parameters = {}) => {

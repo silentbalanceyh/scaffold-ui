@@ -1,4 +1,4 @@
-import func_office_index from './office.index';
+import func_office_index from './variant-office';
 
 import func_rapid_sex_batch from './rapid.fn.sex.batch';
 import func_rapid_sex_callback from './rapid.fn.sex.callback';

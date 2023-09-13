@@ -1,5 +1,5 @@
-import __Zn from './zero.module.dependency';
-
+import __Zn from './zero.office.dependency';
+import orkMode from './office.@fn.ork.mode';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (configuration = {}, parameters = {}) => {
     const editorConfig = configuration.editorConfig ? configuration.editorConfig : {};
@@ -20,5 +20,7 @@ export default (configuration = {}, parameters = {}) => {
     }
 
     configuration.editorConfig = editorConfig;
-    return __Zn.promise(configuration);
+    return __Zn.promise(configuration)
+        // pView = true
+        .then(configData => orkMode(configData, parameters));
 }

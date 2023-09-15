@@ -7,36 +7,48 @@ const __ajaxConfiguration = (fileUrl, record = {}, reference) => {
     }
     // 参数构造优先
     const parameters = {};
-    return Ux.ajaxDownload(fileUrl, {}).then(blob => {
-        parameters.blob = blob;
-        parameters.record = record;
-        parameters.reference = reference;
-        return Ux.promise({})
-            /*
-             * documentType: "???",
-             * token: "???",
-             */
-            .then(configData => Ux.orkConfig(configData, parameters))
-            /*
-             * width:
-             * height:
-             */
-            .then(configData => Ux.orkPage(configData, parameters))
-            /*
-             * document: {
-             *     "fileType": "???",
-             *     "key": "???",
-             *     "title": "???.docx",
-             *     "url": "???"
-             * }
-             */
-            .then(configData => Ux.orkDocument(configData, parameters))
-            /*
-             * editorConfig: {
-             * }
-             */
-            .then(configData => Ux.orkEditor(configData, parameters));
-    });
+    parameters.record = record;
+    parameters.reference = reference;
+    // eslint-disable-next-line
+    {
+        parameters.pView = true;    // 简易模式
+    }
+    return Ux.promise({})
+        /*
+         * documentType: "???",
+         * token: "???",
+         */
+        .then(configData => Ux.orkConfig(configData, parameters))
+        /*
+         * width:
+         * height:
+         */
+        .then(configData => Ux.orkPage(configData, parameters))
+        /*
+         * document: {
+         *     "fileType": "???",
+         *     "key": "???",
+         *     "title": "???.docx",
+         *     "url": "???"
+         * }
+         */
+        .then(configData => Ux.orkDocument(configData, parameters))
+        /*
+         * editorConfig: {
+         * }
+         */
+        .then(configData => Ux.orkEditor(configData, parameters))
+        /*
+         * token 申请
+         */
+        .then(configData => __ajaxToken(configData, parameters))
+}
+
+const __ajaxToken = (configData = {}, parameters) => {
+    return Ux.ajaxPost("/api/doc/token", configData).then(response => {
+        configData.token = response.access_token;
+        return Ux.promise(configData);
+    })
 }
 const componentInit = (reference) => {
     const {data} = reference.props;
@@ -64,6 +76,28 @@ const componentInit = (reference) => {
         Ux.of(reference).in(state).ready().done();
     });
 }
+
+const onLoadComponentError = (reference) => (errorCode, errorDescription) => {
+    switch (errorCode) {
+        case -1:
+            // Unknown error loading component
+            console.error("未知错误，组件加载失败！", errorDescription);
+            break;
+        case -2:
+            // Error load DocsAPI from http://document-server/
+            console.error("文档服务加载失败！", errorDescription);
+            break;
+        case -3:
+            // DocsAPI is not defined
+            console.error("API 未定义", errorDescription);
+            break;
+        default:
+            // Can not capture
+            console.error("未知错误！", errorCode, errorDescription);
+            break;
+    }
+}
 export default {
-    componentInit
+    componentInit,
+    onLoadComponentError
 }

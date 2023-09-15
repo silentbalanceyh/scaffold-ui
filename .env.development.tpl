@@ -16,8 +16,6 @@ Z_APP=app.micro.scaffold
 # ------------------- Office ---------------
 # OnlyOffice Docs
 Z_DOC_SERVER=http://ox.office.cn:5600
-# OnlyOffice Token
-# Z_DOC_TOKEN=FYkOV6zCWKipMi7lX9KJwEeUyBdCuI9W
 # OnlyOffice
 # Z_DOC_THEME=theme-dark
 # ------------------- 业务基础配置 ---------------

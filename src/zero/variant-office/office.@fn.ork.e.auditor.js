@@ -1,12 +1,12 @@
 import __Zn from './zero.office.dependency';
-
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (configuration = {}, parameters = {}) => {
-    const {
-        record = {}     // X_ATTACHMENT 记录
-    } = parameters;
+    const editorConfig = configuration?.editorConfig ? configuration?.editorConfig : {};
 
-    // documentType, 文件类型解析
-    configuration.documentType = __Zn.Env.OFFICE_TYPE[record.extension];
+    const user = __Zn.isLogged();
+    editorConfig.user = {
+        id: user.key,
+        name: user.username,
+    }
     return __Zn.promise(configuration);
 }

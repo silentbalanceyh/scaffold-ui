@@ -1,5 +1,6 @@
 import { DocumentEditor } from "@onlyoffice/document-editor-react";
 import Ux from 'ux';
+import Op from './Op';
 const renderEditor = (reference) => {
     const { $config = {}} = reference.state;
 
@@ -12,7 +13,9 @@ const renderEditor = (reference) => {
         <DocumentEditor {...attrs}
                         events_onDocumentReady={event => {
                             console.log("Finished");
-                        }}/>
+                        }}
+                        onLoadComponentError={Op.onLoadComponentError(reference)}
+        />
     )
 }
 export default {

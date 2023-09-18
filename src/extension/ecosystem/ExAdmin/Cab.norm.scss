@@ -12,5 +12,11 @@
     .ant-pro-layout-apps-popover {
       left: $uni_font * 0.5 !important;
     }
+
+    // 宽度临时解决方案
+    // 参考：https://github.com/ant-design/pro-components/issues/7695
+    .ant-pro-grid-content.ant-pro-grid-content-wide {
+      max-width: 100% !important;
+    }
   }
 }

@@ -1,11 +1,18 @@
 .uex {
   &_ExAdmin {
     // layout = mix
-    .mix_menu {
+    .mix_menu.ant-menu-inline-collapsed {
+      .ant-menu-item {
+        // 修正菜单收缩之后图标错位的问题
+        padding-inline-start: 0;
+      }
     }
 
-    .hook_menu_icon {
-      // margin-right: 0;
+    .mix_menu {
+
+      .hook_menu_icon {
+        margin-right: 0;
+      }
     }
 
     // 临时解决方案

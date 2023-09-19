@@ -375,6 +375,9 @@ const ICON_V3_LEGACY = {
     "info-circle-o": "InfoCircle",
     "exclamation-circle-o": "ExclamationCircle"
 }
+const ICON_V4_NEW = {
+    "partition": "Partition"
+}
 export default {
     ICON_THEME: {
         OUTLINED: "Outlined",
@@ -384,6 +387,8 @@ export default {
     ICON_PREFIX: {
         // V4 Definition
         ...ICON_V4_NORM,
+        // V4 New
+        ...ICON_V4_NEW,
         // V3 Legacy
         ...ICON_V3_LEGACY,
     }

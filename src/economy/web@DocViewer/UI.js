@@ -1,5 +1,4 @@
 import React from 'react';
-import {Row, Col} from 'antd';
 
 import Op from './Op';
 import Ux from 'ux';
@@ -21,14 +20,7 @@ class Component extends React.PureComponent {
             const attrs = Sk.mixUca(UCA_NAME);
             return (
                 <div {...attrs}>
-                    <Row>
-                        <Col span={15}>
-                            {Jsx.renderEditor(this)}
-                        </Col>
-                        <Col span={9}>
-
-                        </Col>
-                    </Row>
+                    {Jsx.renderEditor(this)}
                 </div>
             );
         }, {name: UCA_NAME, logger: true})

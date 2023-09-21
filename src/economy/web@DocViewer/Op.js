@@ -1,5 +1,5 @@
 import Ux from 'ux';
-
+import onEvent from './Op.event';
 const __ajaxConfiguration = (fileUrl, record = {}, reference) => {
     if (!Ux.Env.DOC_SERVER) {
         console.error("请配置 Z_DOC_SERVER");
@@ -10,8 +10,12 @@ const __ajaxConfiguration = (fileUrl, record = {}, reference) => {
     parameters.record = record;
     parameters.reference = reference;
     // eslint-disable-next-line
+    const {config = {}} = reference.props;
     {
-        parameters.pView = true;    // 简易模式
+        parameters.pView = true;                        // 简易模式
+
+        const {pAdjust = 210} = config;
+        parameters.pAdjust = pAdjust;                   // 高度修正
     }
     return Ux.promise({})
         /*
@@ -99,5 +103,6 @@ const onLoadComponentError = (reference) => (errorCode, errorDescription) => {
 }
 export default {
     componentInit,
-    onLoadComponentError
+    onLoadComponentError,
+    onEvent,
 }

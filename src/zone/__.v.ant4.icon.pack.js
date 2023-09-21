@@ -376,7 +376,8 @@ const ICON_V3_LEGACY = {
     "exclamation-circle-o": "ExclamationCircle"
 }
 const ICON_V4_NEW = {
-    "partition": "Partition"
+    "partition": "Partition",
+    "send": "Send"
 }
 export default {
     ICON_THEME: {

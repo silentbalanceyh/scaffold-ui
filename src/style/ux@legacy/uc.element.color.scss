@@ -25,7 +25,19 @@
     @include unit_ant_button($color_op_pink, $color_op_pink_hover);
   }
 
+  &_peach {
+    @include unit_ant_button($color_op_peach, $color_op_peach_hover);
+  }
+
   &_brown {
     @include unit_ant_button($color_op_brown, $color_op_brown_hover);
+  }
+
+  &_yellow {
+    @include unit_ant_button($color_op_yellow, $color_op_yellow_hover);
+  }
+
+  &_gold {
+    @include unit_ant_button($color_op_gold, $color_op_gold_hover);
   }
 }

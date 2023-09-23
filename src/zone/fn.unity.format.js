@@ -129,7 +129,7 @@ const formatNumber = (value, length = 3) => {
     for (let idx = 0; idx < length; idx++) {
         format += `0`;
     }
-    return numeral(value).format(`${format}.0`);
+    return numeral(value).format(format);
 }
 const formatTpl = (data, tpl = {}) => {
     if (data) {

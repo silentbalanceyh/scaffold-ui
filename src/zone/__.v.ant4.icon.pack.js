@@ -377,8 +377,10 @@ const ICON_V3_LEGACY = {
 }
 const ICON_V4_NEW = {
     "partition": "Partition",
-    "send": "Send"
+    "send": "Send",
+    "function": "Function"
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     ICON_THEME: {
         OUTLINED: "Outlined",

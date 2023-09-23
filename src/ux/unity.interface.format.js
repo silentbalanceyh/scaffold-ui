@@ -15,7 +15,16 @@ import __Zn from 'zone';
  */
 const formatExpr = (input = "", params, keep = false) =>
     __Zn.formatExpr(input, params, keep);
-
+/**
+ * ## 「标准」`Ux.formatNumber`
+ *
+ * @memberOf module:format/zone
+ * @param input
+ * @param length
+ * @return {String} 格式化表达式过后的值。
+ */
+const formatNumber = (input, length = 3) =>
+    __Zn.formatNumber(input, length);
 /**
  * ## 「标准」`Ux.formatQuery`
  *
@@ -94,11 +103,13 @@ const formatPercent = (value) =>
  */
 const formatTpl = (data, tpl = {}) =>
     __Zn.formatTpl(data, tpl);
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     formatTpl,
     // 直接根据 tpl 将数据执行转换
     formatCurrency,
     formatPercent,
+    formatNumber,
     // 转换成 Object
     formatObject,
     formatExpr,

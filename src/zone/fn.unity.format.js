@@ -114,13 +114,23 @@ const formatObject = (expr = "", appendKey = false) => {
     return attr;
 };
 const formatCurrency = (value) => {
-    numeral.defaultFormat(`0,0.00`);
-    return numeral(value).format();
+    // numeral.defaultFormat(`0,0.00`);
+    return numeral(value).format(`0,0.00`);
 };
 const formatPercent = (value) => {
-    numeral.defaultFormat("0.00%");
-    return numeral(value).format();
+    // numeral.defaultFormat("0.00%");
+    return numeral(value).format(`0.00%`);
 };
+const formatNumber = (value, length = 3) => {
+    if (isNaN(value)) {
+        return 0;
+    }
+    let format = ``;
+    for (let idx = 0; idx < length; idx++) {
+        format += `0`;
+    }
+    return numeral(value).format(`${format}.0`);
+}
 const formatTpl = (data, tpl = {}) => {
     if (data) {
         const $tpl = __A.clone(tpl);
@@ -137,6 +147,7 @@ export default {
     // 直接根据 tpl 将数据执行转换
     formatCurrency,
     formatPercent,
+    formatNumber,
     // 转换成 Object
     formatObject,
     formatExpr,

@@ -1,5 +1,13 @@
 .uex{
   &_ExTag{
+    &_Dialog{
+      .ux_form{
+        .ant-radio-wrapper{
+          width: 23%;
+          line-height: 27px;
+        }
+      }
+    }
     line-height: $uni_font * 2.4;
     .prefix{
       font-weight: bold;

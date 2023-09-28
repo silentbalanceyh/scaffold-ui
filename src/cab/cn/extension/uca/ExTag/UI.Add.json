@@ -5,15 +5,60 @@
         "ui": [
             [
                 {
-                    "metadata": "name,标签名称,14",
+                    "metadata": "name,标签名称,14,,,placeholder=（标签名称尽量短）",
                     "optionConfig.rules": [
                         "required,请输入标签名，标签名不可为空！"
                     ]
                 }
             ],
             [
+                {
+                    "metadata": "color,标签颜色",
+                    "optionJsx.config.items": [
+                        "geekblue,极客蓝",
+                        "magenta,粉红",
+                        "red,红色",
+                        "volcano,火山红",
+                        "orange,橙色",
+                        "gold,金色",
+                        "lime,青柠绿",
+                        "green,绿色",
+                        "cyan,青色",
+                        "blue,蓝色",
+                        "purple,紫色"
+                    ]
+                }
+            ],
+            [
                 "description,标签描述,,,aiTextArea,rows=3"
+            ],
+            [
+                {
+                    "metadata": "$button",
+                    "hidden": true,
+                    "optionJsx.extension": [
+                        "$opTagAdd,添加,SUBMIT,primary"
+                    ],
+                    "span": 24
+                }
             ]
-        ]
+        ],
+        "op": {
+            "$opAdd": "act.tag.add"
+        },
+        "hidden": [
+            "appId",
+            "active"
+        ],
+        "initial": {
+            "active": "BOOL:true",
+            "appId": "PROP:app.key",
+            "color": "FIX:geekblue"
+        }
+    },
+    "_modal": {
+        "success": {
+            "added": "您好，您的用户组信息添加成功！"
+        }
     }
 }

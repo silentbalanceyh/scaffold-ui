@@ -1,0 +1,15 @@
+.uex{
+  &_ExTag{
+    line-height: $uni_font * 2.4;
+    .prefix{
+      font-weight: bold;
+    }
+    .op{
+      color: $uni_color;
+      font-size: $uni_font * 1.2;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+}

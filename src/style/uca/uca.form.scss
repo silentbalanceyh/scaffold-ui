@@ -40,7 +40,10 @@
   // 表单下边距根据边距计算 * 9
   // 3 = 36
   // 6 = 72
-  padding-bottom: $rowMargin * 12;
+  // padding-bottom: $rowMargin * 12;
+  textarea {
+    resize: none;
+  }
 }
 
 @mixin uca_form_readonly() {

@@ -1,0 +1,19 @@
+{
+    "_form": {
+        "columns": 1,
+        "window": 0.15,
+        "ui": [
+            [
+                {
+                    "metadata": "name,标签名称,14",
+                    "optionConfig.rules": [
+                        "required,请输入标签名，标签名不可为空！"
+                    ]
+                }
+            ],
+            [
+                "description,标签描述,,,aiTextArea,rows=3"
+            ]
+        ]
+    }
+}

@@ -16,7 +16,7 @@
     }
     @media screen and (min-width: $screen-xxl) {
       @include uca_form_error(-32px);
-      @include uca_form_main(36px, 4px);
+      @include uca_form_main(36px, 2px);
       .ux_title {
         @include attr_height_title(36px, 4px);
       }

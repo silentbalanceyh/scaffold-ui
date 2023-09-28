@@ -21,6 +21,7 @@ declare module "ei" {
     export {default as ExService} from './ExService/UI';                    /* SubForm 专用组件（子表单，本身不带表单结构） */
     export {default as ExSubmit} from './ExSubmit/UI';
     export {default as ExTab} from './ExTab/UI';                            /* （通用页签）原始版本的 auiTab */
+    export {default as ExTag} from './ExTag/UI';
     export {default as ExTabular} from './ExTabular/UI';                    /* （Tabular专用）字典管理 */
     export {default as ExTrackField} from './ExTrackField/UI';
     export {default as ExWizard} from './ExWizard/UI';                      /* 双表单依赖搜索专用 */

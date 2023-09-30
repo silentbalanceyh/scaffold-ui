@@ -36,7 +36,7 @@ class Component extends React.PureComponent{
                     </Col>
                     <Col span={pRight}>
                         {pManual ? (
-                            <span className={"tag-op"}>
+                            <span className={"tag-refresh"}>
                                 <RedoOutlined onClick={Op.event.rxRefresh(this)}/>
                             </span>
                         ): false}

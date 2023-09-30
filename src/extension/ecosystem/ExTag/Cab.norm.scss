@@ -1,3 +1,4 @@
+@import "style";
 .uex{
   &_ExTag{
     &_Dialog{
@@ -16,6 +17,16 @@
     }
     .tag-op{
       color: $uni_color;
+      font-size: $uni_font * 1.2;
+      padding-top: $uni_font * 0.1;
+      display: inline-block;
+      float: left;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+    .tag-refresh{
+      color: $color_op_gold;
       font-size: $uni_font * 1.2;
       padding-top: $uni_font * 0.1;
       margin-right: $uni_font * 0.5;

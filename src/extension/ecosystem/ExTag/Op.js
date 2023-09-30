@@ -1,4 +1,17 @@
 import Ux from 'ux';
+
+const __rxRefresh = (reference) => {
+    const { config = {}} = reference.props;
+    // 初始化 $data = [] 部分的数据，加载
+    Ux.ajaxGet("/api/x-tag/m/:identifier/:key",{
+        identifier: config.entityType,
+        key: config.entityId
+    }).then(response => {
+        const state = {};
+        state.$data = response;
+        Ux.of(reference).in(state).ready().done();
+    })
+}
 export default {
     event:{
         rxOpen: (reference) => (event) => {
@@ -25,17 +38,8 @@ export default {
             })
             // 删除成功之后的处理
             .then(nil => Ux.of(reference)._.submitted())
+        ,
+        rxRefresh: (reference) => (event) => __rxRefresh(reference)
     },
-    yiTag: (reference) => {
-        const { config = {}} = reference.props;
-        // 初始化 $data = [] 部分的数据，加载
-        Ux.ajaxGet("/api/x-tag/m/:identifier/:key",{
-            identifier: config.entityType,
-            key: config.entityId
-        }).then(response => {
-            const state = {};
-            state.$data = response;
-            Ux.of(reference).in(state).ready().done();
-        })
-    }
+    yiTag: (reference) =>  __rxRefresh(reference)
 }

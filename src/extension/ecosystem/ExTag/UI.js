@@ -5,7 +5,7 @@ import Ex from 'ex';
 import './Cab.norm.scss';
 import Sk from 'skin';
 import {Row, Col} from 'antd';
-import {PlusOutlined} from "@ant-design/icons";
+import {PlusOutlined, RedoOutlined} from "@ant-design/icons";
 
 import Op from './Op';
 import Jsx from './Web';
@@ -27,7 +27,7 @@ class Component extends React.PureComponent{
                 $edition = true,
                 config = {}
             } = this.props;
-            const { pLeft = 3 } = config;
+            const { pLeft = 3, pManual = false } = config;
             const pRight = 24 - pLeft;
             return (
                 <Row {...attrs}>
@@ -35,6 +35,11 @@ class Component extends React.PureComponent{
                         {configHoc?.prefix}
                     </Col>
                     <Col span={pRight}>
+                        {pManual ? (
+                            <span className={"tag-op"}>
+                                <RedoOutlined onClick={Op.event.rxRefresh(this)}/>
+                            </span>
+                        ): false}
                         {Jsx.renderTags(this)}
                         {$edition ? (
                             <span className={"tag-op"}>

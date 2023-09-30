@@ -22,14 +22,19 @@ class Component extends React.PureComponent{
     render(){
         return Ex.yoRender(this, () => {
             const attrs = Sk.mixEx(UCA_NAME);
-            const config = Ux.inHoc(this, "config");
-            const { $edition = false} = this.props;
+            const configHoc = Ux.inHoc(this, "config");
+            const {
+                $edition = true,
+                config = {}
+            } = this.props;
+            const { pLeft = 3 } = config;
+            const pRight = 24 - pLeft;
             return (
                 <Row {...attrs}>
-                    <Col span={3} className={"tag-prefix"}>
-                        {config?.prefix}
+                    <Col span={pLeft} className={"tag-prefix"}>
+                        {configHoc?.prefix}
                     </Col>
-                    <Col span={21}>
+                    <Col span={pRight}>
                         {Jsx.renderTags(this)}
                         {$edition ? (
                             <span className={"tag-op"}>

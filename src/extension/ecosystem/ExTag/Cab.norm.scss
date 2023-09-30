@@ -8,16 +8,25 @@
         }
       }
     }
-    line-height: $uni_font * 2.4;
-    .prefix{
+    min-height: $uni_font * 2.6;
+    .tag-prefix {
+      text-align: right;
       font-weight: bold;
+      line-height: $uni_font * 2.2;
     }
-    .op{
+    .tag-op{
       color: $uni_color;
       font-size: $uni_font * 1.2;
+      padding-top: $uni_font * 0.1;
+      display: inline-block;
+      float: left;
       &:hover{
         cursor: pointer;
       }
+    }
+    .tag-content{
+      display: inline-block;
+      float: left;
     }
   }
 }

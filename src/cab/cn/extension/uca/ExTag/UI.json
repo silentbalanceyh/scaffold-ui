@@ -2,5 +2,8 @@
     "_config": {
         "prefix": "标签："
     },
-    "_window": "添加标签,保存,,false,720,true,$opTagAdd"
+    "_window": "添加标签,保存,,false,720,true,$opTagAdd",
+    "_request": {
+        "remove": "您正在删除当前记录和标签的关联，确认删除？"
+    }
 }

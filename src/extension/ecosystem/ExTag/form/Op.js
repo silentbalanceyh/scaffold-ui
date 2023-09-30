@@ -8,8 +8,12 @@ export default {
             request.uiStyle = JSON.stringify({color:params.color});
             Object.assign(request, dataTag);
             return Ux.ajaxPost("/api/x-tag", request)
-                .then(data => Ux.ajaxDialog(reference, {data, key: "added"}))
-                .then(response => Ux.of(reference).close(response))
+                .then(data => {
+                    // Message
+                    Ux.sexMessage(ref, "added");
+                    // 关闭窗口
+                    return Ux.of(reference).close(data);
+                })
                 .catch(error => Ux.ajaxError(reference, error));
         }
     }

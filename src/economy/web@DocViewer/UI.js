@@ -16,7 +16,6 @@ class Component extends React.PureComponent {
 
     render() {
         return Ux.xtReady(this, () => {
-
             const attrs = Sk.mixUca(UCA_NAME);
             return (
                 <div {...attrs}>

@@ -27,7 +27,7 @@
             ],
             [
                 {
-                    "metadata": "color,标签颜色",
+                    "metadata": "color,标签颜色,,,aiTag",
                     "optionJsx.config.items": [
                         "geekblue,极客蓝",
                         "magenta,粉红",

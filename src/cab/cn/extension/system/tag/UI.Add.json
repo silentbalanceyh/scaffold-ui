@@ -1,0 +1,64 @@
+{
+    "_form": {
+        "window": 1,
+        "columns": 3,
+        "ui": [
+            [
+                "title=基本信息"
+            ],
+            [
+                {
+                    "metadata": "name,名称,,,,placeholder=（标签名称不能重复）,normalize=text:255",
+                    "optionConfig.rules": [
+                        "required,请输入名称，名称不可为空！",
+                        {
+                            "validator": "existing",
+                            "message": "对不起，标签名称重复！",
+                            "config": {
+                                "uri": "/api/x-tag/existing",
+                                "method": "POST",
+                                "params": {
+                                    "sigma": "PROP:app.sigma"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "metadata": "icon,图标,,,,placeholder=请输入图标,maxLength=255"
+                },
+                {
+                    "metadata": "active,启用,,,aiCheckbox",
+                    "optionConfig": {
+                        "valuePropName": "checked"
+                    }
+                }
+            ],
+            [
+                "description,描述,24,,aiTextArea,rows=3"
+            ],
+            [
+                {
+                    "metadata": "$button",
+                    "hidden": true,
+                    "optionJsx.extension": [
+                        "$opAdd,添加,SUBMIT,primary",
+                        "$opReset,重置,RESET"
+                    ]
+                }
+            ]
+        ],
+        "initial": {
+            "active": "BOOL:true"
+        },
+        "hidden": [],
+        "op": {
+            "$opAdd": "act.tag.add"
+        }
+    },
+    "_modal": {
+        "success": {
+            "added": "您好，您的标签信息已经成功保存！"
+        }
+    }
+}

@@ -1,9 +1,11 @@
 import Ux from 'ux';
 import {Modal, Tag, Popconfirm} from "antd";
-import UiForm from './form/UI.Add';
 import Ex from 'ex';
 import {CloseOutlined} from "@ant-design/icons";
 import Op from './Op';
+
+import UiForm from './form/UI.Add';
+import UiSelector from './selector/UI';
 const yoForm = (reference) => {
     const formAttrs = Ex.yoAmbient(reference);
     formAttrs.rxClose = (params = {}) => {
@@ -33,13 +35,22 @@ export default {
         const configDialog = Ux.configDialog(reference, configW);
         configDialog.open = $visible;
 
-        const formAttrs = yoForm(reference);
-        const {config} = reference.props;
-        return (
-            <Modal {...configDialog} wrapClassName={"uex_ExTag_Dialog"}>
-                <UiForm {...formAttrs} dataTag={config}/>
-            </Modal>
-        )
+        const {config, $view = true} = reference.props;
+        if($view){
+            const inherit = Ex.yoAmbient(reference);
+            return (
+                <Modal {...configDialog} wrapClassName={"uex_ExTag_Dialog_View"}>
+                    <UiSelector {...inherit}/>
+                </Modal>
+            )
+        }else{
+            const formAttrs = yoForm(reference);
+            return (
+                <Modal {...configDialog} wrapClassName={"uex_ExTag_Dialog"}>
+                    <UiForm {...formAttrs} dataTag={config}/>
+                </Modal>
+            )
+        }
     },
     renderTags: (reference) => {
         const { $data = []} = reference.state;

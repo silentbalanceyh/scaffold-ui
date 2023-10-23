@@ -2,6 +2,14 @@
 .uex{
   &_ExTag{
     &_Dialog{
+      &_View{
+        .ant-modal-body{
+          padding: $uni_font * 0.1 !important;
+          .tag-selector{
+            padding: $uni_font * 0.8 $uni_font * 0.3 $uni_font * 1.5 $uni_font * 0.3;
+          }
+        }
+      }
       .ux_form{
         .ant-radio-wrapper{
           width: 23%;

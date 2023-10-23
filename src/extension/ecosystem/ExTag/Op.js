@@ -1,7 +1,7 @@
 import Ux from 'ux';
 
 const __rxRefresh = (reference) => {
-    const { config = {}} = reference.props;
+    const {config = {}} = reference.props;
     // 初始化 $data = [] 部分的数据，加载
     Ux.ajaxGet("/api/x-tag/m/:identifier/:key",{
         identifier: config.entityType,

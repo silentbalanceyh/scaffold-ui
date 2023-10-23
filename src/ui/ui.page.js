@@ -139,7 +139,7 @@ const smartForm = (configurationForm = {}, mode) => {
                     } else {
                         form.$op = smartOp(this, {});
                     }
-                    
+
                     if (Ux.isFunction(yoJsx)) {
                         form.$renders = yoJsx(this);
                     } else if (Ux.isObject(yoJsx)) {
@@ -236,6 +236,7 @@ const smartList = (configuration = {}) => {
         yoRenders,
 
         renderAddOn,
+        renderContent,
     } = configuration;
     const {
         rm = []
@@ -356,23 +357,37 @@ const smartList = (configuration = {}) => {
                 /*
                  * 是否内置容器，内置容器会导致无 PageCard
                  */
+                let Content;
                 const isContainer = options[Ex.Opt.TABS_CONTAINER];
                 if (isContainer) {
                     // tabs.container = true
-                    return (
-                        <PageCard reference={this}>
+                    Content = (
+                        <div>
                             <ExListComplex {...inherit}
                                            config={configuration} $form={form}/>
                             {Ux.isFunction(renderAddOn) ? renderAddOn(this) : false}
-                        </PageCard>
+                        </div>
                     )
                 } else {
                     // tabs.container = false
-                    return (
-                        <PageCard reference={this}>
+                    Content = (
+                        <div>
                             <ExListComplex {...inherit}
                                            config={configuration} $form={form}/>
                             {Ux.isFunction(renderAddOn) ? renderAddOn(this) : false}
+                        </div>
+                    )
+                }
+                if (Ux.isFunction(renderContent)) {
+                    return (
+                        <PageCard reference={this}>
+                            {renderContent(Content, configuration)}
+                        </PageCard>
+                    )
+                } else {
+                    return (
+                        <PageCard reference={this}>
+                            {Content}
                         </PageCard>
                     )
                 }

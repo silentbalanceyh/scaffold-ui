@@ -381,9 +381,10 @@ const smartList = (configuration = {}) => {
                     )
                 }
                 if (Ux.isFunction(renderWrapper)) {
+                    const reference = this;
                     return (
-                        <PageCard reference={this}>
-                            {renderWrapper(contentFn, configuration)}
+                        <PageCard reference={reference}>
+                            {renderWrapper(contentFn, configuration, this)}
                         </PageCard>
                     )
                 } else {

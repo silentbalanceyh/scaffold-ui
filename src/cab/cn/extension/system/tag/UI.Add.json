@@ -1,0 +1,78 @@
+{
+    "_form": {
+        "columns": 1,
+        "window": 0.15,
+        "ui": [
+            [
+                "title=基本信息"
+            ],
+            [
+                {
+                    "metadata": "name,名称,14,,,placeholder=（标签名称不能重复）,normalize=text:255",
+                    "optionConfig.rules": [
+                        "required,请输入名称，名称不可为空！",
+                        {
+                            "validator": "existing",
+                            "message": "对不起，标签名称重复！",
+                            "config": {
+                                "uri": "/api/x-tag/existing",
+                                "method": "POST",
+                                "params": {
+                                    "sigma": "PROP:app.sigma"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            [
+                {
+                    "metadata": "color,标签颜色,,,aiTag",
+                    "optionJsx.config.items": [
+                        "geekblue,极客蓝",
+                        "magenta,粉红",
+                        "red,红色",
+                        "volcano,火山红",
+                        "orange,橙色",
+                        "gold,金色",
+                        "lime,青柠绿",
+                        "green,绿色",
+                        "cyan,青色",
+                        "blue,蓝色",
+                        "purple,紫色"
+                    ]
+                }
+            ],
+            [
+                "description,描述,24,,aiTextArea,rows=3"
+            ],
+            [
+                {
+                    "metadata": "$button",
+                    "hidden": true,
+                    "optionJsx.extension": [
+                        "$opAdd,添加,SUBMIT,primary",
+                        "$opReset,重置,RESET"
+                    ]
+                }
+            ]
+        ],
+        "hidden": [
+            "appId",
+            "active"
+        ],
+        "initial": {
+            "active": "BOOL:true",
+            "appId": "PROP:app.key",
+            "color": "FIX:geekblue"
+        },
+        "op": {
+            "$opAdd": "act.tag.add"
+        }
+    },
+    "_modal": {
+        "success": {
+            "added": "您好，您的标签信息已经成功保存！"
+        }
+    }
+}

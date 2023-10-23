@@ -13,6 +13,7 @@ import __AI_TIME_PICKER from './render.__.ai.time.picker';
 import __AI_CHECKBOX from './render.__.ai.checkbox';
 import __AI_TREE_SELECT from './render.__.ai.tree.select';
 import __AI_RADIO from './render.__.ai.radio';
+import __AI_TAG from './render.__.ai.tag';
 import __AI_TREE_SELECTOR from './render.__.ai.tree.selector';
 import __AI_TABLE_EDITOR from './render.__.ai.table.editor';
 import __AI_MATRIX_SELECTOR from './render.__.ai.matrix.selector';
@@ -82,6 +83,8 @@ export default {
     ...__AI_TREE_SELECTOR,
     // aiRadio
     ...__AI_RADIO,
+    // aiTag
+    ...__AI_TAG,
     // aiTreeSelect
     ...__AI_TREE_SELECT,
     // aiCheckBox

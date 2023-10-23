@@ -312,6 +312,7 @@ const widthDatum = (titleWidth = 0, column = {}, data = [], reference) => {
 export default {
     "EXECUTOR": widthExecutor,
     "TEXT": widthText,
+    "TAG": widthText,
     "CURRENCY": widthCurrency,
     "INPUT": widthText,
     "LOGICAL": widthMapping,

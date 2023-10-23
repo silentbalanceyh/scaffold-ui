@@ -236,7 +236,7 @@ const smartList = (configuration = {}) => {
         yoRenders,
 
         renderAddOn,
-        renderContent,
+        renderWrapper,
     } = configuration;
     const {
         rm = []
@@ -357,37 +357,39 @@ const smartList = (configuration = {}) => {
                 /*
                  * 是否内置容器，内置容器会导致无 PageCard
                  */
-                let Content;
+                let contentFn;
                 const isContainer = options[Ex.Opt.TABS_CONTAINER];
                 if (isContainer) {
                     // tabs.container = true
-                    Content = (
+                    contentFn = (_config, _attrs = {}) => (
                         <div>
                             <ExListComplex {...inherit}
-                                           config={configuration} $form={form}/>
+                                           {..._attrs}
+                                           config={_config} $form={form}/>
                             {Ux.isFunction(renderAddOn) ? renderAddOn(this) : false}
                         </div>
                     )
                 } else {
                     // tabs.container = false
-                    Content = (
+                    contentFn = (_config, _attrs = {}) => (
                         <div>
                             <ExListComplex {...inherit}
-                                           config={configuration} $form={form}/>
+                                           {..._attrs}
+                                           config={_config} $form={form}/>
                             {Ux.isFunction(renderAddOn) ? renderAddOn(this) : false}
                         </div>
                     )
                 }
-                if (Ux.isFunction(renderContent)) {
+                if (Ux.isFunction(renderWrapper)) {
                     return (
                         <PageCard reference={this}>
-                            {renderContent(Content, configuration)}
+                            {renderWrapper(contentFn, configuration)}
                         </PageCard>
                     )
                 } else {
                     return (
                         <PageCard reference={this}>
-                            {Content}
+                            {contentFn(configuration)}
                         </PageCard>
                     )
                 }

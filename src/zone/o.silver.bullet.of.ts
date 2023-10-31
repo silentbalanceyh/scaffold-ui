@@ -112,14 +112,14 @@ class OfFn {
         if (undefined === data.$spinning) {
             data.$spinning = true;
         }
-        return this._fn.rxSubmitting(true, data);
+        return __Ay.pass(this._fn.rxSubmitting(true, data), data);
     }
 
     submitted(data: any = {}) {
         if (undefined === data.$spinning) {
             data.$spinning = false;
         }
-        return this._fn.rxSubmitting(false, data);
+        return __Ay.pass(this._fn.rxSubmitting(false, data), data);
     }
 
     // 关闭

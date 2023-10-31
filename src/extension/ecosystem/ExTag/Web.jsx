@@ -27,7 +27,7 @@ const renderClose = (reference, item) => {
 }
 export default {
     renderWin: (reference) => {
-        const { $visible } = reference.state;
+        const { $visible, $data = [] } = reference.state;
         if(!$visible){
             return false;
         }
@@ -38,9 +38,16 @@ export default {
         const {config, $view = true} = reference.props;
         if($view){
             const inherit = Ex.yoAmbient(reference);
+            // 默认选中项
+            inherit.value = $data.map(item => item.key);
             return (
                 <Modal {...configDialog} wrapClassName={"uex_ExTag_Dialog_View"}>
-                    <UiSelector {...inherit}/>
+                    <UiSelector {...inherit}
+                                config={config}
+                                rxClose={(data = []) => {
+                                    console.log(data);
+                                }}
+                                $connectId={configDialog.__onOk}/>
                 </Modal>
             )
         }else{
@@ -57,10 +64,10 @@ export default {
         return (
             <span className={"tag-content"}>
                 {$data.map(item => {
-                    const style = item?.uiStyle ? item?.uiStyle: {};
-                    const { color } = style;
+                    const color = item?.color ? item?.color: "geekblue";
                     return (
                         <Tag color={color} key={item.key}
+                             style={{fontSize: 14}}
                              // 禁用默认关闭行为
                              onClose={event => Ux.prevent(event)}
                              closeIcon={renderClose(reference, item)}>

@@ -74,7 +74,7 @@
                                 "componentFn": "monitorFile"
                             }
                         ],
-                        "items": "主单信息,ticket;流程信息,bpmn;关联资产,linkageAsset;关联工单,linkageTicket;关联员工,linkageEmployee;关联合同,linkageContract;关联项目,linkageProject;关联客户,linkageCustomer",
+                        "items": "主单信息,ticket;流程信息,bpmn",
                         "pages": {
                             "ticket": {
                                 "ui": [
@@ -136,66 +136,6 @@
                                     ],
                                     [
                                         "monitorHistory,,24"
-                                    ]
-                                ]
-                            },
-                            "linkageTicket": {
-                                "ui": [
-                                    [
-                                        "title=设置关联工单"
-                                    ],
-                                    [
-                                        "linkageTicket,,24"
-                                    ]
-                                ]
-                            },
-                            "linkageAsset": {
-                                "ui": [
-                                    [
-                                        "title=设置关联资产"
-                                    ],
-                                    [
-                                        "linkageAsset,,24"
-                                    ]
-                                ]
-                            },
-                            "linkageEmployee": {
-                                "ui": [
-                                    [
-                                        "title=设置关联员工"
-                                    ],
-                                    [
-                                        "linkageEmployee,,24"
-                                    ]
-                                ]
-                            },
-                            "linkageContract": {
-                                "ui": [
-                                    [
-                                        "title=设置关联合同"
-                                    ],
-                                    [
-                                        "linkageContract,,24"
-                                    ]
-                                ]
-                            },
-                            "linkageProject": {
-                                "ui": [
-                                    [
-                                        "title=设置关联项目"
-                                    ],
-                                    [
-                                        "linkageProject,,24"
-                                    ]
-                                ]
-                            },
-                            "linkageCustomer": {
-                                "ui": [
-                                    [
-                                        "title=设置关联客户"
-                                    ],
-                                    [
-                                        "linkageCustomer,,24"
                                     ]
                                 ]
                             }

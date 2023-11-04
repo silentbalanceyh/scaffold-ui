@@ -5,6 +5,7 @@ import __BTN from './autonomy.fn.ai.unit.buttons';
 import __UNIT from './autonomy.fn.ai.unit.element';
 import __CHILD from './autonomy.fn.ai.child';
 import __V4 from './aureole.fn.ai.child.v4.patch';
+import __AOP from './equip.__.fn.config.aop';
 
 const Jsx = {
     ...__BTN,
@@ -64,11 +65,12 @@ const configDialog = (reference, config = {}, state) => {
     return $dialog;
 };
 const configTab = (reference, config = {}) => {
-    const tabs = __Zn.clone(config);
+    // -------------- Pre：配置预处理
+    const tabs = __AOP.configBefore(reference, config);
+    // -------------- 执行代码
     const {
         tabPosition, items
     } = tabs;
-
 
     // -------------- items 构造
     /*
@@ -176,7 +178,10 @@ const configTab = (reference, config = {}) => {
             }
         }
     }
-    return tabs;
+
+
+    // -------------- Post：配置后期处理
+    return __AOP.configAfter(reference, tabs);
 };
 export default {
     configDialog,

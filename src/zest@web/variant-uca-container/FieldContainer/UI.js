@@ -23,12 +23,15 @@ const componentInit = (reference) => {
         /*
          * 子表单渲染
          */
+        const $tabs = __Zn.configTab(reference, __Zn.yoLimit(config, [
+            "pages"
+        ]));
         const {
-            pages = {},
             type = "card",
             size = "default",
         } = config;
         const raft = {};
+        const pages = $tabs.pages ? $tabs.pages: {};
         /*
          * 这里调用了 onReference 方法，完美处理了连接问题
          * 保证此处的子组件直接穿透带有 form 的 reference.props
@@ -54,9 +57,6 @@ const componentInit = (reference) => {
              * pages 解析完成过后处理 $tabs
              */
             const state = {};
-            const $tabs = __Zn.configTab(reference, __Zn.yoLimit(config, [
-                "pages"
-            ]));
             if ($tabs.hasOwnProperty('activeKey')) {
                 /*
                  * 有状态的 activeKey 优先

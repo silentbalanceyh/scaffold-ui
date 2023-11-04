@@ -13,7 +13,8 @@
         "reject": "拒绝",
         "clear": "清除",
         "edit": "编辑",
-        "remove": "删除"
+        "remove": "删除",
+        "setting": "设置"
     },
     "_dialog": {
         "error": "错误",

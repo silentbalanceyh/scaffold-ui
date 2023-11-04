@@ -1,60 +1,7 @@
 import Ux from "ux";
-import {Langue} from "environment";
 import __Zn from './zero.workflow.dependency';
 import __CFG from './workflow.__.fn.config.norm';
-
-const ioSegment = (reference, form, cab) => {
-    const $cab = form.cab ? form.cab : {};
-    const segment = {};
-    [
-        "SxAssign",
-        "SxClose",
-        "SxOpen",
-        "SxRun"
-    ].forEach(filename => {
-        const name = cab.ns + '/' + ($cab.name ? $cab.name : filename)
-        const resource = Langue(name);
-        if (resource) {
-            Object.assign(segment, resource);
-        }
-    });
-    return segment;
-}
-
-const ioResource = (reference, form = {}, cab) => {
-    const segment = ioSegment(reference, form, cab);
-    const segmentRef = form.segment;
-    const formRef = Ux.clone(form);
-    const segmentCombine = {};
-    if (segmentRef) {
-        // Fix: convert undefined or null to object
-        Object.keys(segmentRef).forEach(key => {
-            const value = segmentRef[key];
-            if ("string" === typeof value) {
-                const connected = segment[value];
-                if (Ux.isArray(connected)) {
-                    segmentCombine[key] = connected;
-                }
-            } else {
-                segmentCombine[key] = value;
-            }
-            // Assignment（特殊逻辑）
-            if (
-                // 条件一，必须配置了下一处理人的分派信息
-                [
-                    "ASSIGNMENT",
-                    "ASSIGNMENT_MORE"
-                ].includes(key) &&
-                // 条件二，原始配置中没有配置标题
-                !segmentRef.hasOwnProperty('ASSIGNMENT_TITLE')) {
-                // 默认标题：下一处理人
-                segmentCombine["ASSIGNMENT_TITLE"] = segment['ASSIGN_NEXT'];
-            }
-        });
-    }
-    formRef.segment = segmentCombine;
-    return formRef;
-}
+import ioSegment from './workflow.channel.__.@fn.y_.form.segment';
 
 const ioForm = (reference, response = {}, cab = {}) => {
     const {$workflow = {}} = reference.props;
@@ -71,21 +18,10 @@ const ioForm = (reference, response = {}, cab = {}) => {
         const segment = Ux.clone(formCab.segment);
         form.segment = Object.assign(segment, form.segment);
     }
-    // ioResource
-    form = ioResource(reference, form, cab);
+    // ioSegment
+    form = ioSegment(reference, form, cab);
     // 替换原始的 form
     response.form = form;
-    return response;
-}
-
-const ioWorkflow = (reference, response = {}) => {
-    const {$workflow = {}} = reference.props;
-
-    const workflow = Ux.clone($workflow);
-    if (response.workflow) {
-        Object.assign(workflow, response.workflow);
-    }
-    response.workflow = workflow;
     return response;
 }
 
@@ -139,7 +75,15 @@ export default (reference) => ({
             }
 
             // 修改 workflow
-            $response = ioWorkflow(reference, $response);
+            {
+                const {$workflow = {}} = reference.props;
+
+                const workflow = Ux.clone($workflow);
+                if ($response.workflow) {
+                    Object.assign(workflow, $response.workflow);
+                }
+                $response.workflow = workflow;
+            }
             state.$workflow = $response.workflow;
             return Ux.promise(state);
         }).then(processed => ioAction(processed)).then(processed => {

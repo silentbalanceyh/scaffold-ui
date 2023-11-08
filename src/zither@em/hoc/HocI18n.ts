@@ -136,7 +136,11 @@ class HocI18n implements HocContainer {
         } = combine;
         const uiBefore = __Zn.clone(result.ui);
         // 递归替换复杂算法
-        result.ui = __Zn.toFormUi(uiBefore, segment);
+        // 递归替换复杂算法
+        result.ui = __Zn.toFormUi(uiBefore, {
+            segment,
+            config: combine
+        });
         Object.assign(formRef, result);
     }
 }

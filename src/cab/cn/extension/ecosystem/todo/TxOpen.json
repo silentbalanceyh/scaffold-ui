@@ -76,9 +76,6 @@
                                     ],
                                     "TICKET",
                                     "TICKET_OPEN",
-                                    [
-                                        "title=下一处理人"
-                                    ],
                                     "ASSIGNMENT",
                                     "ASSIGNMENT_MORE",
                                     [

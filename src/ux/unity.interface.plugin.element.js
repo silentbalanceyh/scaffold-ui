@@ -78,8 +78,8 @@ const valueIndicate = (params = {}, config = {}, reference) =>
  *
  * ```js
  PROP: (expression, {props}) => fnPredicate("PROP", expression, () => {
-     const path = expression.split('.'); // 路径解析
-     return T.valueFind(props, path);
+ const path = expression.split('.'); // 路径解析
+ return T.valueFind(props, path);
  }),
  * ```
  *
@@ -135,11 +135,11 @@ const toForm = (staticForm = {}, dynamicForm = {}) =>
  *
  * @memberOf module:to/zodiac
  * @param ui
- * @param segment
+ * @param configuration
  * @returns {*}
  */
-const toFormUi = (ui = [], segment = {}) =>
-    __Zo.toFormUi(ui, segment);
+const toFormUi = (ui = [], configuration = {}) =>
+    __Zo.toFormUi(ui, configuration);
 /**
  * ## 「引擎」`Ux.itField`
  *

@@ -116,9 +116,6 @@
                                     "ASSIGNMENT_TITLE",
                                     "ASSIGNMENT",
                                     "ASSIGNMENT_MORE",
-                                    [
-                                        "title=当前处理人/处理意见"
-                                    ],
                                     "RUN_USER",
                                     "RUN_TICKET",
                                     "END_CLOSE",

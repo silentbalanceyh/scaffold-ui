@@ -31,7 +31,7 @@ const componentInit = (reference) => {
             size = "default",
         } = config;
         const raft = {};
-        const pages = $tabs.pages ? $tabs.pages: {};
+        const pages = $tabs.pages ? $tabs.pages : {};
         /*
          * 这里调用了 onReference 方法，完美处理了连接问题
          * 保证此处的子组件直接穿透带有 form 的 reference.props
@@ -73,15 +73,6 @@ const componentInit = (reference) => {
             }
             $tabs.type = type;
             $tabs.size = size;
-            {
-                /*
-                 * items 过滤，执行上层传入的 koTab 函数
-                 */
-                let $items = __Zn.clone($tabs.items);
-                const {koTab = () => $items} = reference.props;
-                $items.forEach(item => item.forceRender = true);
-                $tabs.items = koTab($items);
-            }
             $tabs.items.forEach(item => {
                 const raftItem = raft[item.key];
                 /*

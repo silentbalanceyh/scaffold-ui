@@ -1,10 +1,8 @@
 {
-    "ASSIGN_NEXT": [
+    "ASSIGN_SINGLE_ESCALATION": [
         [
             "title=下一处理人"
-        ]
-    ],
-    "ASSIGN_SINGLE_ESCALATION": [
+        ],
         [
             {
                 "metadata": "escalate,是否升级,8,,aiCheckbox,valuePropName=checked",
@@ -44,6 +42,9 @@
     ],
     "ASSIGN_SINGLE": [
         [
+            "title=下一处理人"
+        ],
+        [
             {
                 "metadata": "toUserName,处理人,8,,aiUserSelector,placeholder=（谁将会审批该工单）",
                 "optionJsx.config": {
@@ -69,6 +70,9 @@
         ]
     ],
     "ASSIGN_SINGLE_FULL": [
+        [
+            "title=下一处理人"
+        ],
         [
             {
                 "metadata": "toUserName,处理人,8,,aiUserSelector,placeholder=（谁将会审批该工单）",

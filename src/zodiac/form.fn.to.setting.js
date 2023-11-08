@@ -1,5 +1,5 @@
 import __Zn from './zero.module.dependency';
-
+import __Pre from './form.__.fn.pre.process';
 const toForm = (staticForm = {}, dynamicForm = {}) => {
     /*
      * form：输入的 form
@@ -31,6 +31,7 @@ const toForm = (staticForm = {}, dynamicForm = {}) => {
         io = {},
         modal = {},
         assist = {},
+        combiner = {},
         ...rest
     } = dynamicForm;
     if (!__Zn.isEmpty(rest)) {
@@ -75,93 +76,52 @@ const toForm = (staticForm = {}, dynamicForm = {}) => {
         // Assign 必须这样处理
         form.modal = __Zn.assign(form.modal, modal, 2);
     }
+    if (__Zn.isNotEmpty(combiner)){
+        if (!form.combiner) form.combiner = {};
+        Object.assign(form.combiner, combiner);
+    }
     return form;
 };
-
-const toFormUi = (ui = [], segment = {}) => {
+const toFormUi = (ui = [], configuration = {}) => {
     // ui迭代
     if (__Zn.isArray(ui)) {
+        const uiNorm = __Pre.preToUi(ui, configuration);
         const uiAfter = [];
-        ui.forEach(row => {
-            const rowAfter = [];
+        uiNorm.forEach(row => {
+            const uiRow = [];
             if (__Zn.isArray(row)) {
                 // row 必须也是数组
                 row.forEach((cell, cellIndex) => {
                     // 查看 cell 是否 complex 类型
                     if (cell.complex) {
-                        /*
-                         *  特殊类型提取
-                         *  {
-                         *      "complex": true,
-                         *      "config": {
-                         *          "pages": {
-                         *               "key": []
-                         *          }
-                         *      }
-                         *  }
-                         */
-                        const cellAdd = __Zn.clone(cell);
-                        if (cellAdd.config && cellAdd.config['pages']) {
-                            const {pages = {}} = cellAdd.config;
-                            const pagesAdd = {};
-                            Object.keys(pages).forEach(key => {
-                                const pageForm = pages[key];
-                                if (pageForm && __Zn.isArray(pageForm.ui)) {
-                                    /*
-                                     * 「递归」复杂页面直接执行递归替换
-                                     */
-                                    pagesAdd[key] = __Zn.clone(pageForm);
-                                    pagesAdd[key].ui = toFormUi(pageForm.ui, segment);
-                                }
-                            });
-                            cellAdd.config.pages = pagesAdd;
+                        // 复杂表单处理流程
+                        const cellAdd = __Pre.preToComplex(cell, configuration, toFormUi);
+                        if(cellAdd) {
+                            uiRow.push(cellAdd);
                         }
-                        rowAfter.push(cellAdd);
                     } else {
-                        if (__Zn.isObject(cell)) {
-                            /*
-                             * Object单元格普通追加
-                             * [
-                             *     {},{},{}
-                             * ]
-                             */
-                            rowAfter.push(cell);
-                        } else if ("string" === typeof cell) {
-                            const target = segment[cell];
-                            if (__Zn.isArray(target)) {
-                                // Cell 列连接
-                                target.filter(__Zn.isArray).filter(__Zn.isNotEmpty)
-                                    // Ui 追加都要考虑不为空
-                                    .forEach(each => uiAfter.push(each))
-                            } else {
-                                /*
-                                 * String单元格普通追加
-                                 * [
-                                 *     "","",""
-                                 * ]
-                                 */
-                                rowAfter.push(cell);
-                            }
-                        } else {
-                            console.warn("列连接非法", cell);
+                        // 直接执行 segment 部分注入
+                        const uiPending = __Pre.preToSegment(cell, configuration);
+                        if(__Zn.isArray(uiPending)) {
+                            uiPending.forEach(row => uiAfter.push(row));
+                        }else{
+                            uiRow.push(uiPending)
                         }
                     }
                 })
             } else if ("string" === typeof row) {
                 // Row 行连接
-                const target = segment[row];
-                // 二维数组追加到一维数据
-                if (__Zn.isArray(target)) {
-                    // Ui 追加都要考虑不为空
-                    target.filter(__Zn.isArray).filter(__Zn.isNotEmpty)
-                        .forEach(each => uiAfter.push(each))
+                const uiPending = __Pre.preToSegment(row, configuration);
+                if(__Zn.isArray(uiPending)) {
+                    uiPending.forEach(row => uiAfter.push(row));
+                }else{
+                    uiRow.push(uiPending)
                 }
             }
-            if (__Zn.isNotEmpty(rowAfter)) {
-                // Ui 追加都要考虑不为空
-                uiAfter.push(rowAfter);
+            if(0 < uiRow.length){
+                uiAfter.push(uiRow);
             }
-        })
+        });
         return uiAfter;
     } else {
         console.error("数据格式非法", ui)

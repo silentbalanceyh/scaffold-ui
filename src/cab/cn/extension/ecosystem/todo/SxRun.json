@@ -1,6 +1,9 @@
 {
     "RUN_APPROVE": [
         [
+            "title=当前处理人/处理意见"
+        ],
+        [
             {
                 "metadata": "confirmedOk,审批结果,8,,aiRadio",
                 "optionJsx.config.items": [
@@ -16,10 +19,16 @@
     ],
     "RUN_PROCESS": [
         [
+            "title=当前处理人/处理意见"
+        ],
+        [
             "comment,处理说明,24,,aiTextArea,rows=3"
         ]
     ],
     "RUN_USER": [
+        [
+            "title=当前处理人/处理意见"
+        ],
         [
             {
                 "metadata": "acceptedName,当前处理人,8,,aiUserSelector,readOnly=true,placeholder=（谁将会审批该工单）",

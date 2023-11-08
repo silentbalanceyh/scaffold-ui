@@ -36,18 +36,6 @@ export default (reference, form = {}, cab) => {
             } else {
                 segmentCombine[key] = value;
             }
-            // Assignment（特殊逻辑）
-            if (
-                // 条件一，必须配置了下一处理人的分派信息
-                [
-                    "ASSIGNMENT",
-                    "ASSIGNMENT_MORE"
-                ].includes(key) &&
-                // 条件二，原始配置中没有配置标题
-                !segmentRef.hasOwnProperty('ASSIGNMENT_TITLE')) {
-                // 默认标题：下一处理人
-                segmentCombine["ASSIGNMENT_TITLE"] = segment['ASSIGN_NEXT'];
-            }
         });
     }
     formRef.segment = segmentCombine;

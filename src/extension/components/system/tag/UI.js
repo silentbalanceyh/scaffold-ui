@@ -12,7 +12,8 @@ import FormFilter from './form/UI.Filter';
 )
 class Component extends React.PureComponent {
     componentDidMount() {
-        Ux.of(this).ready().done();
+        Ex.yiAssist(this).then(Ux.ready).then(Ux.pipe(this));
+        //Ux.of(this).ready().done();
     }
 
     render() {

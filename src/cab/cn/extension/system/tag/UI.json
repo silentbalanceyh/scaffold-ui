@@ -1,4 +1,16 @@
 {
+    "_assist": {
+        "tabular": {
+            "uri": "/api/types/tabulars",
+            "method": "POST",
+            "magic": {
+                "$body": [
+                    "tag.type"
+                ]
+            },
+            "group": "type"
+        }
+    },
     "_grid": {
         "query": {
             "projection": [],

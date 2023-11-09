@@ -7,7 +7,7 @@ export default {
             const request = Ux.clone(params);
             request.uiStyle = JSON.stringify({color:params.color});
             Object.assign(request, dataTag);
-            return Ux.ajaxPost("/api/x-tag", request)
+            return Ux.ajaxPost("/api/x-tag/m", request)
                 .then(data => {
                     // Message
                     Ux.sexMessage(ref, "added");

@@ -30,6 +30,7 @@
                 "signMobile,联系电话,,,aiMagic"
             ],
             [
+                "amountAll,收款总计,,,aiMagic",
                 "comment,备注,24,,aiMagic"
             ]
         ]

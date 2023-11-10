@@ -80,7 +80,12 @@ class Component extends React.PureComponent {
             const {items = [], payment = [], ...initValues} = $inited;
             const inherit = Ex.yoAmbient(this);
             const tabs = rxTab(this, initValues);
-
+            let sum = 0
+            payment.forEach(item=>{
+                console.log(item)
+                return sum  += item.amount
+            })
+            initValues.amountAll = sum.toFixed(2)
             inherit.$amount = initValues.amount;
             return (
                 <div>

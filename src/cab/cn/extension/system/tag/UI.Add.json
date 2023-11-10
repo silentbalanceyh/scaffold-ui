@@ -27,6 +27,12 @@
             ],
             [
                 {
+                    "metadata": "type,类型,14,,aiSelect,placeholder=（请选择标签类型）",
+                    "optionJsx.config.datum": "source=tag.type,value=key,label=name"
+                }
+            ],
+            [
+                {
                     "metadata": "color,标签颜色,,,aiTag",
                     "optionJsx.config.items": [
                         "geekblue,极客蓝",

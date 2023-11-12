@@ -75,6 +75,7 @@ const componentInit = (reference) => {
             $tabs.size = size;
             $tabs.items.forEach(item => {
                 const raftItem = raft[item.key];
+                item.forceRender = true;
                 /*
                  * 延迟处理
                  */

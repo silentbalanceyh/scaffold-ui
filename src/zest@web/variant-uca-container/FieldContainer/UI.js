@@ -21,7 +21,17 @@ const componentInit = (reference) => {
         // reference.?etState({error: "Not Allow `children` in current component."})
     } else {
         /*
-         * 子表单渲染
+         * 子表单渲染，先针对 Tab 执行相关配置，此配置会包含如下：
+         * 1. rxCBefore / rxCAfter 双配置注入函数，后期可能会扩展成专用配置函数。
+         * 2. items 的基础解析
+         *    - String 格式
+         *       - String
+         *    - Array 格式
+         *       - String
+         *       - Object
+         * 3. 针对 Block 类型和普通类型分流（部分管理模块正在使用）
+         * 4. 将无状态切换成有状态，调用 rxTabClick 函数
+         * 5. 处理 tabBarExtraContent 部分，纯配置模式处理
          */
         const $tabs = __Zn.configTab(reference, __Zn.yoLimit(config, [
             "pages"
@@ -75,7 +85,15 @@ const componentInit = (reference) => {
             $tabs.size = size;
             $tabs.items.forEach(item => {
                 const raftItem = raft[item.key];
+
+                
+                /*
+                 * 强制更新在此部分是必须的，否则会出现子表单不渲染的情况
+                 * 即使隐藏了部分字段也需要在此处让用户不点击就可以强制渲染
+                 */
                 item.forceRender = true;
+
+
                 /*
                  * 延迟处理
                  */

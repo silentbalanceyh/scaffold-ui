@@ -41,29 +41,41 @@ const aiValidation = (reference = {}, item = {}) => {
 const aiNormalizer = (reference, item = {}) => {
     if (item.optionConfig && item.optionConfig.normalize) {
         const expr = item.optionConfig.normalize;
-        if (expr) {
-            const segments = expr.toString().split(",");
-            if (1 <= segments.length) {
-                // 读取类型
-                const type = segments[0];
-                const executor = Cv.V_NORMALIZER[type];
-                if (executor) {
-                    // 参数准备
-                    const args = [];
-                    for (let idx = 1; idx < segments.length; idx++) {
-                        args.push(segments[idx]);
-                    }
-                    // 函数调用
-                    const jFun = executor.apply(null, args);
-                    if (jFun) {
-                        item.optionConfig.normalize = jFun;
-                    }
-                } else {
-                    console.error("[ Ux ] normalize 属性解析失败：", expr, item);
+
+        const jFun = aiNormalizerFn(expr);
+        if(jFun){
+            item.optionConfig.normalize = jFun;
+        }
+    }
+}
+
+const aiNormalizerFn = (expr) => {
+    let retFn = null;
+    if(expr && "string" === typeof expr){
+        // 必须是字符串才可以执行
+        const replaced = expr.toString().replace(/:/g, ",");
+        const segments = replaced.toString().split(",");
+        if (1 <= segments.length) {
+            // 读取类型
+            const type = segments[0];
+            const executor = Cv.V_NORMALIZER[type];
+            if (executor) {
+                // 参数准备
+                const args = [];
+                for (let idx = 1; idx < segments.length; idx++) {
+                    args.push(segments[idx]);
                 }
+                // 函数调用
+                const jFun = executor.apply(null, args);
+                if (__Zn.isFunction(jFun)) {
+                    retFn = jFun;
+                }
+            } else {
+                console.error("[ Ux ] normalize 属性解析失败：", expr);
             }
         }
     }
+    return retFn;
 }
 
 const aiRule = (rule, item) => {
@@ -96,6 +108,7 @@ const aiRule = (rule, item) => {
 export default {
     aiErrorFocus,
     aiNormalizer,
+    aiNormalizerFn,
     aiValidation,
     aiRule,
 }

@@ -17,9 +17,9 @@ export default {
             // optionConfig 的另外表达方式
 
             if (__Zn.isFunction(executor)) {
-                if (text) {
-                    $jsx.value = text;
-                }
+
+                // 针对 normalize 无效的情况处理
+                $jsx.value = text;
 
                 // disabled 状态同步到组件
                 const {

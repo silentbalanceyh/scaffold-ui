@@ -19,7 +19,12 @@ const xtDiff = (left, right) => {
 };
 const xtValue = (reference, consumer) => {
     const {config = {}} = reference.props;
-    const originalFormat = config.format ? config.format : Cv.XT_FORMAT.OBJECT;
+    /*
+     * format 的设置过程中，直接将原始格式设置成
+     * ARRAY 的格式模式，这种模式下更容易处理，目前只有 TableEditor / TableTransfer 在
+     * 使用这种格式中使用，所以从原始的 OBJECT 更新到 ARRAY 中
+     */
+    const originalFormat = config.format ? config.format : Cv.XT_FORMAT.ARRAY;
     const state = reference.state ? __Zn.clone(reference.state) : {};
     let data = state.data;
     /* 计算简单format */
@@ -28,7 +33,7 @@ const xtValue = (reference, consumer) => {
         hitFormat = originalFormat;
     } else {
         const {type} = originalFormat;
-        hitFormat = type ? type : Cv.XT_FORMAT.OBJECT;
+        hitFormat = type ? type : Cv.XT_FORMAT.ARRAY;
     }
     // Dev.dgDebug({format: hitFormat}, "自定义组件选择数据格式")
     if (Cv.XT_FORMAT.OBJECT === hitFormat) {

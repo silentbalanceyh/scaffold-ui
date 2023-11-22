@@ -43,9 +43,11 @@
                 {
                     "metadata": "rounded,零头处理,,,aiMagic",
                     "optionJsx.config.items": [
+                        "NONE,不处理",
                         "HALF,四舍五入",
                         "FLOOR,零头舍弃",
-                        "CEIL,零头入进"
+                        "CEIL,零头入进",
+                        "INPUT,折扣（自定义）"
                     ]
                 }
             ],

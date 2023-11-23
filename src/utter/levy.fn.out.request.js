@@ -62,8 +62,9 @@ const outError = (reference, data, {pAsync, pFlow = false}) => {
 const inPrePay = (reference, params = {}, config = {}, pAsync = false) => {
     const {
         payment = [],
-        amount = 0,            // 总金额（总金额直接放到请求数据中）
+        amountActual = 0,            // 总金额（总金额直接放到请求数据中）
     } = params;
+
     const {
         pFlow = false,         // 是否开启页面流，主要是是否触发父组件的 rxSubmitting
         pDigit = 2,             // 金额计算精度
@@ -86,12 +87,13 @@ const inPrePay = (reference, params = {}, config = {}, pAsync = false) => {
         sum += Ux.valueFloat(payment[idx].amount, 0.0, pDigit);
     }
     /**
-     * amount 和 sum 对比，如果是抹零，那么此处的范围为：
-     * ceil(sum - 1) < amount < floor(sum + 1)
+     * 新的三合一验证流程
+     * 根据属性 rounded 判断验证流程
+     * - HALF / 四舍五入
+     * - FLOOR / 零头舍弃
+     * - CEIL / 零头入进
      */
-    const min = Math.ceil(sum - 1);
-    const max = Math.floor(sum + 1);
-    if (amount < min || amount > max) {
+    if (0 < amountActual && amountActual !== sum) {
         const data = outMessage(reference, eAmount, pAsync);
         return outError(reference, data, {pFlow, pAsync});
     }

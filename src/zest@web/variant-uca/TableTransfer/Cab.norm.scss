@@ -7,14 +7,16 @@
 
     .tree {
       margin-top: $uni_font * 0.6;
-      max-height: 280px;
+      max-height: 160px;
       max-width: 235px;
       overflow: auto;
-      .ant-tree{
+
+      .ant-tree {
         min-width: 300px;
       }
-      .tree_node_checked{
-        .ant-tree-switcher{
+
+      .tree_node_checked {
+        .ant-tree-switcher {
           display: none;
         }
       }
@@ -28,8 +30,8 @@
         overflow-y: auto;
       }
 
-      .ux_table_transfer{
-        table{
+      .ux_table_transfer {
+        table {
           padding: 0;
 
           td {
@@ -40,7 +42,8 @@
             padding: $uni_font * 0.6 12px;
           }
         }
-        .ant-table-cell{
+
+        .ant-table-cell {
 
           a {
             color: $uni_color;

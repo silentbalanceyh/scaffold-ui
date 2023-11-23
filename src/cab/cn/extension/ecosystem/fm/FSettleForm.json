@@ -150,7 +150,7 @@
                         "HALF,四舍五入",
                         "FLOOR,零头舍弃",
                         "CEIL,零头入进",
-                        "INPUT,折扣（自定义）"
+                        "INPUT,自定义"
                     ],
                     "optionJsx.depend.enabled": {
                         "finishType": "STANDARD"

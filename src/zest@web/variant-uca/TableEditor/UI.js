@@ -58,13 +58,15 @@ class Component extends React.PureComponent {
 
     render() {
         return __Zn.xtReady(this, () => {
-            const {$table = {}} = this.state;
+            const {$table = {}, data = []} = this.state;
             const {value = []} = this.props;
 
             const attrs = Sk.mixUca(UCA_NAME);
+
+            const dataSource = 0 === value.length ? data: value;
             return (
                 <div {...attrs}>
-                    <Table {...$table} dataSource={value}/>
+                    <Table {...$table} dataSource={dataSource}/>
                 </div>
             );
         }, {name: UCA_NAME, logger: true})

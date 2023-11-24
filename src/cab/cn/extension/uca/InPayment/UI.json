@@ -1,0 +1,33 @@
+{
+    "_config": {
+        "table": {
+            "className": "ux_table_secondary",
+            "columns": [
+                {
+                    "metadata": "name,付款码,ROW",
+                    "width": 240,
+                    "$config": {
+                        "field": "aiSelect",
+                        "jsx": {
+                            "config": {
+                                "datum": "source=pay.type,key=code,label=name"
+                            }
+                        }
+                    }
+                },
+                {
+                    "metadata": "amount,支付金额,ROW",
+                    "$config": {
+                        "field": "aiInput",
+                        "jsx": {
+                            "addonAfter": "￥"
+                        },
+                        "config": {
+                            "normalize": "decimal,18,2"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

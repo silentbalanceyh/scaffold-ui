@@ -5,6 +5,9 @@ import func_boundary_yl_channel_control from './boundary.fn.yl.channel.control';
 import func_channel_commerce_yi_region from './channel.commerce.fn.yi.region';
 import func_channel_commerce_yo_finance from './channel.commerce.fn.yo.finance';
 
+import func_fm_form_pay_jsx from './fm.fn.form.pay.jsx';
+import func_fm_pay_process from './fm.fn.pay.process';
+
 import func_levy_out_economy from './levy.fn.out.economy';
 import func_lkway_on_event from './lkway.fn.on.event';
 
@@ -61,6 +64,8 @@ export default {
      */
     ...func_channel_commerce_yo_finance,
 
+    ...func_fm_form_pay_jsx,
+    ...func_fm_pay_process,
     /**
      * # 扩展：数据标准化
      *

@@ -1,0 +1,1 @@
+export {default as InPayment} from './InPayment/UI';

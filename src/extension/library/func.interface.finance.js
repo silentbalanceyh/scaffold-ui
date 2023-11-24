@@ -91,4 +91,11 @@ export default {
      */
     yoDebt: (reference, $inited = {}, debt = true) =>
         __Zp.yoDebt(reference, $inited, debt),
+    // TODO: 新的API
+    payGap: (params = {}) => __Zp.payGap(params),
+    // 表单
+    payFormBill: (ref) => __Zp.payFormBill(ref),
+    payFormFee: (ref) => __Zp.payFormFee(ref),
+    payFormNorm: (ref) => __Zp.payFormNorm(ref),
+    payFormItem: (ref) => __Zp.payFormItem(ref),
 }

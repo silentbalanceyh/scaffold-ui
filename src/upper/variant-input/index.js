@@ -4,6 +4,13 @@ import login_captcha from './field.__.@fn.login.captcha';
 
 import address_region_id from './field.__.@fn.address.regionid';
 
+import pay_amount from './field.__.@fn.pay.amount';
+import pay_amountGap from './field.__.@fn.pay.amountGap';
+import pay_amountView from './field.__.@fn.pay.amountView';
+import pay_items from './field.__.@fn.pay.items';
+import pay_payment from './field.__.@fn.pay.payment';
+import pay_rounded from './field.__.@fn.pay.rounded';
+import pay_finishType_fn from './field.__.@@fn.pay.finishType';
 export default {
 
     /**
@@ -12,6 +19,18 @@ export default {
      * @type {Object}
      */
     Jsx: {
+        PayFn: (ref) => ({
+            // 二阶
+            finishType: pay_finishType_fn(ref),
+            // 一阶
+            payment: pay_payment,
+            rounded: pay_rounded,
+            items: pay_items,
+            // 一阶：金额部分
+            amount: pay_amount,
+            amountGap: pay_amountGap,
+            amountView: pay_amountView,
+        }),
         /*
          * ## 登录专用类
          *

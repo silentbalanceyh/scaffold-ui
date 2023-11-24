@@ -1,8 +1,8 @@
-import Jsx from './variant-input'
+import __In from './variant-input'
 export default {
     // 入账部分处理
     payFormBill: (ref) => {
-        const fields = Jsx.PayFn(ref);
+        const fields = __In.Jsx.PayFn(ref);
         return {
             amountView: fields.amountView,
             items: fields.items,
@@ -10,7 +10,7 @@ export default {
     },
     // 特殊函数
     payFormFee: (ref) => {
-        const fields = Jsx.PayFn(ref);
+        const fields = __In.Jsx.PayFn(ref);
         return {
             finishType: fields.finishType,
             rounded: fields.rounded,
@@ -20,7 +20,7 @@ export default {
     },
     // 普通入账
     payFormNorm: (ref) => {
-        const fields = Jsx.PayFn(ref);
+        const fields = __In.Jsx.PayFn(ref);
         return {
             payment: fields.payment,
             rounded: fields.rounded,
@@ -30,7 +30,7 @@ export default {
     },
     // items 入账
     payFormItem: (ref) => {
-        const fields = Jsx.PayFn(ref);
+        const fields = __In.Jsx.PayFn(ref);
         return {
             payment: fields.payment,
             rounded: fields.rounded,

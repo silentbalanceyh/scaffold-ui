@@ -16,18 +16,22 @@
         "columns": 3,
         "ui": [
             [
+                "title=结算单"
+            ],
+            [
                 "serial,结算单号,,,aiMagic",
                 {
                     "metadata": "amount,结算金额,,,aiMagic",
                     "optionJsx.config.currency": "￥"
                 },
                 {
-                    "metadata": "linked,关联单据,,,aiMagic",
+                    "metadata": "rounded,零头处理,,,aiMagic",
                     "optionJsx.config.items": [
-                        "DONE,直接结算:check-circle,16:#268941",
-                        "DEBT,含应收:link,16:#ff8626",
-                        "REFUND,含退款:link,16:#ff686b",
-                        "PENDING,未结算:exclamation-circle,16:#0a7bed"
+                        "NONE,不处理",
+                        "HALF,四舍五入",
+                        "FLOOR,零头舍弃",
+                        "CEIL,零头入进",
+                        "INPUT,自定义"
                     ]
                 }
             ],
@@ -41,14 +45,17 @@
                     "optionJsx.config.boolean": true
                 },
                 {
-                    "metadata": "rounded,零头处理,,,aiMagic",
+                    "metadata": "linked,关联单据,,,aiMagic",
                     "optionJsx.config.items": [
-                        "NONE,不处理",
-                        "HALF,四舍五入",
-                        "FLOOR,零头舍弃",
-                        "CEIL,零头入进",
-                        "INPUT,自定义"
+                        "DONE,直接结算:check-circle,16:#268941",
+                        "DEBT,含应收:link,16:#ff8626",
+                        "REFUND,含退款:link,16:#ff686b",
+                        "PENDING,未结算:exclamation-circle,16:#0a7bed"
                     ]
+                },
+                {
+                    "metadata": "amountGap,零头金额,,,aiMagic",
+                    "optionJsx.config.currency": "￥"
                 }
             ],
             [
@@ -68,6 +75,9 @@
             ],
             [
                 "comment,结算备注,24,,aiMagic"
+            ],
+            [
+                "title=结算明细"
             ]
         ]
     }

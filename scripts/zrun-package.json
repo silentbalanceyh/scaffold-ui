@@ -30,5 +30,6 @@
     "url-loader": "4.1.1",
     "redux-observable": "^2.0.0",
     "chalk": "4.1.2",
-    "@antv/g2": "4.2.10"
+    "@antv/g2": "4.2.10",
+    "react-redux": "8.1.3"
 }

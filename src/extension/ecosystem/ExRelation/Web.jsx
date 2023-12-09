@@ -104,7 +104,7 @@ const _renderPage = (reference, data, key, combine) => {
         }
         const editable = Op.isEditable(reference);  // 是否开启编辑视图
         return (
-            <div className={"r_body"}>
+            <div className={"r_body"} key={`${key}/${combine.key}`}>
                 <Row className={"row"}>
                     {editable ? (
                         <Col span={20} className={"row-op"}>
@@ -189,7 +189,7 @@ export default {
                 },
                 // childFn
                 childFn: (item = {}, ref) => {
-                    const {up = [], down = [], combine} = item;
+                    const {up = [], down = [], ...combine} = item;
                     return [
                         _renderUp(reference, () => _renderUpPage(ref, up, combine)),
                         _renderDown(reference, () => _renderDownPage(ref, down, combine))

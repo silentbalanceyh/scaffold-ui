@@ -2,8 +2,7 @@ import Immutable from "immutable";
 
 import __Is from './fn.under.is.decision';
 import __It from './fn.under.it.spread';
-import dayjs from "dayjs";
-
+import clone from './fn.atomic.__.clone';
 const prevent = (event) => {
     /* 保证安全调用 */
     if (event && __Is.isFunction(event.preventDefault)) {
@@ -32,52 +31,6 @@ const remove = (item, ...keys) => {
             delete item[key];
         }
     })
-}
-const clone = (input) => {
-    if (__Is.isNull(input)) {
-        // null, undefined
-        return input;
-    } else if (__Is.isMoment(input)) {
-        // dayjs
-        return dayjs(input)
-    } else if (__Is.isTEntity(input)) {
-        // DataObject, DataArray
-        if (input.is()) {
-            const object = input.to();
-            return Immutable.fromJS(object).toJS();
-        } else {
-            if (__Is.isTObject(input)) {
-                return Immutable.fromJS({}).toJS();
-            } else {
-                return Immutable.fromJS([]).toJS();
-            }
-        }
-    } else if (__Is.isFunction(input)) {
-        // Function
-        return input;
-    } else if (__Is.isSet(input)) {
-        // Set
-        const set = new Set();
-        Array.from(input).forEach(item => set.add(item));
-        return set;
-    } else if (__Is.isNodeList(input)) {
-        // NodeList
-        return input;
-    } else if (__Is.isArray(input) || __Is.isObject(input)) {
-        // Array, Object
-        try {
-            const normalized = Immutable.fromJS(input).toJS();
-            if (__Is.isArray(input) && input.__acl) {
-                normalized.__acl = input.__acl;
-            }
-            return normalized;
-        } catch (error) {
-            console.error(error, input);
-        }
-    } else {
-        // Number, Boolean, String
-        return input;
-    }
 }
 const assign = (target = {}, source = {}, mode = 0) => {
     if (!target) target = {};

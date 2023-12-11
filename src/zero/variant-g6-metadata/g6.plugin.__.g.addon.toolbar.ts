@@ -40,7 +40,7 @@ export class GToolbar implements GLife, GView {
 
         // ID计算
         this._id = container ? container : null;
-        this._config = Ld.g6DefaultAddOn(this._id, toolbarConfig);
+        this._config = __Zn.g6DefaultAddOn(this._id, toolbarConfig);
 
         return this;
     }

@@ -2,8 +2,6 @@ import {GLife} from "./g6.__.c.interface.contract";
 import {GStore} from "./g6.__.c.pojo.g.store";
 import __Zn from './zero.uca.dependency';
 
-const Ld = __Zn.G6_LIBRARY;
-
 export class GRegistry implements GLife {
     private readonly _gGraph: any = null;
     private _config: Array<any> = [];
@@ -29,7 +27,7 @@ export class GRegistry implements GLife {
         const {$registry = {}} = reference.props;
         const combiner: any = {};
         if (this._config && __Zn.isArray(this._config)) {
-            this._config.forEach(regKey => combiner[regKey] = Ld.g6Registry(regKey));
+            this._config.forEach(regKey => combiner[regKey] = __Zn.g6Registry(regKey));
         }
 
         Object.keys($registry).forEach(regKey => {

@@ -9,8 +9,6 @@ import __KNT from './g6.__.fn.on.element.process';
 import __KPT from './g6.__.fn.pos.locate.element';
 import __Zn from './zero.uca.dependency';
 
-const Ld = __Zn.G6_LIBRARY;
-
 export class GStencil implements GLife, GView {
     private readonly _gGraph: any = null;   // GGraph
 
@@ -42,7 +40,7 @@ export class GStencil implements GLife, GView {
 
         // ID计算
         this._id = container ? container : null;
-        const options = Ld.g6DefaultAddOn(this._id, stencilConfig);
+        const options = __Zn.g6DefaultAddOn(this._id, stencilConfig);
 
         options.search = __KNT.onNodeSearch(criteria);
         // FnAttr：设置 search 属性

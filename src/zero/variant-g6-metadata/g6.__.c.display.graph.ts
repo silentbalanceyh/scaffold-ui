@@ -6,8 +6,6 @@ import {GPos} from "./g6.__.c.unit.g.pos";
 import {GLayout} from "./g6.__.c.display.layout";
 import __Zn from './zero.uca.dependency';
 
-const Ld = __Zn.G6_LIBRARY;
-
 export class GGraph implements GLife, GView {
     private readonly _gEvent: any = null;
 
@@ -42,7 +40,7 @@ export class GGraph implements GLife, GView {
         if (css) Object.assign(this._css, css);
 
         // 构造图配置
-        this._config = Ld.g6DefaultGraph(this._id, graphConfig);
+        this._config = __Zn.g6DefaultGraph(this._id, graphConfig);
 
         // 位置数据
         const pos = new GPos(position);

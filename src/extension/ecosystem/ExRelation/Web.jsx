@@ -174,8 +174,6 @@ export default {
         /*
          * Tab页签添加滚动条
          */
-        let height = document.body.clientHeight;
-        height = height * 0.618;
         if (0 === items.length) {
             return Ux.aiEmpty();
         } else {
@@ -196,7 +194,10 @@ export default {
                     ]
                 }
             }, reference);
-            return (<Tabs {...rest} style={{height}} items={$items}/>)
+            let height = window.innerHeight;
+            height = height * 0.618;
+            const style = {height};
+            return (<Tabs {...rest} style={style} items={$items}/>)
         }
         /*
                 {items.map(item => {

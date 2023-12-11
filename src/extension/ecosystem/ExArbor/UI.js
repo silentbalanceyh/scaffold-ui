@@ -4,7 +4,6 @@ import Ex from 'ex';
 import {Collapse} from "antd";
 
 const UCA_NAME = "ExArbor";
-const {Panel} = Collapse;
 
 /**
  * ## 「组件」`ExArbor`
@@ -69,15 +68,16 @@ class Component extends React.PureComponent {
             if (Ux.isFunction(fnSelect)) {
                 attrsTree.onSelect = fnSelect;
             }
+            const items = treeData.map(item => {
+                const child = {};
+                child.key = item.key;
+                child.label = item.text;
+                child.children = Ux.aiTree(item.children, attrsTree);
+                return child;
+            })
             return (
-                <Collapse defaultActiveKey={defaultActiveKey} className={"ux_collapse"}>
-                    {treeData.map(item => (
-                        <Panel key={item.key} header={item.text}
-                               showArrow={false}>
-                            {Ux.aiTree(item.children, attrsTree)}
-                        </Panel>
-                    ))}
-                </Collapse>
+                <Collapse defaultActiveKey={defaultActiveKey}
+                          className={"ux_collapse"} items={items}/>
             );
         }, Ex.parserOfColor(UCA_NAME).component())
     }

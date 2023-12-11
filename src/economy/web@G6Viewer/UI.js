@@ -2,6 +2,8 @@ import React from 'react';
 import {Spin} from 'antd';
 
 import Ux from 'ux';
+import Sk from 'skin';
+import './Cab.norm.scss';
 
 /**
  * ## 「组件」`G6Viewer`
@@ -23,6 +25,7 @@ import Ux from 'ux';
  * @method G6Viewer
  **/
 
+const UCA_NAME = "G6Viewer"
 // =====================================================
 // componentInit/componentUp
 // =====================================================
@@ -75,9 +78,10 @@ class Component extends React.PureComponent {
         const style = $gEvent.css();
         /* 读取状态 */
         const {$ready = false} = this.state;
+        const attrs = Sk.mixUca(UCA_NAME);
         return (
             <Spin spinning={!$ready}>
-                <div className={"web-g6-viewer"}>
+                <div {...attrs}>
                     <div className={"content"}>
                         <div className={"panel"}>
                             <div id={container.toolbar} className={"toolbar"} style={style.toolbar}>

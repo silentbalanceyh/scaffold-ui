@@ -181,13 +181,17 @@ export default {
             const $items = Ux.v4Items(items, {
                 // itemFn
                 itemFn: each => {
-                    const $item = Ux.clone(each);
-                    Ux.remove($item, "up", "down", "combine");
+                    const { up = [], down = [], combine = true, ...rest} = each;
+                    const $item = Ux.clone(rest);
+                    $item.data = {
+                        up, down, combine
+                    };
                     return $item;
                 },
                 // childFn
                 childFn: (item = {}, ref) => {
-                    const {up = [], down = [], ...combine} = item;
+                    const { data = {}} = item;
+                    const {up = [], down = [], ...combine} = data;
                     return [
                         _renderUp(reference, () => _renderUpPage(ref, up, combine)),
                         _renderDown(reference, () => _renderDownPage(ref, down, combine))

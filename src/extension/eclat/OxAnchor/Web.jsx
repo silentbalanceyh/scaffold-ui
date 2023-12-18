@@ -10,6 +10,7 @@ export default (reference) => {
     const {data = {}} = reference.props;
     inherit.data = data;
     const config = Ux.fromHoc(reference, "config");
+    console.log($dialog);
     return (
         // v4
         <Modal {...$dialog} open={$visible} footer={

@@ -17,8 +17,8 @@ const _ciItem = (data = {}) => {
 };
 
 const ciStart = (reference) => {
-    const {$inited = {}} = reference.props;
-    const item = _ciItem($inited);
+    const {data = {}} = reference.props;
+    const item = _ciItem(data);
     item.index = 0; // 第一个
     return item;
 };

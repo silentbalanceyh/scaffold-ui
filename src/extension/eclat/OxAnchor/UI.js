@@ -31,7 +31,7 @@ const componentInit = (reference) => {
     const dialog = Ux.configDialog(reference, config.window);
     const state = {};
     state.$dialog = dialog;
-    Ux.of(reference).hide().ready().done();
+    Ux.of(reference).hide().in(state).ready().done();
     // reference.?etState(state);
     // state.$ready = true;
     // state.$visible = false;

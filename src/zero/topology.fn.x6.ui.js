@@ -60,7 +60,7 @@ const x6UiDialog = (reference, config = {}) => {
 
     const inherit = __Zn.isFunction(supplier) ? supplier(reference) : {};
     inherit.$mode = Cv.FORM_MODE.ADD;
-    inherit.$inited = $inited;
+    inherit.data = $inited;
     inherit.$openId = $openId;
     inherit.$gEvent = $gEvent;
     /*

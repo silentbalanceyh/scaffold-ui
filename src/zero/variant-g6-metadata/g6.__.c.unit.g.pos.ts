@@ -90,8 +90,8 @@ export class GPos {
 
     // 私有函数执行初始化
     private init(inWidth: number = 0, inHeight: number = 0): void {
-        this._width = document.body.offsetWidth - inWidth;
-        this._height = document.body.offsetHeight - inHeight;
+        this._width = window.innerWidth - inWidth;
+        this._height = window.innerHeight - inHeight;
 
         this._widthInner = this._width;
         this._heightInner = this._height;

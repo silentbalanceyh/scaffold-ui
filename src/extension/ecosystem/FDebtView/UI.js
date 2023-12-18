@@ -61,7 +61,7 @@ const rxTab = (reference, initValues = {}) => {
 }
 
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
@@ -81,9 +81,9 @@ class Component extends React.PureComponent {
             const inherit = Ex.yoAmbient(this);
             const tabs = rxTab(this, initValues);
             let sum = 0
-            payment.forEach(item=>{
+            payment.forEach(item => {
                 console.log(item)
-                return sum  += item.amount
+                return sum += item.amount
             })
             initValues.amountAll = sum.toFixed(2)
             inherit.$amount = initValues.amount;

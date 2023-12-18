@@ -45,10 +45,11 @@ const componentInit = (reference) => {
 
 @component({
     "i18n.cab": require("./Cab.json"),
-    "i18n.name": UCA_NAME
+    "i18n.name": "UI"
 })
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     constructor(props) {
         super(props);
         this.state = Ux.xtInitObject(props);

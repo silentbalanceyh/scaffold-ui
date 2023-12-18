@@ -58,7 +58,7 @@ const componentInit = (reference) => {
 
 @component({
     "i18n.cab": require("./Cab.json"),
-    "i18n.name": "IxRuleTerm"
+    "i18n.name": "UI.Term"
 })
 class RuleTerm extends React.PureComponent {
     componentDidMount() {

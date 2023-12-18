@@ -1,6 +1,6 @@
 import React from 'react';
 import Ux from "ux";
-import {Popconfirm, Table, Row, Col, Tag} from "antd";
+import {Col, Popconfirm, Row, Table, Tag} from "antd";
 import Ex from "ex";
 
 const UCA_NAME = "FPaymentList";
@@ -40,7 +40,7 @@ const renderFooter = (reference) => (data = []) => {
     const params = {};
     params.count = data.length;
 
-    const { $amount = 0 } = reference.props;
+    const {$amount = 0} = reference.props;
     params.amount = Ux.formatCurrency($amount);
     const amountPayed = data.map(item => item.amount).reduce((left, right) => left + right, 0);
     params.amountPayed = Ux.formatCurrency(amountPayed);
@@ -63,14 +63,14 @@ const renderFooter = (reference) => (data = []) => {
             </Col>
             <Col span={4}>
                 {(() => {
-                    const { result = {}} = report;
-                    if(amountPayed >= $amount){
+                    const {result = {}} = report;
+                    if (amountPayed >= $amount) {
                         return (
                             <Tag color={"green"}>
                                 {result.finished}
                             </Tag>
                         )
-                    }else{
+                    } else {
                         return (
                             <Tag color={"red"}>
                                 {result.waiting}
@@ -84,11 +84,12 @@ const renderFooter = (reference) => (data = []) => {
 }
 
 @Ux.zero(Ux.rxEtat(require('./Cab'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         const {$assist = true} = this.props;
         if ($assist) {

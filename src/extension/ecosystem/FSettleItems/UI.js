@@ -1,6 +1,6 @@
 import React from 'react';
 import Ux from "ux";
-import {Table, Row, Col} from "antd";
+import {Col, Row, Table} from "antd";
 
 const UCA_NAME = "FSettleItems";
 
@@ -22,12 +22,14 @@ const renderFooter = (reference) => (data = []) => {
         </Row>
     )
 }
+
 @Ux.zero(Ux.rxEtat(require('./Cab'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     render() {
         const {data = []} = this.props;
         const table = Ux.fromHoc(this, "table");

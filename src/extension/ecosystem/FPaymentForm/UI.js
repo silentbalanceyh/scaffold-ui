@@ -4,12 +4,14 @@ import Ux from "ux";
 import ExForm from "../ExForm/UI";
 
 const UCA_NAME = "FPaymentForm";
+
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     render() {
         const {$inited = {}, $payment = []} = this.props;
         const form = Ex.yoForm(this, null, $inited);
@@ -38,13 +40,13 @@ class Component extends React.PureComponent {
                             if (amount === amountLeft || amount < amountLeft) {
                                 request.amount = amount; // 使用处理后的金额值
                                 return Ux.ajaxPost("/api/payment/create", request)
-                                    .then(data => Ux.ajaxDialog(reference, { data, key: "single" }))
+                                    .then(data => Ux.ajaxDialog(reference, {data, key: "single"}))
                                     .then(response => Ux.of(reference)._.close(response))
                                     .catch(error => Ux.ajaxError(reference, error));
                             }
 
                             if (amount > amountLeft || amount < 0) {
-                                Ux.ajaxDialog(reference, { key: "defeated" })
+                                Ux.ajaxDialog(reference, {key: "defeated"})
                                     .then(response => Ux.of(reference)._.close(response))
                                     .catch(error => Ux.ajaxError(reference, error));
                             }

@@ -50,11 +50,12 @@ const renderView = (reference) => {
 }
 
 @Ux.zero(Ux.rxEtat(require('./Cab'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     render() {
         let table = Ux.fromHoc(this, "table");
         table = Ux.clone(table);

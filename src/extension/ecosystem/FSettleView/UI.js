@@ -37,7 +37,7 @@ const yoValue = (reference) => {
 
 const renderView = (reference, data = {}) => {
     const inherit = Ex.yoAmbient(reference);
-    const { $inited = {}} = reference.props;
+    const {$inited = {}} = reference.props;
     inherit.$amount = $inited.amount;
     if ("DEBT" === data.linked) {
         inherit.$inited = data.record;
@@ -65,7 +65,7 @@ const renderView = (reference, data = {}) => {
 }
 
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {

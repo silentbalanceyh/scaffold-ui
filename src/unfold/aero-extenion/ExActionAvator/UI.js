@@ -7,7 +7,7 @@ import __Zn from '../zero.aero.dependency';
 const UCA_NAME = "ExActionAvator"
 
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {

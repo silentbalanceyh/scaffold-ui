@@ -23,12 +23,14 @@ import renders from './Renders';
 // componentInit/componentUp
 // =====================================================
 const UCA_NAME = "ExService";
+
 @Ux.zero(Ux.rxEtat(require('./Cab'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         Ex.yiPartForm(this, {
             id: "formService",

@@ -54,7 +54,7 @@ const jsx = {
 }
 
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .unmount()
     .form().raft(1).raft({
         ...Ex.Jsx.Login, ...jsx
@@ -63,6 +63,7 @@ const jsx = {
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         componentInit(this)
     }

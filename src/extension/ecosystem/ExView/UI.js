@@ -10,7 +10,7 @@ import "./Cab.norm.scss";
 const UCA_NAME = "ExView";
 
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .form().raft(2)
     .raft({
         projection: (reference, jsx = {}) => {

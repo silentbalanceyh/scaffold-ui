@@ -90,7 +90,7 @@ const componentInit = (reference) => {
  * 可重用的链接专用组件
  */
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {

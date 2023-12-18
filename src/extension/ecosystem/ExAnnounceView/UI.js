@@ -18,11 +18,12 @@ const renderFooter = (reference, onCancel) => {
 }
 
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     render() {
         const {data = {}, visible = false, rxClose} = this.props;
         let dialog = Ux.fromHoc(this, "window");

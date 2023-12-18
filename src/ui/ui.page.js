@@ -317,7 +317,7 @@ const smartList = (configuration = {}) => {
                  */
                 const config = Ux.fromHoc(this, "grid");
                 // Combine Tpl and config
-                const configTpl = Lg(`extension/tpl/ExComplexList`)
+                const configTpl = Lg(`extension/__tpl/ExListComplex/UI`)
                 const {_grid = {}} = configTpl;
                 // configuration
                 let configuration = Ux.assign(_grid, config, 1);

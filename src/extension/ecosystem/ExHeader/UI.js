@@ -23,12 +23,13 @@ const {Header} = Layout;
  * }
  */
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .ready(true)
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     render() {
         return Ex.yoRender(this, () => {
             const {config = {}, fnCollapse} = this.props;

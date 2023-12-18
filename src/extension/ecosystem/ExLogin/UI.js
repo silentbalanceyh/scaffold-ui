@@ -21,7 +21,7 @@ import Ex from 'ex';
 const UCA_NAME = "ExLogin";
 
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .form().raft(1).raft(Ex.Jsx.Login)
     .bind(Ex.Op)
     .to()

@@ -103,7 +103,7 @@ const componentInit = (reference) => {
 }
 
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .form().raft(1).raft(Ex.Jsx.Login)
     .bind(Ex.Op)
     .to()

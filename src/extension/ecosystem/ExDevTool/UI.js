@@ -139,11 +139,12 @@ const renderTooltip = (reference, each) => {
 }
 
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     render() {
         const data = Ux.DevTool(this).initialize();
         const items = Ux.v4Items(data, {

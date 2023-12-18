@@ -76,11 +76,12 @@ const componentInit = (reference, state = {}) => {
 }
 
 @Ux.zero(Ux.rxEtat(require('./Cab'))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         Ux.g6PageInit(this, componentInit);
     }

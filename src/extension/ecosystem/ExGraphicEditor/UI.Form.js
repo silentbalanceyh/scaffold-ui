@@ -4,7 +4,7 @@ import Ex from 'ex';
 import ExForm from '../ExForm/UI';
 
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab("ExFormLink")
+    .cab("UI.Form")
     .to()
 )
 class Component extends React.PureComponent {

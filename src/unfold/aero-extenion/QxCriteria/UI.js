@@ -17,7 +17,7 @@ const componentInit = (reference) => {
     /*
      * metadata definition
      */
-    const combine = __Zn.yiCombine(reference, Ux.dataCab(require('./Cab.json'), "QxCriteria"));
+    const combine = __Zn.yiCombine(reference, Ux.dataCab(require('./Cab.json'), "UI"));
 
     const {
         pattern = {}, field = [],

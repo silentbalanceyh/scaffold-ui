@@ -105,11 +105,12 @@ const componentInit = (reference) => {
 
 
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab(UCA_NAME)
+    .cab("MyTodo")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         componentInit(this)
     }

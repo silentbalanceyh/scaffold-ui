@@ -114,23 +114,41 @@ const tabTopology = reference => (props = {}) => {
 export default {
     renderNav: (reference) => {
         const {$stack = [], $index} = reference.state;
+        const $items = $stack.map(item => {
+            const $item = {};
+            // className
+            let className;
+            if ($index === item.index) {
+                className = "nav-item nav-active"
+            } else {
+                className = "nav-item"
+            }
+            $item.key = item.key;
+            $item.title = (
+                // eslint-disable-next-line
+                <a href={"#"}
+                   className={className}
+                   onClick={Op.onSelected(reference, item)}>{item.name}</a>
+            )
+            return $item;
+        })
         return (
-            <Breadcrumb separator={">"}>
-                {$stack.map(item => {
-                    let className;
-                    if ($index === item.index) {
-                        className = "nav-item nav-active"
-                    } else {
-                        className = "nav-item"
-                    }
-                    return (
-                        <Breadcrumb.Item key={item.key} className={className}>
-                            {/* eslint-disable-next-line */}
-                            <a href={"#"} onClick={Op.onSelected(reference, item)}>{item.name}</a>
-                        </Breadcrumb.Item>
-                    )
-                })}
-            </Breadcrumb>
+            <Breadcrumb separator={">"} items={$items}/>
+            // {$stack.map(item => {
+            //         let className;
+            //         if ($index === item.index) {
+            //             className = "nav-item nav-active"
+            //         } else {
+            //             className = "nav-item"
+            //         }
+            //         return (
+            //             <Breadcrumb.Item key={item.key} className={className}>
+            //                 {/* eslint-disable-next-line */}
+            //                 <a href={"#"} onClick={Op.onSelected(reference, item)}>{item.name}</a>
+            //             </Breadcrumb.Item>
+            //         )
+            //     })}
+            // </Breadcrumb>
         )
     },
     renderPage: (reference, $ciUNLOCK) => {

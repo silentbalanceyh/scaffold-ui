@@ -360,7 +360,16 @@ export default {
             }
             {
                 /*
-                 * key 的条件设置
+                 * 主键相关的条件设置，条件有几个：
+                 * 1. 要查询的设置关联关系的设备如果已经存在：上游、下游 双向的设备数据信息，那么此处不再
+                 *    关联任何已存在的设备信息
+                 *    up - 上游配置项
+                 *    down - 下游配置项
+                 * 2. 当前设备中自引用设备不可关联，简单说就是自己和自己创建关系（容易造成死环）所以要排除
+                 *    排除过程中，从
+                 *    props.$record.rowData.key 中提取数据，由于此处是 ExRelation 组件，所以不提供
+                 *    类似 $inited 的表单初始化数据方法，而通常情况下 $record.rowData 表示的是外层主单
+                 *    数据，所以代码走此处主键更靠谱。
                  */
                 const {$data = {}} = reference.state;
                 let existing = [];
@@ -371,6 +380,12 @@ export default {
                 }
                 if (0 < existing.length) {
                     criteria[`globalId,!i`] = existing;
+                }
+                // 自引用
+                const {$record = {}} = reference.props;
+                const excludeKey = $record.rowData?.key ? $record.rowData.key : undefined;
+                if (excludeKey) {
+                    criteria[`key,<>`] = excludeKey;
                 }
             }
             /* 已确认条件 */

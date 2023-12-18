@@ -5,7 +5,10 @@ import Ex from 'ex';
 import {Col, Row, Tag} from 'antd';
 import Jsx from './Web';
 import Op from "./Op";
+import './Cab.norm.scss';
+import Sk from 'skin';
 
+const UCA_NAME = "OxCi";
 /**
  * ## 「组件」`OxCi`
  *
@@ -152,8 +155,10 @@ class Component extends React.PureComponent {
 
     render() {
         const header = Ux.fromHoc(this, "header");
+
+        const attrs = Sk.mixOx(UCA_NAME);
         return (
-            <div className={"ox-ci"}>
+            <div {...attrs}>
                 <Row className={"nav"}>
                     <Col span={2}>
                         <Tag color={"magenta"}>{header.stack}</Tag>
@@ -170,7 +175,7 @@ class Component extends React.PureComponent {
                                     {renderUnlock(this)}
                                 </div>
                             )
-                        }, Ex.parserOfColor("OxCi").component())}
+                        }, Ex.parserOfColor(UCA_NAME).component())}
                     </Col>
                 </Row>
             </div>

@@ -1,0 +1,14 @@
+.uox{
+  &_OxCi{
+    .nav{
+      height: $uni_font * 2.4;
+      border-bottom: 1px dotted lightgrey;
+      .nav-item{
+        line-height: $uni_font * 1.6;
+      }
+      .nav-active{
+        color: $uni_color;
+      }
+    }
+  }
+}

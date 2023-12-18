@@ -141,7 +141,7 @@ const componentUp = (reference, virtualRef) => {
 }
 
 @Ux.zero(Ux.rxEtat(require('./Cab'))
-    .cab("ExCi")
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {

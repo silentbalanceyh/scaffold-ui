@@ -5,7 +5,7 @@ import {Col, List, Radio, Row} from 'antd';
 
 
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
-    .cab("ExTpl")
+    .cab("UI.Tpl")
     .to()
 )
 class Component extends React.PureComponent {

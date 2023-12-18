@@ -38,7 +38,7 @@ const componentInit = (reference) => {
 }
 
 @Ux.zero(Ux.rxEtat(require('./Cab'))
-    .cab("ExAnchor")
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {

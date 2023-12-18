@@ -148,7 +148,7 @@ const componentInit = (reference) => {
 }
 
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab("ExHistory")
+    .cab("UI")
     .state({
         $row: {}
     })

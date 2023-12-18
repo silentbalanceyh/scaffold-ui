@@ -6,7 +6,7 @@ import ExForm from "../ExForm/UI";
 const UCA_NAME = "TxObserve";
 
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {

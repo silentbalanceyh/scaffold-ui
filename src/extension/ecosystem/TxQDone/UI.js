@@ -12,12 +12,14 @@ import Sk from 'skin';
 import "./Cab.norm.scss";
 
 const UCA_NAME = "TxQDone";
+
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         Ex.wf(this).yiQueue();
     }

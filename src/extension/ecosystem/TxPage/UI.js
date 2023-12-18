@@ -10,12 +10,14 @@ import Sk from 'skin';
 import "./Cab.norm.scss";
 
 const UCA_NAME = "TxPage";
+
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab(UCA_NAME)
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         Op.yiPage(this);
         // Ex.wf(this).yiPage().then(Ux.pipe(this));

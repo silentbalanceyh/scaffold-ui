@@ -10,7 +10,8 @@ const __ioSegment = (reference, form, cab) => {
         "SxOpen",
         "SxRun"
     ].forEach(filename => {
-        const name = cab.ns + '/' + ($cab.name ? $cab.name : filename)
+        // extension/__tpl/SxWorkflow
+        const name = 'extension/__tpl/SxWorkflow/' + ($cab.name ? $cab.name : filename)
         const resource = Langue(name);
         if (resource) {
             Object.assign(segment, resource);

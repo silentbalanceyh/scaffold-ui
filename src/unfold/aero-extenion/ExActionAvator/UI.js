@@ -4,8 +4,6 @@ import {Dropdown} from 'antd';
 
 import __Zn from '../zero.aero.dependency';
 
-const UCA_NAME = "ExActionAvator"
-
 @Ux.zero(Ux.rxEtat(require('./Cab.json'))
     .cab("UI")
     .to()

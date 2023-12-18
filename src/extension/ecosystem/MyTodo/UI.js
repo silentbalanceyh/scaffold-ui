@@ -105,7 +105,7 @@ const componentInit = (reference) => {
 
 
 @Ux.zero(Ux.rxEtat(require("./Cab"))
-    .cab("MyTodo")
+    .cab("UI")
     .to()
 )
 class Component extends React.PureComponent {

@@ -61,6 +61,7 @@ export {default as FBookView} from './FBookView/UI';                // 账本详
 export {default as FBookList} from './FBookList/UI';                // 账本列表（订单中查看）
 export {default as FSettleView} from './FSettleView/UI';            // 结算单详情
 export {default as FSettleForm} from './FSettleForm/UI';            // 待结算单
+export {default as FSettleFormBatch} from './FSettleFormBatch/UI';  // 待结算批量表单
 export {default as FDebtView} from './FDebtView/UI';                // 应收详情
 export {default as FRefundView} from './FRefundView/UI';            // 退款详情
 

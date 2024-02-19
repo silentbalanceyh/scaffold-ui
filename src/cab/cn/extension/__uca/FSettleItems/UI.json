@@ -1,12 +1,16 @@
 {
     "_table": {
+        "bordered": true,
         "className": "ux_table_tree",
         "pagination": false,
         "scroll": {
             "y": 500
         },
         "columns": [
-            "serial,明细编号",
+            {
+                "metadata": "serial,明细编号",
+                "width": 100
+            },
             "name,名称",
             "amount,明细金额,CURRENCY,true",
             {

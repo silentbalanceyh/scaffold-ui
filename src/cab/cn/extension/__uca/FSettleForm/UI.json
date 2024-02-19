@@ -23,46 +23,20 @@
                 }
             ],
             [
+                "title=结算单/明细"
+            ],
+            [
+                {
+                    "metadata": "settlements,结算单,24"
+                }
+            ],
+            [
+                {
+                    "metadata": "items,结算明细,24"
+                }
+            ],
+            [
                 "title=结算处理"
-            ],
-            [
-                "serial,结算单号,,,aiMagic",
-                {
-                    "metadata": "amount,结算金额,,,aiMagic",
-                    "optionJsx.config.currency": "￥"
-                },
-                {
-                    "metadata": "linked,关联单据,,,aiMagic",
-                    "optionJsx.config.items": [
-                        "DONE,直接结算:check-circle,16:#268941",
-                        "DEBT,含应收:link,16:#ff8626",
-                        "REFUND,含退款:link,16:#ff686b",
-                        "PENDING,未结算:exclamation-circle,16:#0a7bed"
-                    ]
-                }
-            ],
-            [
-                {
-                    "metadata": "cross,结算模式,8,,aiMagic",
-                    "optionJsx.config.items": [
-                        "false,单订单结算:pay-circle,16:#228B22",
-                        "true,跨订单结算:pay-circle,16:#0e8be6"
-                    ],
-                    "optionJsx.config.boolean": true
-                },
-                {
-                    "metadata": "updatedBy,结算人,,,aiMagic",
-                    "optionJsx.config.user": {
-                        "uri": "/api/user/:key",
-                        "field": "realname"
-                    },
-                    "optionJsx.$empty": "（系统）"
-                },
-                {
-                    "metadata": "updatedAt,结算时间,,,aiMagic",
-                    "optionJsx.config.format": "YYYY年MM月DD日 HH:mm",
-                    "moment": true
-                }
             ],
             [
                 {
@@ -196,9 +170,6 @@
                         }
                     }
                 }
-            ],
-            [
-                "title=明细详情"
             ]
         ],
         "metadata": {

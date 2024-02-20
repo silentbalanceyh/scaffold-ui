@@ -60,5 +60,29 @@ export default {
             values.rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
         }
         return values;
+    },
+    // 选择结算单
+    rxSettlement: (reference) => (keys = []) => {
+        const {$inited = {}} = reference.props;
+        const { settlements = [], items = []} = $inited;
+        const state = {};
+        const $selected = {};
+        $selected.settlements = settlements.filter(item => keys.includes(item.key));
+        $selected.items = items.filter(item => keys.includes(item.settlementId));
+        state.$selected = $selected;
+        console.log(state);
+        Ux.of(reference).in(state).done();
+    },
+    // 选择结算明细
+    rxSettleItem: (reference) => (keys = []) => {
+        const {$inited = {}} = reference.props;
+        const { settlements = [], items = []} = $inited;
+        const state = {};
+        const $selected = {};
+        $selected.items = items.filter(item => keys.includes(item.key));
+        const keySettlement = $selected.items.map(item => item.settlementId);
+        $selected.settlements = settlements.filter(item => keySettlement.includes(item.key));
+        state.$selected = $selected;
+        Ux.of(reference).in(state).done();
     }
 }

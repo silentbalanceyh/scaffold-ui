@@ -1,0 +1,43 @@
+{
+    "_table": {
+        "bordered": true,
+        "className": "ux_table_tree",
+        "pagination": false,
+        "scroll": {
+            "y": 500
+        },
+        "columns": [
+            {
+                "metadata": "serial,结算单编号",
+                "width": 100
+            },
+            "amount,结算金额,CURRENCY",
+            "comment,结算备注,TEXT",
+            {
+                "metadata": "linked,关联单据,MAPPING",
+                "$mapping": {
+                    "DONE": "直接结算,check-circle,16,#268941",
+                    "DEBT": "含应收,link,16,#0e8be6",
+                    "REFUND": "含退款,link,16,#ff686b",
+                    "PENDING": "未结算,exclamation-circle,16,#0a7bed"
+                }
+            },
+            {
+                "title": "结算人",
+                "dataIndex": "updatedBy",
+                "$render": "USER",
+                "$config": {
+                    "uri": "/api/user/:key",
+                    "field": "realname"
+                },
+                "$empty": "（未结算）"
+            },
+            {
+                "title": "结算时间",
+                "dataIndex": "updatedAt",
+                "$render": "DATE",
+                "$format": "YYYY年MM月DD日 HH:mm:ss"
+            }
+        ]
+    }
+}

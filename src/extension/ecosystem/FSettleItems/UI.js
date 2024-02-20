@@ -1,13 +1,24 @@
 import React from 'react';
 import Ux from "ux";
 import {Col, Row, Table} from "antd";
+import Sk from 'skin';
+import './Cab.norm.scss';
 
 const UCA_NAME = "FSettleItems";
 
 const renderFooter = (reference) => (data = []) => {
     const params = {};
     params.count = data.length;
-    const amount = data.map(item => item.amount).reduce((left, right) => left + right, 0);
+
+    let amount = 0;
+    data.forEach(item => {
+        if(item.income){
+            amount += item.amount;
+        }else{
+            amount -= item.amount;
+        }
+    })
+    // const amount = data.map(item => item.amount).reduce((left, right) => left + right, 0);
     params.amount = Ux.formatCurrency(amount);
 
     const report = Ux.inHoc(reference, "report");
@@ -37,9 +48,21 @@ class Component extends React.PureComponent {
         let dataSource = Ux.clone(data);
         Ux.configScroll(table, dataSource, this);
 
-        dataSource = dataSource.sort(Ux.sorterDescFn('updatedAt'))
+        dataSource = dataSource.sort(Ux.sorterDescFn('updatedAt'));
+
+        {
+            const { $selectedKeys = [], rxCascade = () => false } = this.props;
+            table.rowSelection = ({
+                selectedRowKeys: $selectedKeys,
+                onChange: rxCascade
+            })
+        }
+
+        const attrs = Sk.mixF(UCA_NAME);
         return (
-            <Table {...table} dataSource={dataSource} footer={renderFooter(this)}/>
+            <div {...attrs}>
+                <Table {...table} dataSource={dataSource} footer={renderFooter(this)}/>
+            </div>
         )
     }
 }

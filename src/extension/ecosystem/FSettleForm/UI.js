@@ -54,16 +54,32 @@ class Component extends React.PureComponent {
                 .forEach(item => item.tab = page[initValues.linked]);
 
             const attrs = Sk.mixF(UCA_NAME);
+            /*
+             * 此处会有生命周期问题，不可以直接在这里提取 this.state 中的数据
+             * 如果直接提取会导致状态不同步的情况，引起选中项无法同步状态的问题
+             * 所以此处获取外层 React 引用只能使用 onReference 方法，并且在
+             * render 生命周期中来提取，参考 $renders 中两个字段的定制，根据
+             *
+             * 旧代码（此处调用）
+             * const { $selected = {} } = this.state;
+             * 新代码
+             * 在 $renders 自定义函数中调用：
+             * {
+             *     settlements: (reference, jsx) => {
+             *         const ref = Ux.onReference(reference, 1);
+             *         const { $selected = {} } = ref.state;
+             *         .....
+             *     }
+             * }
+             *
+             * 二者区别在于触发代码的生命周期不同，所以状态本身也会有区别。
+             */
             return (
                 <div {...attrs}>
                     <ExForm {...form} $height={"300px"}
                             $form={$form} $op={Op.actions}
                             $renders={{
                                 settlements: (reference, jsx) => {
-                                    /*
-                                     * 此处会有生命周期问题，不可以直接在这里提取 this.state 中的数据
-                                     * 如果直接提取会导致状态不同步的情况，引起选中项无法同步状态的问题
-                                     */
                                     const ref = Ux.onReference(reference, 1);
                                     const { $selected = {} } = ref.state;
                                     return (<FSettles {...inherit} data={settlements}

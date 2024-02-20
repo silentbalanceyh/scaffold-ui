@@ -4,10 +4,10 @@ import Ex from "ex";
 const verifyPayment = (reference, params = {}) => {
     // 支付手段
     const finishType = params.finishType;
-    if("STANDARD" === finishType){
+    if ("STANDARD" === finishType) {
         // 标准结账，标准结账验证 payment
         return Ex.inPrePay(reference, params, {}, true);
-    }else{
+    } else {
         // 延迟（应收/退款）
         return Ux.promise(params);
     }
@@ -38,19 +38,19 @@ export default {
         let values = Ux.clone($inited);
         // 计算结算信息
         values = Ex.inSettlement(values);
-        const { record = {}} = values;
-        if(values.finished){
-            if(Ux.isEmpty(record)){
+        const {record = {}} = values;
+        if (values.finished) {
+            if (Ux.isEmpty(record)) {
                 // 已结算
                 values.linked = "DONE";
-            }else{
-                if(0 < record.amount){
+            } else {
+                if (0 < record.amount) {
                     values.linked = "DEBT";
-                }else{
+                } else {
                     values.linked = "REFUND";
                 }
             }
-        }else{
+        } else {
             // 未结算
             values.linked = "PENDING";
             // 结算方式默认：STANDARD
@@ -64,19 +64,18 @@ export default {
     // 选择结算单
     rxSettlement: (reference) => (keys = []) => {
         const {$inited = {}} = reference.props;
-        const { settlements = [], items = []} = $inited;
+        const {settlements = [], items = []} = $inited;
         const state = {};
         const $selected = {};
         $selected.settlements = settlements.filter(item => keys.includes(item.key));
         $selected.items = items.filter(item => keys.includes(item.settlementId));
         state.$selected = $selected;
-        console.log(state);
         Ux.of(reference).in(state).done();
     },
     // 选择结算明细
     rxSettleItem: (reference) => (keys = []) => {
         const {$inited = {}} = reference.props;
-        const { settlements = [], items = []} = $inited;
+        const {settlements = [], items = []} = $inited;
         const state = {};
         const $selected = {};
         $selected.items = items.filter(item => keys.includes(item.key));

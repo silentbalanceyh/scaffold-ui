@@ -31,8 +31,25 @@
             }
         ]
     },
-    "_report": {
-        "count": "明细合计：:count条",
-        "amount": "金额合计：￥:amount"
-    }
+    "_report": [{
+        "label": "总数量",
+        "value": ":value条",
+        "className": "fm_item_blue",
+        "executor": "SUM_C_ALL"
+    },{
+        "label": "已完成",
+        "value": ":value条",
+        "className": "fm_item_green",
+        "executor": "SUM_C_FINISHED"
+    },{
+        "label": "总金额",
+        "value": "￥:value",
+        "className": "fm_item_red",
+        "executor": "SUM_A_ALL"
+    },{
+        "label": "完成总额",
+        "value": "￥:value",
+        "className": "fm_item_green",
+        "executor": "SUM_A_FINISHED"
+    }]
 }

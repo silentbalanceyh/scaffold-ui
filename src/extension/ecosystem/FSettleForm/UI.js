@@ -79,6 +79,15 @@ class Component extends React.PureComponent {
                     <ExForm {...form} $height={"300px"}
                             $form={$form} $op={Op.actions}
                             $renders={{
+                                amountActual: (reference, jsx) => {
+                                    const { config = {}} = jsx;
+                                    return (
+                                        <span>
+                                            {config.currency}
+                                            {Ux.formatCurrency(Op.yoAmount(reference))}
+                                        </span>
+                                    )
+                                },
                                 settlements: (reference, jsx) => {
                                     const ref = Ux.onReference(reference, 1);
                                     const { $selected = {} } = ref.state;

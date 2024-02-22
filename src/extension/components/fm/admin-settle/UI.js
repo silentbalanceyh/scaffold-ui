@@ -1,5 +1,5 @@
 import Ui from "ui";
-import {FSettleFormBatch} from 'ei';
+import {FSettleForm} from 'ei';
 import Ex from 'ex';
 import Ux from "ux";
 
@@ -45,7 +45,7 @@ export default Ui.smartList({
 
     Form: {
         name: "FSettleFormBatch",
-        FormEdit: FSettleFormBatch
+        FormEdit: FSettleForm
     },
 
     componentInit: (reference) => {

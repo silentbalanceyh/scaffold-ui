@@ -1,4 +1,5 @@
-import __In from './variant-input'
+import __In from './variant-input';
+import __Pr from './fm.fn.pay.process';
 export default {
     // 入账部分处理
     payFormBill: (ref) => {
@@ -9,8 +10,19 @@ export default {
         }
     },
     // 特殊函数
+    payFormSettle: (ref) => {
+        const { $selected = {}} = ref.state;
+        const fields = __In.Jsx.PayFn(ref, __Pr.paySum($selected.items));
+        return {
+            rounded: fields.rounded,
+            payment: fields.payment,
+            amountGap: fields.amountGap,
+        }
+    },
+    // 特殊函数
     payFormFee: (ref) => {
-        const fields = __In.Jsx.PayFn(ref);
+        const { $fee = {}} = ref.props;
+        const fields = __In.Jsx.PayFn(ref, $fee.sum);
         return {
             finishType: fields.finishType,
             rounded: fields.rounded,

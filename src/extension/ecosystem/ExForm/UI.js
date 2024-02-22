@@ -3,6 +3,7 @@ import Ex from "ex";
 import Ux from 'ux';
 import {Form} from "antd";
 import Op from './Op';
+
 /**
  * ## 「组件」`ExForm`
  *
@@ -82,7 +83,20 @@ class Component extends React.PureComponent {
     };
 
     componentDidMount() {
-        Ux.raftForm(this).then(Ux.ready).then(Ux.pipe(this));
+        const reference = this;
+        /*
+         * 此处做初始化处理，追加生命周期到环境中
+         * rxMountAfter 函数会在初始化执行之后执行 state 的最终修改流程
+         * 且为 Promise 流程，并且是 ExForm 组件独有的流程
+         */
+        Ux.raftForm(reference).then(state => {
+            const {rxMountAfter} = reference.props;
+            if (Ux.isFunction(rxMountAfter)) {
+                return rxMountAfter(state, reference);
+            } else {
+                return Ux.promise(state);
+            }
+        }).then(Ux.ready).then(Ux.pipe(reference));
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

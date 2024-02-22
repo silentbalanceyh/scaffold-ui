@@ -1,16 +1,21 @@
 import Ux from 'ux';
 import {Row, Col} from "antd";
 import React from 'react';
+/*
+ * Fix: JavaScript 浮点数在加法的时候会出现精度问题，是因为 JavaScript 中的数字按照 IEEE 754 的标准
+ * 使用 64 位双精度浮点型来表示1。这样会导致一些无法用有限的二进制位精确表示的十进制小数，在转换成二进制的过程中产生误差2。
+ * 防止：535.83 -> 535.8299999999999 的情况发生
+ */
 const valueAmount = (data = []) => {
     let amount = 0;
     data.forEach(item => {
         if(item.income){
-            amount += item.amount;
+            amount += (item.amount * 100);
         }else{
-            amount -= item.amount;
+            amount -= (item.amount * 100);
         }
     })
-    return amount;
+    return amount / 100;
 }
 
 const EXECUTOR = {

@@ -93,9 +93,11 @@ export default {
         __Zp.yoDebt(reference, $inited, debt),
     // TODO: 新的API
     payGap: (params = {}) => __Zp.payGap(params),
+    paySum: (data = []) => __Zp.paySum(data),
     // 表单
     payFormBill: (ref) => __Zp.payFormBill(ref),
     payFormFee: (ref) => __Zp.payFormFee(ref),
     payFormNorm: (ref) => __Zp.payFormNorm(ref),
     payFormItem: (ref) => __Zp.payFormItem(ref),
+    payFormSettle: (ref, amount) => __Zp.payFormSettle(ref, amount),
 }

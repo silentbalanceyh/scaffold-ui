@@ -16,16 +16,38 @@
         }
     },
     "_grid": {
+        "options": {
+            "search.advanced": false,
+            "tabs.edit": "待结算单据",
+            "op.extension.settlement": {
+                "text": "处理选中",
+                "icon": "edit",
+                "region": "op.batch.settle",
+                "config": {
+                    "executor": "rxSettleBatch"
+                }
+            }
+        },
+        "table": {
+            "columns": [
+                {
+                    "title": "操作",
+                    "dataIndex": "key",
+                    "fixed": "left",
+                    "$render": "EXECUTOR",
+                    "$option": [
+                        {
+                            "text": "处理结算",
+                            "executor": "rxSettle"
+                        }
+                    ]
+                }
+            ]
+        },
         "module": {
             "NAME": "待结算",
             "MODULE": "settlement",
             "IDENTIFIER": "fm.settlement"
-        },
-        "options": {
-            "search.advanced": false,
-            "op.row.edit": "处理结算",
-            "op.row.delete": false,
-            "tabs.edit": "待结算单据"
         },
         "query": {
             "projection": [],

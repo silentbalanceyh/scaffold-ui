@@ -44,6 +44,7 @@ document/doc-web    # 去文档
 # ---------- Zero分发脚本
 run-ux-current.sh
 run-ux-all.sh
+run-sync.sh
 # ---------- Zero生成代码
 src/environment/routes.js
 src/environment/datum.js

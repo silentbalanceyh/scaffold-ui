@@ -1,0 +1,17 @@
+{
+    "_grid": {
+        "module": {
+            "NAME": "交易记录",
+            "MODULE": "trans",
+            "IDENTIFIER": "fm.trans"
+        },
+        "query": {
+            "projection": [],
+            "pager": "1,10",
+            "sorter": "updatedAt=DESC",
+            "criteria": {
+                "sigma": "PROP:app.sigma"
+            }
+        }
+    }
+}

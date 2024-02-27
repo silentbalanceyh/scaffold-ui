@@ -44,7 +44,7 @@ export default Ui.smartList({
     },
 
     Form: {
-        name: "FSettleFormBatch",
+        name: "FSettleForm",
         FormEdit: FSettleForm
     },
 

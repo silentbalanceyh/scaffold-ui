@@ -24,10 +24,23 @@ class Component extends React.PureComponent {
         dataSource = dataSource.sort(Ux.sorterDescFn('updatedAt'));
 
         {
-            const { $selectedKeys = [], rxCascade = () => false } = this.props;
+            const { $selectedKeys = [], rxCascade = () => false, data = [] } = this.props;
+            const $selected = [];
+            data.forEach(record => {
+                if(!record.finishedId && $selectedKeys.includes(record.key)){
+                    $selected.push(record.key);
+                }
+            })
             table.rowSelection = ({
-                selectedRowKeys: $selectedKeys,
-                onChange: rxCascade
+                selectedRowKeys: $selected,
+                onChange: rxCascade,
+                getCheckboxProps: (record = {}) => {
+                    const props = {};
+                    if(record.finishedId){
+                        props.disabled = true;
+                    }
+                    return props;
+                }
             })
         }
 

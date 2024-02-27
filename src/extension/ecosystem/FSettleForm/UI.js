@@ -13,14 +13,7 @@ import './Cab.norm.scss';
 
 const UCA_NAME = "FSettleForm";
 const componentInit = (reference) => {
-    const state = {};
-    const { $inited = {} } = reference.props;
-    const { settlements = [], items = [] } = $inited;
-    const $selected = {};
-    $selected.settlements = settlements;
-    $selected.items = items;
-    state.$selected = $selected;
-    Ux.of(reference).in(state).ready().done();
+    Ux.of(reference).ready().done();
     // reference.?etState(state);
     // state.$ready = true;
 }
@@ -78,8 +71,13 @@ class Component extends React.PureComponent {
                 <div {...attrs}>
                     <ExForm {...form} $height={"300px"}
                             $form={$form} $op={Op.actions}
+                            rxMountAfter={Op.rxMountAfter}
                             $renders={{
-                                amountActual: (reference, jsx) => {
+                                ...Ex.payFormSettle(this),
+                                finishType: (reference, jsx) => {
+                                    return Ux.aiRadio(reference, jsx, Op.rxFinishType(reference));
+                                },
+                                amount: (reference, jsx) => {
                                     const { config = {}} = jsx;
                                     return (
                                         <span>
@@ -89,19 +87,17 @@ class Component extends React.PureComponent {
                                     )
                                 },
                                 settlements: (reference, jsx) => {
-                                    const ref = Ux.onReference(reference, 1);
-                                    const { $selected = {} } = ref.state;
+                                    const { $selected = {} } = reference.state;
                                     return (<FSettles {...inherit} data={settlements}
                                                       $selectedKeys={$selected.settlements.map(i => i.key)}
-                                                      rxCascade={Op.rxSettlement(ref)}/>
+                                                      rxCascade={Op.rxSettlement(reference)}/>
                                     )
                                 },
                                 items: (reference, jsx) => {
-                                    const ref = Ux.onReference(reference, 1);
-                                    const { $selected = {} } = ref.state;
+                                    const { $selected = {} } = reference.state;
                                     return (<FSettleItems {...inherit} data={items}
                                                           $selectedKeys={$selected.items.map(i => i.key)}
-                                                          rxCascade={Op.rxSettleItem(ref)}/>
+                                                          rxCascade={Op.rxSettleItem(reference)}/>
                                     )
                                 }
                             }}/>

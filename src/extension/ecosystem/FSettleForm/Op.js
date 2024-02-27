@@ -12,27 +12,31 @@ const verifyPayment = (reference, params = {}) => {
         return Ux.promise(params);
     }
 }
-const valueAmount = (data = []) => {
-    let amount = 0;
-    data.forEach(item => {
-        if(item.income){
-            amount += item.amount;
-        }else{
-            amount -= item.amount;
-        }
-    })
-    return amount;
+
+const valueAmount = (items = [], rounded = "HALF") => {
+    const values = {};
+    values.amount = Ex.paySum(items);
+    values.rounded = rounded;
+    const attachAmount = Ex.payGap({
+        amount: values.amount,
+        rounded: values.rounded
+    });
+    Object.assign(values, attachAmount);
+    return values;
 }
 export default {
     actions: {
         $opSave: (reference) => (params) => {
             const ref = Ux.onReference(reference, 1);
-            const { $selected = {}} = ref.state;
+            const { $selected = {}} = reference.state;
             /* settlments / items */
             const request = Ux.clone(params);
+
             request.settlements = $selected.settlements;
             request.items = $selected.items;
-            request.amountActual = valueAmount($selected.items);
+            request.amountActual = Ex.paySum($selected.items);
+            const attachAmount = valueAmount($selected.items, request.rounded);
+            Object.assign(request, attachAmount);
 
             if(0 === request.settlements.length || 0 === request.items.length){
                 const modal = Ux.fromHoc(ref, "modal");
@@ -47,9 +51,8 @@ export default {
         }
     },
     yoAmount: (reference) => {
-        const ref = Ux.onReference(reference, 1);
-        const { $selected = {} } = ref.state;
-        return valueAmount($selected.items);
+        const { $selected = {} } = reference.state;
+        return Ex.paySum($selected.items);
     },
     yoValue: (reference) => {
         const {$inited = {}} = reference.props;
@@ -66,11 +69,22 @@ export default {
         values.finishType = "STANDARD";
         const params = Ux.isMod('mHotel');
         values.rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
+
+        const amountAttach = valueAmount($inited.items, values.rounded);
+        Object.assign(values, amountAttach);
+
+        values.payment = [];
+        values.payment.push({
+            key: "Cash",
+            name: "Cash",
+            amount: values.amountActual
+        })
         return values;
     },
     // 选择结算单
     rxSettlement: (reference) => (keys = []) => {
-        const {$inited = {}} = reference.props;
+        const ref = Ux.onReference(reference, 1);
+        const {$inited = {}} = ref.props;
         const { settlements = [], items = []} = $inited;
         const state = {};
         const $selected = {};
@@ -78,10 +92,15 @@ export default {
         $selected.items = items.filter(item => keys.includes(item.settlementId));
         state.$selected = $selected;
         Ux.of(reference).in(state).done();
+
+        const rounded = Ux.formHit(reference, 'rounded');
+        const formValues = valueAmount($selected.items, rounded);
+        Ux.formHits(reference, formValues);
     },
     // 选择结算明细
     rxSettleItem: (reference) => (keys = []) => {
-        const {$inited = {}} = reference.props;
+        const ref = Ux.onReference(reference, 1);
+        const {$inited = {}} = ref.props;
         const { settlements = [], items = []} = $inited;
         const state = {};
         const $selected = {};
@@ -90,5 +109,37 @@ export default {
         $selected.settlements = settlements.filter(item => keySettlement.includes(item.key));
         state.$selected = $selected;
         Ux.of(reference).in(state).done();
+
+        const rounded = Ux.formHit(reference, 'rounded');
+        const formValues = valueAmount($selected.items, rounded);
+        Ux.formHits(reference, formValues);
+    },
+    // rxMountAfter
+    rxMountAfter: (state, reference) => {
+        const ref = Ux.onReference(reference, 1);
+        const {$inited = {}} = ref.props;
+        const { settlements = [], items = []} = $inited;
+        const $selected = {};
+        $selected.settlements = settlements;
+        $selected.items = items;
+        state.$selected = $selected;
+        Ux.of(reference).in(state).ready().done();
+    },
+    // rxFinishType
+    rxFinishType: (reference) => (event) => {
+        const value = Ux.ambEvent(event);
+        let formValues = {};
+        if("STANDARD" === value){
+            const { $selected = {}} = reference.state;
+            const params = Ux.isMod('mHotel');
+            const rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
+            const amountAttach = valueAmount($selected.items, rounded);
+            Object.assign(formValues, amountAttach);
+        }else{
+            formValues.amountActual = 0;
+            formValues.amountGap = 0;
+            formValues.rounded = undefined;
+        }
+        Ux.formHits(reference, formValues);
     }
 }

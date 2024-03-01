@@ -1,0 +1,64 @@
+{
+    "_assist": {
+        "tabular": {
+            "uri": "/api/types/tabulars",
+            "method": "POST",
+            "magic": {
+                "$body": [
+                    "bill.type",
+                    "bill.status",
+                    "bill.category",
+                    "pay.term.type",
+                    "pay.type"
+                ]
+            },
+            "group": "type"
+        }
+    },
+    "_grid": {
+        "options": {
+            "search.advanced": false,
+            "tabs.edit": "带处理应收/退款",
+            "op.extension.settlement": {
+                "text": "处理选中",
+                "icon": "edit",
+                "region": "op.batch.settle",
+                "config": {
+                    "executor": "rxDebtBatch"
+                }
+            }
+        },
+        "table": {
+            "row": {
+                "onDoubleClick": "rxDebt"
+            },
+            "columns": [
+                {
+                    "title": "操作",
+                    "dataIndex": "key",
+                    "fixed": "left",
+                    "$render": "EXECUTOR",
+                    "$option": [
+                        {
+                            "text": "处理结算",
+                            "executor": "rxDebt"
+                        }
+                    ]
+                }
+            ]
+        },
+        "module": {
+            "NAME": "应收/应退",
+            "MODULE": "debt",
+            "IDENTIFIER": "fm.debt"
+        },
+        "query": {
+            "projection": [],
+            "pager": "1,10",
+            "sorter": "updatedAt=DESC",
+            "criteria": {
+                "sigma": "PROP:app.sigma"
+            }
+        }
+    }
+}

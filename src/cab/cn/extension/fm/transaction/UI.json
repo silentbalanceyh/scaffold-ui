@@ -1,5 +1,12 @@
 {
     "_grid": {
+        "options": {
+            "search.advanced": false,
+            "op.row.edit": false,
+            "op.row.delete": false,
+            "op.row.view": "查看详情",
+            "tabs.edit": "交易记录详情"
+        },
         "module": {
             "NAME": "交易记录",
             "MODULE": "trans",

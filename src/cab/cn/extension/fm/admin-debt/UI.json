@@ -40,7 +40,7 @@
                     "$render": "EXECUTOR",
                     "$option": [
                         {
-                            "text": "处理结算",
+                            "text": "处理应收",
                             "executor": "rxDebt"
                         }
                     ]
@@ -57,7 +57,9 @@
             "pager": "1,10",
             "sorter": "updatedAt=DESC",
             "criteria": {
-                "sigma": "PROP:app.sigma"
+                "sigma": "PROP:app.sigma",
+                "finished": "BOOL:false",
+                "": "OPERATOR:AND"
             }
         }
     }

@@ -27,6 +27,20 @@
             ],
             [
                 {
+                    "metadata": "amount,本次交易额,8",
+                    "optionJsx.config.currency": "￥"
+                },
+                {
+                    "metadata": "cross,交易模式,8,,aiMagic",
+                    "optionJsx.config.items": [
+                        "false,单订单结算:pay-circle,16:#228B22",
+                        "true,跨订单结算:pay-circle,16:#0e8be6"
+                    ],
+                    "optionJsx.config.boolean": true
+                }
+            ],
+            [
+                {
                     "metadata": "settlements,结算单,24"
                 }
             ],
@@ -133,6 +147,18 @@
             ],
             [
                 {
+                    "metadata": "amountActual,应结金额,,,aiMagic",
+                    "optionJsx.config.currency": "￥"
+                },
+                {
+                    "metadata": "amountGap,零头金额,,,,addonAfter=￥,normalize=decimal:18:2",
+                    "optionJsx.depend.enabled": {
+                        "rounded": "INPUT"
+                    }
+                }
+            ],
+            [
+                {
                     "metadata": "payment,付款方式,24,,aiTableEditor",
                     "optionJsx.depend.enabled": {
                         "finishType": "STANDARD"
@@ -186,10 +212,11 @@
         "error": {
             "payway": "请检查您的付款方式，付款方式不可为空！",
             "payment": "请检查您填写的付款方式信息，信息不全！",
-            "pay": "请检查您填写的付款方式中的金额，金额信息和总明细金额不匹配！"
+            "pay": "请检查您填写的付款方式中的金额，金额信息和总明细金额不匹配！",
+            "empty": "请选择您要处理的结算单或结算明细项，待处理的结算单或明细项不可为空！"
         },
         "success": {
-            "saved": "恭喜！您的结算单处理完成，单号:serial。"
+            "saved": "恭喜！您本次交易处理完成，交易单号:serial。"
         }
     }
 }

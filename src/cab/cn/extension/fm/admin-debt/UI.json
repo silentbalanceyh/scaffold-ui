@@ -18,19 +18,19 @@
     "_grid": {
         "options": {
             "search.advanced": false,
-            "tabs.edit": "待结算单据",
+            "tabs.edit": "带处理应收/退款",
             "op.extension.settlement": {
                 "text": "处理选中",
                 "icon": "edit",
                 "region": "op.batch.settle",
                 "config": {
-                    "executor": "rxSettleBatch"
+                    "executor": "rxDebtBatch"
                 }
             }
         },
         "table": {
             "row": {
-                "onDoubleClick": "rxSettle"
+                "onDoubleClick": "rxDebt"
             },
             "columns": [
                 {
@@ -40,17 +40,17 @@
                     "$render": "EXECUTOR",
                     "$option": [
                         {
-                            "text": "处理结算",
-                            "executor": "rxSettle"
+                            "text": "处理应收",
+                            "executor": "rxDebt"
                         }
                     ]
                 }
             ]
         },
         "module": {
-            "NAME": "待结算",
-            "MODULE": "settlement",
-            "IDENTIFIER": "fm.settlement"
+            "NAME": "应收/应退",
+            "MODULE": "debt",
+            "IDENTIFIER": "fm.debt"
         },
         "query": {
             "projection": [],

@@ -10,13 +10,12 @@ import Ux from "ux";
                     ]
                 }
  */
-export default (ref) => {
-    const { $fee = {}} = ref?.props;
+export default (ref, required) => {
     return (reference, jsx) => {
         return Ux.aiRadio(reference, jsx, (event) => {
             const mode = Ux.ambEvent(event);
             const params = {};
-            params.amount = $fee.sum;
+            params.amount = required;
             if ("RUN_UP" === mode) {
                 // 延迟结账（挂账），重设某部分值
                 params.amountActual = params.amount;
@@ -24,7 +23,7 @@ export default (ref) => {
             } else {
                 // 现结，直接用金额执行计算
                 const input = {};
-                input.amount = $fee.sum;
+                input.amount = required;
                 const pParam = Ux.isMod('mHotel');
                 const rounded = pParam['pRemainder'] ? pParam['pRemainder'] : "NONE";
                 input.rounded = rounded;

@@ -1,5 +1,4 @@
 import Ui from "ui";
-import {FSettleForm} from 'ei';
 import Ex from 'ex';
 import Ux from "ux";
 
@@ -27,7 +26,7 @@ const rxOpen = (reference, keys = []) => {
 }
 export default Ui.smartList({
     ns: require("./Cab.json"),
-    name: "PxSettlement",
+    name: "PxDebt",
     Options: {
         rm: [
             "form.add",         // 关闭添加表单
@@ -44,8 +43,7 @@ export default Ui.smartList({
     },
 
     Form: {
-        name: "FSettleForm",
-        FormEdit: FSettleForm
+        name: "FDebtForm"
     },
 
     componentInit: (reference) => {
@@ -53,20 +51,16 @@ export default Ui.smartList({
             .then(Ux.ready)
             .then(Ux.pipe(reference));
     },
-    yoRx: () => ({
-        // TODO: 此处要重写
-        rxHoriz: (data = {}) => Ex.inSettlement(data)
-    }),
     yoOp: () => ({
         // 批量处理
-        rxSettleBatch: (ref, config) => (event) => {
+        rxDebtBatch: (ref, config) => (event) => {
             const { $selected = []} = ref.state;
             rxOpen(ref, $selected);
         }
     }),
     yoExecutor: () => ({
         // 行处理
-        rxSettle: (key = {},data = {}, metadata = {}) => {
+        rxDebt: (key = {},data = {}, metadata = {}) => {
             const ref = metadata.reference;
             rxOpen(ref, [key]);
         }

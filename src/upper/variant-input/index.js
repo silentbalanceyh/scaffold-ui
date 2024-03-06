@@ -19,9 +19,9 @@ export default {
      * @type {Object}
      */
     Jsx: {
-        PayFn: (ref) => ({
+        PayFn: (ref, required) => ({
             // 二阶
-            finishType: pay_finishType_fn(ref),
+            finishType: pay_finishType_fn(ref, required),
             // 一阶
             payment: pay_payment,
             rounded: pay_rounded,

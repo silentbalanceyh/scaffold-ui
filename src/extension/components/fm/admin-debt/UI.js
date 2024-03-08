@@ -1,12 +1,12 @@
 import Ui from "ui";
 import Ex from 'ex';
 import Ux from "ux";
-
+import {FDebtForm} from 'ei';
 
 const rxOpen = (reference, keys = []) => {
     // 打开加载效果
     Ux.of(reference).spinning()
-        .future(() => Ux.ajaxPost("/api/settlement/batch", {
+        .future(() => Ux.ajaxPost("/api/debt/batch", {
             $body: keys
             /*
              * debts: [],
@@ -43,7 +43,8 @@ export default Ui.smartList({
     },
 
     Form: {
-        name: "FDebtForm"
+        name: "FDebtForm",
+        FormEdit: FDebtForm
     },
 
     componentInit: (reference) => {

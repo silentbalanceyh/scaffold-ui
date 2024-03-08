@@ -60,6 +60,7 @@ export {default as G2MoreLine} from './G2MoreLine/UI';
 export {default as FBookView} from './FBookView/UI';                // 账本详情，带账单明细
 export {default as FBookList} from './FBookList/UI';                // 账本列表（订单中查看）
 export {default as FSettleForm} from './FSettleForm/UI';            // 待结算单
+export {default as FDebtForm} from './FDebtForm/UI';                // 待处理应收
 
 // 开发中心
 export {default as DxAdmin} from './DxAdmin/UI';                    // 开发专用模板

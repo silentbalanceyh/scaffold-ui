@@ -16,7 +16,7 @@ class Component extends React.PureComponent {
         const {$inited = {}} = this.props;
         const form = Ex.yoForm(this, null, $inited);
         return (
-            <ExForm {...form} $height={"300px"}/>
+            false
         )
     }
 }

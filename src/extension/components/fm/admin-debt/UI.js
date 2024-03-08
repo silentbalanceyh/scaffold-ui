@@ -65,5 +65,29 @@ export default Ui.smartList({
             const ref = metadata.reference;
             rxOpen(ref, [key]);
         }
+    }),
+    yoPlugins: () => ({
+        /*
+         * koSelection 选项处理，只有同一个单位的应收可以被选择
+         * 启用法则
+         * 1）$selected 中已经有的会被选中。
+         * 2）同一个单位的可以被选择。
+         */
+        koSelection: (record = {}, reference) => {
+            const { $data = {}, $selected = []} = reference.state;
+            if(0 < $selected.length){
+                // 当前记录就是选中记录
+                if($selected.includes(record.key)){
+                    return false;
+                }
+                // 当前记录的单位
+                const { list = [] } = $data;
+                const customers = list.filter(item => $selected.includes(item.key))
+                    .map(item => item.customerId);
+                return !customers.includes(record.customerId);
+            }else{
+                return false;
+            }
+        }
     })
 })

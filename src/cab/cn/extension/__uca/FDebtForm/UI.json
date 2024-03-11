@@ -20,6 +20,9 @@
                 "debts,应收/退款单,24"
             ],
             [
+                "comment,备注信息,24,,,placeholder=（交易备注）"
+            ],
+            [
                 {
                     "metadata": "rounded,零头处理,16,,aiRadio",
                     "optionJsx.config.items": [
@@ -79,6 +82,12 @@
                         }
                     }
                 }
+            ],
+            [
+                "title=关联结算"
+            ],
+            [
+                "settlements,结算单,24"
             ]
         ],
         "hidden": [

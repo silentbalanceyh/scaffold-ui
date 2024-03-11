@@ -1,0 +1,61 @@
+{
+    "_table": {
+        "className": "ux_table_tree ux_table_black",
+        "pagination": false,
+        "scroll": {
+            "y": 500
+        },
+        "columns": [
+            {
+                "metadata": "serial,结算单编号",
+                "width": 100
+            },
+            "amount,结算金额,CURRENCY",
+            "comment,结算备注,TEXT",
+            {
+                "title": "结算人",
+                "dataIndex": "updatedBy",
+                "$render": "USER",
+                "$config": {
+                    "uri": "/api/user/:key",
+                    "field": "realname"
+                },
+                "$empty": "（未结算）"
+            },
+            {
+                "title": "结算时间",
+                "dataIndex": "updatedAt",
+                "$render": "DATE",
+                "$format": "YYYY年MM月DD日 HH:mm:ss"
+            }
+        ]
+    },
+    "_childTable": {
+        "className": "ux_table_secondary",
+        "pagination": false,
+        "columns": [
+            {
+                "metadata": "serial,明细编号",
+                "width": 120
+            },
+            "name,名称",
+            "amount,明细金额,CURRENCY",
+            {
+                "metadata": "income,消费/付款,LOGICAL",
+                "$mapping": {
+                    "true": "消费项,pay-circle,16,#268941",
+                    "false": "付款项,pay-circle,16,#f6af03"
+                }
+            },
+            {
+                "metadata": "type,明细类型,DATUM",
+                "$datum": "source=bill.type,value=code,display=name"
+            },
+            "comment,备注",
+            {
+                "metadata": "updatedAt,更新时间,DATE",
+                "$format": "YYYY年MM月DD日 HH:mm"
+            }
+        ]
+    }
+}

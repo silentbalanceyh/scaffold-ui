@@ -3,6 +3,7 @@ import Ux from "ux";
 import Ex from "ex";
 import ExForm from "../ExForm/UI";
 import FDebts from '../FDebts/UI';
+import FSettleTree from '../FSettleTree/UI';
 import Op from './Op';
 
 const UCA_NAME = "FDebtForm";
@@ -23,7 +24,9 @@ class Component extends React.PureComponent {
             const { $customer = {}} = this.state;
             const formValues = Op.yoValue($inited, $customer);
             const form = Ex.yoForm(this, null, formValues);
-            return (<ExForm {...form}
+            return (
+                <div>
+                    <ExForm {...form}
                             rxMountAfter={Op.rxMountAfter}
                             $renders={{
                                 ...Ex.payFormDebt(this, formValues.amountActual),
@@ -33,8 +36,17 @@ class Component extends React.PureComponent {
                                         <FDebts {...jsx} data={$inited ? $inited.debts: []}
                                                 rxDebt={Op.rxDebts(this)}/>
                                     )
+                                },
+                                settlements: (reference, jsx) => {
+                                    const { $inited = {}} = reference.state;
+                                    return (
+                                        <FSettleTree data={$inited.settlements}
+                                                     dataItems={$inited.items}/>
+                                    )
                                 }
-                            }}/>)
+                            }}/>
+                </div>
+            )
         }, Ex.parserOfColor(UCA_NAME).page())
     }
 }

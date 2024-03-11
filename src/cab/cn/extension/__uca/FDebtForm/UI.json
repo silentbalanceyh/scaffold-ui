@@ -8,11 +8,11 @@
             [
                 "customerName,客户名称,8,,aiMagic",
                 {
-                    "metadata": "amount,交易总额,8,,aiMagic",
+                    "metadata": "amountTotal,总额,8,,aiMagic",
                     "optionJsx.config.currency": "￥"
                 },
                 {
-                    "metadata": "amountActual,本次交易额,8,,aiMagic",
+                    "metadata": "amount,本次交易额,8,,aiMagic",
                     "optionJsx.config.currency": "￥"
                 }
             ],
@@ -29,6 +29,12 @@
                         "CEIL,零头入进",
                         "INPUT,自定义"
                     ]
+                }
+            ],
+            [
+                {
+                    "metadata": "amountActual,实际交易额,,,aiMagic",
+                    "optionJsx.config.currency": "￥"
                 },
                 {
                     "metadata": "amountGap,零头金额,,,,addonAfter=￥,normalize=decimal:18:2",

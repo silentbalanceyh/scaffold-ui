@@ -8,10 +8,10 @@ const __yoValue = ($inited = {}, customer = {}) => {
     formValues.customerName = customer.name;
     formValues.customerId = customer.key;
     // 应收总额度
-    formValues.amount = debts.map(debt => debt.amount)
-        .reduce((left, right) => Ux.mathSum(left, right), 0);
+    formValues.amountTotal = debts.map(debt => debt.amount)
+        .reduce((left, right) => Ux.mathSum(left, right, true), 0.0);
     formValues.amountActual = debts.map(debt => debt.amountBalance)
-        .reduce((left, right) => Ux.mathSum(left, right), 0);
+        .reduce((left, right) => Ux.mathSum(left, right, true), 0.0);
     return formValues;
 }
 export default {
@@ -31,6 +31,7 @@ export default {
             amount: formValues.amountActual,
             rounded: formValues.rounded,
         });
+        formValues.amount = formValues.amountActual;
         Object.assign(formValues, amountAttach);
 
         formValues.payment = [];
@@ -64,9 +65,17 @@ export default {
         const formValues = Ux.clone($inited);
         formValues.debts = debts;
         formValues.amountActual = debts.map(debt => debt.finishedAmount)
-            .reduce((left, right) => Ux.mathSum(left, right), 0);
+            .reduce((left, right) => Ux.mathSum(left, right, true), 0.0);
+        formValues.amount = formValues.amountActual;
 
         const formRef = Ux.onReference(reference, 1);
+
+        const rounded = Ux.formHit(formRef, "rounded");
+        const amountAttach = Ex.payGap({
+            amount: formValues.amountActual,
+            rounded,
+        });
+        Object.assign(formValues, amountAttach);
         Ux.formHits(formRef, formValues);
     }
 }

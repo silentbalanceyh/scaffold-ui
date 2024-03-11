@@ -12,12 +12,67 @@
                     "optionJsx.config.currency": "￥"
                 },
                 {
-                    "metadata": "amountBalance,本次交易额,8,,aiMagic",
+                    "metadata": "amountActual,本次交易额,8,,aiMagic",
                     "optionJsx.config.currency": "￥"
                 }
             ],
             [
                 "debts,应收/退款单,24"
+            ],
+            [
+                {
+                    "metadata": "rounded,零头处理,16,,aiRadio",
+                    "optionJsx.config.items": [
+                        "NONE,不处理",
+                        "HALF,四舍五入",
+                        "FLOOR,零头舍弃",
+                        "CEIL,零头入进",
+                        "INPUT,自定义"
+                    ]
+                },
+                {
+                    "metadata": "amountGap,零头金额,,,,addonAfter=￥,normalize=decimal:18:2",
+                    "optionJsx.depend.enabled": {
+                        "rounded": "INPUT"
+                    }
+                }
+            ],
+            [
+                {
+                    "metadata": "payment,付款方式,24,,aiTableEditor",
+                    "optionJsx.config": {
+                        "format": {
+                            "type": "ARRAY",
+                            "keyField": "name"
+                        },
+                        "table": {
+                            "className": "ux_table_secondary",
+                            "columns": [
+                                {
+                                    "metadata": "name,付款码,ROW",
+                                    "width": 240,
+                                    "$config": {
+                                        "field": "aiSelect",
+                                        "jsx": {
+                                            "config": {
+                                                "datum": "source=pay.type,key=code,label=name"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "metadata": "amount,支付金额,ROW",
+                                    "$config": {
+                                        "field": "aiInput",
+                                        "jsx": {
+                                            "addonAfter": "￥"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
             ]
         ],
         "hidden": [

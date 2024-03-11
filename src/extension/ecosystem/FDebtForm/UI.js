@@ -26,6 +26,7 @@ class Component extends React.PureComponent {
             return (<ExForm {...form}
                             rxMountAfter={Op.rxMountAfter}
                             $renders={{
+                                ...Ex.payFormDebt(this, formValues.amountActual),
                                 debts: (reference, jsx) => {
                                     const { $inited = {}} = reference.state;
                                     return (

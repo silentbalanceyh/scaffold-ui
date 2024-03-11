@@ -1,5 +1,5 @@
 import Ux from 'ux';
-
+import Ex from 'ex';
 const __yoValue = ($inited = {}, customer = {}) => {
     const formValues = Ux.clone($inited);
     const { debts = []} = $inited;
@@ -10,7 +10,7 @@ const __yoValue = ($inited = {}, customer = {}) => {
     // 应收总额度
     formValues.amount = debts.map(debt => debt.amount)
         .reduce((left, right) => Ux.mathSum(left, right), 0);
-    formValues.amountBalance = debts.map(debt => debt.amountBalance)
+    formValues.amountActual = debts.map(debt => debt.amountBalance)
         .reduce((left, right) => Ux.mathSum(left, right), 0);
     return formValues;
 }
@@ -24,6 +24,22 @@ export default {
             debt.finishedAmount = debt.amountBalance;
         });
         formValues.debts = $debts;
+
+        const params = Ux.isMod('mHotel');
+        formValues.rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
+        const amountAttach = Ex.payGap({
+            amount: formValues.amountActual,
+            rounded: formValues.rounded,
+        });
+        Object.assign(formValues, amountAttach);
+
+        formValues.payment = [];
+        formValues.payment.push({
+            key: "Cash",
+            name: "Cash",
+            amount: formValues.amountActual
+        })
+
         return formValues;
     },
     yiPage: (reference) => {
@@ -47,7 +63,7 @@ export default {
         const { $inited = {}} = reference.props;
         const formValues = Ux.clone($inited);
         formValues.debts = debts;
-        formValues.amountBalance = debts.map(debt => debt.amountBalance)
+        formValues.amountActual = debts.map(debt => debt.finishedAmount)
             .reduce((left, right) => Ux.mathSum(left, right), 0);
 
         const formRef = Ux.onReference(reference, 1);

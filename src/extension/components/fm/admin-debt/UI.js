@@ -82,7 +82,8 @@ export default Ui.smartList({
                 }
                 // 当前记录的单位
                 const { list = [] } = $data;
-                const customers = list.filter(item => $selected.includes(item.key))
+                const customers = list
+                    .filter(item => $selected.includes(item.key))
                     .map(item => item.customerId);
                 return !customers.includes(record.customerId);
             }else{

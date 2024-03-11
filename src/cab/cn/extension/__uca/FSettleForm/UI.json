@@ -40,14 +40,10 @@
                 }
             ],
             [
-                {
-                    "metadata": "settlements,结算单,24"
-                }
+                "settlements,结算单,24"
             ],
             [
-                {
-                    "metadata": "items,结算明细,24"
-                }
+                "items,结算明细,24"
             ],
             [
                 "title=结算处理"

@@ -3,36 +3,25 @@
         "columns": 3,
         "ui": [
             [
-                "serial,应收单号,,,aiMagic",
+                "title=应收/退款信息"
+            ],
+            [
+                "customerName,客户名称,8,,aiMagic",
                 {
-                    "metadata": "amount,应收金额,,,aiMagic",
+                    "metadata": "amount,交易总额,8,,aiMagic",
                     "optionJsx.config.currency": "￥"
                 },
                 {
-                    "metadata": "finished,是否处理,,,aiMagic",
-                    "optionJsx.config.items": [
-                        "true,已完成:check-circle,16:#268941",
-                        "false,待处理:undo,16:#fe6600"
-                    ],
-                    "optionJsx.config.boolean": true
+                    "metadata": "amountBalance,本次交易额,8,,aiMagic",
+                    "optionJsx.config.currency": "￥"
                 }
             ],
             [
-                {
-                    "metadata": "customerId,客户名称,,,aiMagic",
-                    "optionJsx.config.user": {
-                        "uri": "/api/customer/:key",
-                        "field": "name"
-                    },
-                    "optionJsx.$empty": "（未填写）"
-                },
-                "signName,签单人,,,aiMagic",
-                "signMobile,联系电话,,,aiMagic"
-            ],
-            [
-                "amountAll,收款总计,,,aiMagic",
-                "comment,备注,24,,aiMagic"
+                "debts,应收/退款单,24"
             ]
+        ],
+        "hidden": [
+            "customerId"
         ]
     }
 }

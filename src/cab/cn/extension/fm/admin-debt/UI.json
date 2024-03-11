@@ -18,7 +18,7 @@
     "_grid": {
         "options": {
             "search.advanced": false,
-            "tabs.edit": "带处理应收/退款",
+            "tabs.edit": "待处理应收/退款",
             "op.extension.settlement": {
                 "text": "处理选中",
                 "icon": "edit",

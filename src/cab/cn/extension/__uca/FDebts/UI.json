@@ -1,0 +1,43 @@
+{
+    "_table": {
+        "bordered": true,
+        "className": "ux_table_tree",
+        "pagination": false,
+        "scroll": {
+            "y": 500
+        },
+        "columns": [
+            "serial,单据号",
+            {
+                "metadata": "type,类型,MAPPING",
+                "$mapping": {
+                    "DEBT": "应收,link,16,#0e8be6",
+                    "REFUND": "退款,link,16,#ff686b"
+                }
+            },
+            "amount,金额,CURRENCY",
+            "amountBalance,待处理金额,CURRENCY",
+            "finished,处理",
+            {
+                "metadata": "finishedAmount,处理金额",
+                "width": 140
+            },
+            {
+                "title": "处理人",
+                "dataIndex": "updatedBy",
+                "$render": "USER",
+                "$config": {
+                    "uri": "/api/user/:key",
+                    "field": "realname"
+                },
+                "$empty": "（未结算）"
+            },
+            {
+                "title": "处理时间",
+                "dataIndex": "updatedAt",
+                "$render": "DATE",
+                "$format": "YYYY年MM月DD日 HH:mm:ss"
+            }
+        ]
+    }
+}

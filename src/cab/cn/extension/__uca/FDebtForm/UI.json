@@ -3,6 +3,15 @@
         "columns": 3,
         "ui": [
             [
+                {
+                    "metadata": "$button",
+                    "hidden": true,
+                    "optionJsx.extension": [
+                        "$opSave,保存,SUBMIT"
+                    ]
+                }
+            ],
+            [
                 "title=应收/退款信息"
             ],
             [

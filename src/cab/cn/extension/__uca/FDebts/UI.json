@@ -1,7 +1,7 @@
 {
     "_table": {
         "bordered": true,
-        "className": "ux_table_tree",
+        "className": "ux_table",
         "pagination": false,
         "scroll": {
             "y": 500
@@ -20,7 +20,8 @@
             "finished,处理",
             {
                 "metadata": "finishedAmount,处理金额",
-                "width": 140
+                "width": 140,
+                "className": "hm-edit"
             },
             {
                 "title": "处理人",

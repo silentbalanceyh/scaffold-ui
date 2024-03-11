@@ -28,6 +28,7 @@ class Component extends React.PureComponent {
                 <div>
                     <ExForm {...form}
                             rxMountAfter={Op.rxMountAfter}
+                            $op={Op.actions}
                             $renders={{
                                 ...Ex.payFormDebt(this, formValues.amountActual),
                                 debts: (reference, jsx) => {

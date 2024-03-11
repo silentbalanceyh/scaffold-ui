@@ -1,6 +1,6 @@
 import Ux from 'ux';
 import Ex from 'ex';
-const __yoValue = ($inited = {}, customer = {}) => {
+const __valueInited = ($inited = {}, customer = {}) => {
     const formValues = Ux.clone($inited);
     const { debts = []} = $inited;
 
@@ -15,8 +15,14 @@ const __yoValue = ($inited = {}, customer = {}) => {
     return formValues;
 }
 export default {
+    actions: {
+        $opSave: (reference) => (params) => {
+            console.log(params);
+            return Ux.ajaxError(reference, {data: "Error"});
+        }
+    },
     yoValue: ($inited = {}, customer = {}) => {
-        const formValues = __yoValue($inited, customer);
+        const formValues = __valueInited($inited, customer);
         const { debts = []} = $inited;
         const $debts = Ux.clone(debts);
         $debts.forEach(debt => {

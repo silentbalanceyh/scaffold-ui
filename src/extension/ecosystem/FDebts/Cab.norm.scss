@@ -1,5 +1,12 @@
 .uf{
   &_FDebts{
-
+    // 重写 ant-table-cell
+    .ux_table .ant-table .ant-table-body .hm-edit{
+      padding: 2px 12px;
+    }
+    // 重写 ux_table 最后一行
+    .ux_table .ant-table .ant-table-body tr:last-child .hm-edit{
+      padding: 2px 12px;
+    }
   }
 }

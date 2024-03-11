@@ -39,8 +39,9 @@ class Component extends React.PureComponent {
                                 },
                                 settlements: (reference, jsx) => {
                                     const { $inited = {}} = reference.state;
+                                    const inherit = Ex.yoAmbient(this);
                                     return (
-                                        <FSettleTree data={$inited.settlements}
+                                        <FSettleTree {...inherit} data={$inited.settlements}
                                                      dataItems={$inited.items}/>
                                     )
                                 }

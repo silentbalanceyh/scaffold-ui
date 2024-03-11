@@ -3,22 +3,11 @@ import Ux from "ux";
 import {Table} from "antd";
 import Sk from 'skin';
 import './Cab.norm.scss';
+import FSettleItems from '../FSettleItems/UI';
+
 import Ex from "ex";
 
 const UCA_NAME = "FSettleTree";
-
-const renderChild = (reference, record = {}) => {
-    const config = Ux.inHoc(reference, "childTable");
-    const configTable = Ux.clone(config);
-    configTable.columns = Ux.configColumn(reference, configTable.columns);
-    const items = Ux.clone(record.items);
-    Ux.configScroll(configTable, items, reference);
-    const { $loading = false } = reference.state;
-    return (
-        <Table {...configTable} loading={$loading}
-               dataSource={items}/>
-    )
-}
 
 const yoExpand = ($table = {}, reference) => {
     const expandKeys = reference.state?.$expandKey ? reference.state.$expandKey : [];
@@ -81,7 +70,13 @@ class Component extends React.PureComponent {
                 <div {...attrs}>
                     <Table {...$table} dataSource={dataSource}
                            expandable={{
-                               expandedRowRender:record => renderChild(this, record)
+                               expandedRowRender:record => {
+                                   const inherit = Ex.yoAmbient(this);
+                                   return (<FSettleItems {...inherit} data={record.items}
+                                                         isEdit={false}     // 是否查看模式
+                                                         isReport={false}   // 是否统计
+                                   />)
+                               }
                            }}/>
                 </div>
             )

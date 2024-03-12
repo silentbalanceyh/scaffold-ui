@@ -5,9 +5,6 @@
             "method": "POST",
             "magic": {
                 "$body": [
-                    "bill.type",
-                    "bill.status",
-                    "bill.category",
                     "pay.term.type",
                     "pay.type"
                 ]

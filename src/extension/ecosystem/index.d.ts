@@ -61,6 +61,7 @@ declare module "ei" {
     export {default as FBookList} from './FBookList/UI';                // 账本列表（订单中查看）
     export {default as FSettleForm} from './FSettleForm/UI';            // 待结算单
     export {default as FDebtForm} from './FDebtForm/UI';                // 待处理应收
+    export {default as FTransView} from './FTransView/UI';              // 交易历史详情
 
 
     // 开发中心

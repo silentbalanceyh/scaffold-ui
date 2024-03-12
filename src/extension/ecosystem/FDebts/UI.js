@@ -19,14 +19,20 @@ class Component extends React.PureComponent {
     }
     render(){
         return Ex.yoRender(this, () => {
-            const {data = []} = this.props;
-            const {$table = {}} = this.state;
+            const {data = [], isView = false } = this.props;
+            let {$table = {}} = this.state;
+            $table = Ux.clone($table);
             let dataSource = Ux.clone(data);
-            Ux.configScroll($table, dataSource, this);
 
             dataSource = dataSource.sort(Ux.sorterDescFn('updatedAt'));
 
             const attrs = Sk.mixF(UCA_NAME);
+            if(isView){
+                $table.columns = $table.columns
+                    .filter(column => !["amountBalance", "finished", "finishedAmount"]
+                        .includes(column.dataIndex));
+            }
+            Ux.configScroll($table, dataSource, this);
             return (
                 <div {...attrs}>
                     <Table {...$table} dataSource={dataSource}/>

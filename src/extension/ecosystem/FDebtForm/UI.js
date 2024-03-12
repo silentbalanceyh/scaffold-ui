@@ -60,7 +60,7 @@ class Component extends React.PureComponent {
                             }}/>
                 </div>
             )
-        }, Ex.parserOfColor(UCA_NAME).page())
+        }, Ex.parserOfColor(UCA_NAME).form())
     }
 }
 

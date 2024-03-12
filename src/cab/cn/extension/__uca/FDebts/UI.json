@@ -17,9 +17,9 @@
             },
             "amount,金额,CURRENCY",
             "amountBalance,待处理金额,CURRENCY",
-            "finished,处理",
+            "finished,自动",
             {
-                "metadata": "finishedAmount,处理金额",
+                "metadata": "finishedAmount,手动金额",
                 "width": 140,
                 "className": "hm-edit"
             },

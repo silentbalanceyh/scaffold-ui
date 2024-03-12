@@ -14,11 +14,40 @@ const __valueInited = ($inited = {}, customer = {}) => {
         .reduce((left, right) => Ux.mathSum(left, right, true), 0.0);
     return formValues;
 }
+
+// 验证本次请求详细信息
+const __verifyRequest = (params = {}, reference) => {
+    // 父级引用
+    const ref = Ux.onReference(reference, 1);
+    const modal = Ux.inHoc(ref, "modal");
+    const { error = {}} = modal;
+    const amountLimit = Ux.valueFloat(params.amountTotal);
+    const amount = Ux.valueFloat(params.amount);
+    if(amountLimit > amount){
+        // 本次交易额不可以超过总额
+        return Ux.ajaxError(reference, {data: error.exceed});
+    }
+    if (0 === params.amountActual){
+        // 本次交易额为0
+        return Ux.ajaxError(reference, {data: error.zero});
+    }
+    // 付款方式中的额度必须和 amountActual 相等
+    return Ex.inPrePay(reference, params, {}, true);
+}
 export default {
     actions: {
         $opSave: (reference) => (params) => {
-            console.log(params);
-            return Ux.ajaxError(reference, {data: "Error"});
+            const request = Ux.clone(params);
+            return __verifyRequest(request, reference)
+                .then(nil => {
+                    // type 计算
+                    request.type = (request.amountActual > 0) ? "DEBT": "REFUND";
+                    console.log(request);
+                    return Ux.promise(request)
+                })
+                .then(data => Ux.ajaxDialog(reference, {data, key: "saved"}))
+                .then(response => Ux.of(reference).close(response))
+                .catch(error => Ux.ajaxError(reference, error));
         }
     },
     yoValue: ($inited = {}, customer = {}) => {

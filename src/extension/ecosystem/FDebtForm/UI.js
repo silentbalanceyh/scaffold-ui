@@ -24,9 +24,20 @@ class Component extends React.PureComponent {
             const { $customer = {}} = this.state;
             const formValues = Op.yoValue($inited, $customer);
             const form = Ex.yoForm(this, null, formValues);
+            const { rxClose } = this.props;
             return (
                 <div>
                     <ExForm {...form}
+                            // 关闭之后处理选择信息
+                            rxClose={(data = {}, addOn = {}) => {
+                                const ref = Ux.onReference(this, 1);
+                                Ux.of(ref).in({$selected:[]}).handle(() => {
+                                    // 调用外层函数
+                                    if(Ux.isFunction(rxClose)){
+                                        rxClose(data, addOn)
+                                    }
+                                })
+                            }}
                             rxMountAfter={Op.rxMountAfter}
                             $op={Op.actions}
                             $renders={{

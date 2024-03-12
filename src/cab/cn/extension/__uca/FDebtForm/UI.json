@@ -101,7 +101,8 @@
         ],
         "hidden": [
             "customerId",
-            "key"
+            "key",
+            "items"
         ]
     },
     "_modal": {

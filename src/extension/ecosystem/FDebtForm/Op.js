@@ -42,8 +42,7 @@ export default {
                 .then(nil => {
                     // type 计算
                     request.type = (request.amountActual > 0) ? "DEBT": "REFUND";
-                    console.log(request);
-                    return Ux.promise(request)
+                    return Ux.ajaxPut("/api/trans-proc/debt", request)
                 })
                 .then(data => Ux.ajaxDialog(reference, {data, key: "saved"}))
                 .then(response => Ux.of(reference).close(response))

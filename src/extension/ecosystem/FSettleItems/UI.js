@@ -24,31 +24,38 @@ class Component extends React.PureComponent {
         dataSource = dataSource.sort(Ux.sorterDescFn('updatedAt'));
 
         {
-            const { $selectedKeys = [], rxCascade = () => false, data = [] } = this.props;
-            const $selected = [];
-            data.forEach(record => {
-                if(!record.finishedId && $selectedKeys.includes(record.key)){
-                    $selected.push(record.key);
-                }
-            })
-            table.rowSelection = ({
-                selectedRowKeys: $selected,
-                onChange: rxCascade,
-                getCheckboxProps: (record = {}) => {
-                    const props = {};
-                    if(record.finishedId){
-                        props.disabled = true;
+            const { isEdit = true } = this.props;
+            if(isEdit){
+                const { $selectedKeys = [], rxCascade = () => false, data = [] } = this.props;
+                const $selected = [];
+                data.forEach(record => {
+                    if(!record.finishedId && $selectedKeys.includes(record.key)){
+                        $selected.push(record.key);
                     }
-                    return props;
-                }
-            })
+                })
+                table.rowSelection = ({
+                    selectedRowKeys: $selected,
+                    onChange: rxCascade,
+                    getCheckboxProps: (record = {}) => {
+                        const props = {};
+                        if(record.finishedId){
+                            props.disabled = true;
+                        }
+                        return props;
+                    }
+                })
+            }
         }
 
         const attrs = Sk.mixF(UCA_NAME);
+
+        const { isReport = true } = this.props;
+        if(isReport){
+            table.footer = (data = []) => Op.reportFooter(this, data);
+        }
         return (
             <div {...attrs}>
-                <Table {...table} dataSource={dataSource}
-                       footer={(data = []) => Op.reportFooter(this, data)}/>
+                <Table {...table} dataSource={dataSource}/>
             </div>
         )
     }

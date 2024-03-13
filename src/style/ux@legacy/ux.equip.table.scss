@@ -34,6 +34,15 @@
 
     // ux_table_black
     &_black {
+      .ant-table {
+        table {
+          th:hover {
+            background-color: ghostwhite;
+            opacity: 0.8;
+            color: $uni_color;
+          }
+        }
+      }
     }
 
     // ux_table_editor

@@ -1,7 +1,7 @@
 import Ux from 'ux';
 import Ex from "ex";
 
-const verifyPayment = (reference, params = {}) => {
+const __verifyPayment = (reference, params = {}) => {
     // 支付手段
     const finishType = params.finishType;
     if("STANDARD" === finishType){
@@ -13,7 +13,7 @@ const verifyPayment = (reference, params = {}) => {
     }
 }
 
-const valueAmount = (items = [], rounded = "HALF") => {
+const __valueAmount = (items = [], rounded = "HALF") => {
     const values = {};
     values.amount = Ex.paySum(items);
     values.rounded = rounded;
@@ -35,7 +35,7 @@ export default {
             request.settlements = $selected.settlements;
             request.items = $selected.items;
             request.amountActual = Ex.paySum($selected.items);
-            const attachAmount = valueAmount($selected.items, request.rounded);
+            const attachAmount = __valueAmount($selected.items, request.rounded);
             Object.assign(request, attachAmount);
 
             if(0 === request.settlements.length || 0 === request.items.length){
@@ -43,7 +43,7 @@ export default {
                 const {error = {}} = modal;
                 return Ux.ajaxError(reference, {data: error.empty});
             }
-            return verifyPayment(reference, request)
+            return __verifyPayment(reference, request)
                 .then(nil => Ux.ajaxPut("/api/trans-proc/standard", request))
                 .then(data => Ux.ajaxDialog(reference, {data, key: "saved"}))
                 .then(response => Ux.of(reference).close(response))
@@ -70,7 +70,7 @@ export default {
         const params = Ux.isMod('mHotel');
         values.rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
 
-        const amountAttach = valueAmount($inited.items, values.rounded);
+        const amountAttach = __valueAmount($inited.items, values.rounded);
         Object.assign(values, amountAttach);
 
         values.payment = [];
@@ -94,7 +94,7 @@ export default {
         Ux.of(reference).in(state).done();
 
         const rounded = Ux.formHit(reference, 'rounded');
-        const formValues = valueAmount($selected.items, rounded);
+        const formValues = __valueAmount($selected.items, rounded);
         Ux.formHits(reference, formValues);
     },
     // 选择结算明细
@@ -111,7 +111,7 @@ export default {
         Ux.of(reference).in(state).done();
 
         const rounded = Ux.formHit(reference, 'rounded');
-        const formValues = valueAmount($selected.items, rounded);
+        const formValues = __valueAmount($selected.items, rounded);
         Ux.formHits(reference, formValues);
     },
     // rxMountAfter
@@ -133,7 +133,7 @@ export default {
             const { $selected = {}} = reference.state;
             const params = Ux.isMod('mHotel');
             const rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
-            const amountAttach = valueAmount($selected.items, rounded);
+            const amountAttach = __valueAmount($selected.items, rounded);
             Object.assign(formValues, amountAttach);
         }else{
             formValues.amountActual = 0;

@@ -1,0 +1,69 @@
+{
+    "_form": {
+        "className": "ux_form",
+        "columns": 3,
+        "ui": [
+            [
+                {
+                    "metadata": "$button",
+                    "hidden": true,
+                    "optionJsx.extension": [
+                        "$opSave,保存,SUBMIT"
+                    ]
+                }
+            ],
+            [
+                "title=交易明细"
+            ],
+            [
+                "serial,交易单号,,,aiMagic",
+                {
+                    "metadata": "type,交易类型,8,,aiMagic",
+                    "optionJsx.config.items": [
+                        "SETTLEMENT,直接结算:check-circle,16:#268941",
+                        "DEBT,应收:link,16:#0e8be6",
+                        "REFUND,退款:link,16:#ff686b"
+                    ]
+                },
+                {
+                    "metadata": "status,交易状态,8,,aiMagic",
+                    "optionJsx.config.items": [
+                        "FINISHED,已完成:check-circle,16:#268941"
+                    ]
+                }
+            ],
+            [
+                {
+                    "metadata": "amount,交易金额,8,,aiMagic",
+                    "optionJsx.config.currency": "￥"
+                },
+                {
+                    "metadata": "rounded,抹零方式,8,,aiMagic",
+                    "optionJsx.config.items": [
+                        "NONE,不处理",
+                        "HALF,四舍五入",
+                        "FLOOR,零头舍弃",
+                        "CEIL,零头入进",
+                        "INPUT,自定义"
+                    ]
+                },
+                {
+                    "metadata": "amountGap,零头金额,8,,aiMagic",
+                    "optionJsx.config.currency": "￥"
+                }
+            ],
+            [
+                "payment,交易明细,24"
+            ],
+            [
+                "comment,交易备注,24,,aiMagic"
+            ],
+            [
+                "title=关联单据"
+            ]
+        ],
+        "hidden": [
+            "key"
+        ]
+    }
+}

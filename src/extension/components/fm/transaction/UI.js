@@ -1,10 +1,10 @@
 import Ui from "ui";
-import {FSettleForm} from 'ei';
+import {FTransView} from 'ei';
 import Ex from 'ex';
 import Ux from "ux";
 export default Ui.smartList({
     ns: require("./Cab.json"),
-    name: "PxSettlement",
+    name: "PxTransaction",
     Options: {
         rm: [
             "form.add",         // 关闭添加表单
@@ -21,7 +21,8 @@ export default Ui.smartList({
     },
 
     Form: {
-        name: "FTransForm"
+        name: "FTransView",
+        FormEdit: FTransView
     },
 
     componentInit: (reference) => {

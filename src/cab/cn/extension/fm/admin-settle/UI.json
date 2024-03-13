@@ -5,9 +5,6 @@
             "method": "POST",
             "magic": {
                 "$body": [
-                    "bill.type",
-                    "bill.status",
-                    "bill.category",
                     "pay.term.type",
                     "pay.type"
                 ]
@@ -19,6 +16,7 @@
         "options": {
             "search.advanced": false,
             "tabs.edit": "待结算单据",
+            "op.submit.save": "结算交易",
             "op.extension.settlement": {
                 "text": "处理选中",
                 "icon": "edit",

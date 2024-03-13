@@ -3,36 +3,118 @@
         "columns": 3,
         "ui": [
             [
-                "serial,应收单号,,,aiMagic",
                 {
-                    "metadata": "amount,应收金额,,,aiMagic",
+                    "metadata": "$button",
+                    "hidden": true,
+                    "optionJsx.extension": [
+                        "$opSave,保存,SUBMIT"
+                    ]
+                }
+            ],
+            [
+                "title=应收/退款信息"
+            ],
+            [
+                "customerName,客户名称,8,,aiMagic",
+                {
+                    "metadata": "amountTotal,总额,8,,aiMagic",
                     "optionJsx.config.currency": "￥"
                 },
                 {
-                    "metadata": "finished,是否处理,,,aiMagic",
+                    "metadata": "amount,本次交易额,8,,aiMagic",
+                    "optionJsx.config.currency": "￥"
+                }
+            ],
+            [
+                "debts,应收/退款单,24"
+            ],
+            [
+                "comment,备注信息,24,,,placeholder=（交易备注）"
+            ],
+            [
+                {
+                    "metadata": "rounded,零头处理,16,,aiRadio",
                     "optionJsx.config.items": [
-                        "true,已完成:check-circle,16:#268941",
-                        "false,待处理:undo,16:#fe6600"
-                    ],
-                    "optionJsx.config.boolean": true
+                        "NONE,不处理",
+                        "HALF,四舍五入",
+                        "FLOOR,零头舍弃",
+                        "CEIL,零头入进",
+                        "INPUT,自定义"
+                    ]
                 }
             ],
             [
                 {
-                    "metadata": "customerId,客户名称,,,aiMagic",
-                    "optionJsx.config.user": {
-                        "uri": "/api/customer/:key",
-                        "field": "name"
-                    },
-                    "optionJsx.$empty": "（未填写）"
+                    "metadata": "amountActual,实际交易额,,,aiMagic",
+                    "optionJsx.config.currency": "￥"
                 },
-                "signName,签单人,,,aiMagic",
-                "signMobile,联系电话,,,aiMagic"
+                {
+                    "metadata": "amountGap,零头金额,,,,addonAfter=￥,normalize=decimal:18:2",
+                    "optionJsx.depend.enabled": {
+                        "rounded": "INPUT"
+                    }
+                }
             ],
             [
-                "amountAll,收款总计,,,aiMagic",
-                "comment,备注,24,,aiMagic"
+                {
+                    "metadata": "payment,付款方式,24,,aiTableEditor",
+                    "optionJsx.config": {
+                        "format": {
+                            "type": "ARRAY",
+                            "keyField": "name"
+                        },
+                        "table": {
+                            "className": "ux_table_secondary",
+                            "columns": [
+                                {
+                                    "metadata": "name,付款码,ROW",
+                                    "width": 240,
+                                    "$config": {
+                                        "field": "aiSelect",
+                                        "jsx": {
+                                            "config": {
+                                                "datum": "source=pay.type,key=code,label=name"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "metadata": "amount,支付金额,ROW",
+                                    "$config": {
+                                        "field": "aiInput",
+                                        "jsx": {
+                                            "addonAfter": "￥"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            [
+                "title=关联结算"
+            ],
+            [
+                "settlements,结算单,24"
             ]
+        ],
+        "hidden": [
+            "customerId",
+            "key",
+            "items"
         ]
+    },
+    "_modal": {
+        "error": {
+            "payway": "请检查您的付款方式，付款方式不可为空！",
+            "payment": "请检查您填写的付款方式信息，信息不全！",
+            "pay": "请检查您填写的付款方式中的金额，金额信息和总明细金额不匹配！",
+            "exceed": "对不起，您处理的金额超过了应收总额，请重新输入。",
+            "zero": "对不起，本次交易金额不能为 0。"
+        },
+        "success": {
+            "saved": "恭喜！您本次交易处理完成，交易单号:serial。"
+        }
     }
 }

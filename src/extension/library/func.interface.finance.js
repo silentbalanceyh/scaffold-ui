@@ -100,4 +100,5 @@ export default {
     payFormNorm: (ref) => __Zp.payFormNorm(ref),
     payFormItem: (ref) => __Zp.payFormItem(ref),
     payFormSettle: (ref, amount) => __Zp.payFormSettle(ref, amount),
+    payFormDebt: (ref, amount) => __Zp.payFormDebt(ref, amount),
 }

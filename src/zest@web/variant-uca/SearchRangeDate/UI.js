@@ -36,7 +36,7 @@ class Component extends React.PureComponent {
          * mode 选择
          */
         const {mode = "FULL"} = config;
-        const {value = {}} = this.props;
+        const value = this.props.value || {};
         const WebField = __Zn.V4InputGroup;
         return (
             <WebField {...rest} className={"web-range-date"}>

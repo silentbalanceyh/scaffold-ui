@@ -4,10 +4,7 @@
         "bordered": true,
         "pagination": false,
         "columns": [
-            {
-                "metadata": "name,付款码,DATUM",
-                "$datum": "source=pay.type,value=code,display=name"
-            },
+            "name,付款码",
             "amount,支付金额,CURRENCY"
         ]
     }

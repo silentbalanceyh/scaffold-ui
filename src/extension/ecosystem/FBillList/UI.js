@@ -24,7 +24,8 @@ const renderBill = (reference, data = []) => {
     dataSource.forEach(dataItem => {
         if (dataItem.children) {
             treeMap[dataItem.key] = Ux.clone(dataItem.children);
-            delete dataItem.children;
+            //下面删除会同时删除reference中data的children数据
+            //delete dataItem.children;
         }
     });
     Ux.configScroll(tableConfig, dataSource, reference);

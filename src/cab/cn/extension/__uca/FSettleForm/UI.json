@@ -72,6 +72,9 @@
             [
                 {
                     "metadata": "runName,挂账单位,8,,aiListSelector,placeholder=（挂账单位）",
+                    "optionConfig.rules": [
+                        "required,请选择挂账单位！"
+                    ],
                     "optionJsx.config": {
                         "ajax": {
                             "metadata": "POST,/api/customer/search,1,10,sorter=name`ASC",

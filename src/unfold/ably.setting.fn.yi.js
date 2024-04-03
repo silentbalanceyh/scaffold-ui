@@ -13,9 +13,10 @@ import {_Locator} from "./allocation.__.c.locator.navigation";
  *
  * @memberOf module:yi/unfold
  * @param reference
+ * @param addOn
  * @return {Promise<*>}
  */
-const yiProSetting = async (reference) => {
+const yiProSetting = async (reference, addOn = {}) => {
     // 旧代码
     const {$collapsed = true} = reference.props;
     const state = {};
@@ -39,6 +40,7 @@ const yiProSetting = async (reference) => {
      */
     const $setting = await __yiSetting(reference, menuData);
     const configuration = Ux.clone($setting);
+    configuration.plugins = addOn?.plugins ? addOn.plugins : {};
 
     /*
      * Step 01

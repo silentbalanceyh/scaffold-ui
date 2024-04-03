@@ -4,8 +4,8 @@ import Ux from 'ux';
 
 const UCA_NAME = "ExNotify";
 const componentInit = (reference) => {
+    console.log("Test")
     Ux.sockOn("/job/notify", () => {
-
     })
 }
 
@@ -17,9 +17,9 @@ class Component extends React.PureComponent {
 
     render() {
         const {config = {}} = this.props;
-        const {tips = {}, icon = {}} = config;
+        const { label, key, icon } = config;
         return (
-            <Tooltip {...tips}>
+            <Tooltip title={label} key={key}>
                 {Ux.v4Icon(icon)}
             </Tooltip>
         );

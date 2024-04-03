@@ -6,6 +6,7 @@ import Sk from 'skin';
 import "./Cab.norm.scss";
 import {PageContainer, ProConfigProvider, ProLayout, SettingDrawer, WaterMark} from '@ant-design/pro-components';
 // Fix
+import ExNotify from '../ExNotify/UI';
 
 const UCA_NAME = "ExAdmin";
 /**
@@ -42,14 +43,16 @@ const UCA_NAME = "ExAdmin";
 // componentInit/componentUp
 // =====================================================
 const componentInit = (reference) => {
-    Ex.yiProSetting(reference)
-        .then(Ux.ready).then(Ux.pipe(reference))
-        .catch(error => {
-            console.trace(error);
-            Ux.of(reference).in({
-                error: error.message
-            }).done();
-        });
+    Ex.yiProSetting(reference, {
+        plugins: {
+            ExNotify
+        }
+    }).then(Ux.ready).then(Ux.pipe(reference)).catch(error => {
+        console.trace(error);
+        Ux.of(reference).in({
+            error: error.message
+        }).done();
+    });
 };
 
 @Ux.zero(Ux.rxEtat(require("./Cab.json"))

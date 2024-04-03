@@ -9,7 +9,20 @@ export default async (reference, menuData = [], config = {}) => {
     return (props) => dataSource.map(item => {
         const {data = {}} = item;
         const {metadata = {}} = data;
-        if (metadata.confirm) {
+        /*
+         * metadata.plugin 可提取插件基础配置，然后结合对应的菜单定义配置
+         * 形成完成的处理配置相关信息
+         */
+        const plugins = config.plugins;
+        const { plugin } = metadata;
+        if(plugin && plugins[plugin]){
+            const Component = plugins[plugin];
+            const metaConfig = metadata.config ? metadata.config: {};
+            Object.assign(metaConfig, item);
+            return (
+                <Component config={metaConfig}/>
+            )
+        } else if (metadata.confirm) {
             return (
                 <Tooltip title={item.label} key={item.key}>
                     {item.icon}

@@ -20,6 +20,9 @@ const v4Icon = (type, attrs = {}) => {
             return (<UiV4Icon {...rest}/>)
         } else return false;
     } else {
+        if(type && type.$$typeof){
+            return type;
+        }
         return v4Icon(type.type, type);
     }
 }

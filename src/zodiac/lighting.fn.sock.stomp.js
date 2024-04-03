@@ -11,7 +11,7 @@ const sockOn = (address, callback) => {
         endpoint = endpoint.replace("http:", "ws:");
     }
     // 获取STOMP自协议的客户端对象
-    const stompClient = Stomp.client(`${endpoint}/api/web-socket/stomp`);
+    const stompClient = Stomp.client(`${endpoint}/api/web-socket`);
     // 关闭日志：
     stompClient.debug = null;
     // 自定义客户端的认证信息，按需求配置

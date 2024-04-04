@@ -19,8 +19,9 @@ export default async (reference, menuData = [], config = {}) => {
             const Component = plugins[plugin];
             const metaConfig = metadata.config ? metadata.config: {};
             Object.assign(metaConfig, item);
+            const inherit = __Zn.yoAmbient(reference);
             return (
-                <Component config={metaConfig}/>
+                <Component {...inherit} config={metaConfig}/>
             )
         } else if (metadata.confirm) {
             return (

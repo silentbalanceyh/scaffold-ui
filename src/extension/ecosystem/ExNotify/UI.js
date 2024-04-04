@@ -4,9 +4,10 @@ import Ux from 'ux';
 
 const UCA_NAME = "ExNotify";
 const componentInit = (reference) => {
-    console.log("Test")
-    Ux.sockOn("/job/notify", () => {
-    })
+    const { $websocket = {}} = reference.props;
+    if(Ux.isNotEmpty($websocket)){
+        Ux.sockOn($websocket, reference);
+    }
 }
 
 class Component extends React.PureComponent {
@@ -16,7 +17,11 @@ class Component extends React.PureComponent {
     }
 
     render() {
-        const {config = {}} = this.props;
+        const {config = {}, $websocket = {}} = this.props;
+        if(Ux.isEmpty($websocket)){
+            // 无内容
+            return false;
+        }
         const { label, key, icon } = config;
         return (
             <Tooltip title={label} key={key}>

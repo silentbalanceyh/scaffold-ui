@@ -17,7 +17,7 @@ export default (reference = {}, config = {}) => {
     const uniform = Ux.onUniform(props,
         "app", "user", "router",
         "menus", "query",
-        "synonym", "setting"
+        "synonym", "setting", "websocket"
     );
     {
         const user = uniform.$user;

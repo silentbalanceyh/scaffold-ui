@@ -68,7 +68,7 @@ const renderToolbar = (reference, action = {}) => {
                                 {("SENT" === item.status) ? (
                                     <InfoCircleOutlined style={{color: "#66CD00", fontSize:16 }}/>
                                 ): false}
-                                <span className={"aContent"}>
+                                <span className={"SENT" === item.status ? "aContent": ""}>
                                 {item.subject}
                                 </span>
                             </div>

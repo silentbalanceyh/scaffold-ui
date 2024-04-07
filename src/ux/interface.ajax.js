@@ -838,6 +838,16 @@ const rxEdict = (type, promise, responser = data => data) =>
  */
 const sockOn = (address, callback) => __Zo.sockOn(address, callback)
 // eslint-disable-next-line import/no-anonymous-default-export
+const notifyInfo = (config = {}, onClose) =>
+    __Zo.notifyInfo(config, onClose);
+const notifySuccess = (config = {}, onClose) =>
+    __Zo.notifySuccess(config, onClose);
+const notifyWarning = (config = {}, onClose) =>
+    __Zo.notifyWarning(config, onClose);
+const notifyError = (config = {}, onClose) =>
+    __Zo.notifyError(config, onClose);
+const notifyRequest = (data = {}, callbackFn) =>
+    __Zo.notifyRequest(data, callbackFn);
 export default {
     sockOn,
     // Web Socket
@@ -868,4 +878,10 @@ export default {
     messageFailure,
     messageCatch,
     messageConfirm,
+    // notify
+    notifySuccess,
+    notifyWarning,
+    notifyInfo,
+    notifyError,
+    notifyRequest,
 }

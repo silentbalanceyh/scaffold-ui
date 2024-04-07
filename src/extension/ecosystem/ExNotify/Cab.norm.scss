@@ -1,0 +1,35 @@
+.uex {
+  &_ExNotify {
+    max-height: 55px;
+    padding: 0 6px;
+    i {
+      svg{
+        color:#8c8c8c;
+      }
+    }
+    &_Drawer{
+      .ant-drawer-body{
+        padding: 0 12px;
+      }
+      .aHeader{
+
+        .aClear{
+          margin-left: 12px;
+          color: red;
+        }
+        .aClear[disabled]{
+          color: #bfbfbf;
+        }
+      }
+      .aRead{
+        font-weight: normal;
+        margin-right: 12px;
+      }
+      i{
+        margin-right: 12px;
+      }
+      .aContent{
+      }
+    }
+  }
+}

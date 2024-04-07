@@ -1,6 +1,7 @@
 import * as V4Icons from '@ant-design/icons';
 import __V4 from './__.v.ant4.icon.pack';
 import Immutable from "immutable";
+import React from 'react';
 
 const v4Icon = (type, attrs = {}) => {
     const {
@@ -17,11 +18,22 @@ const v4Icon = (type, attrs = {}) => {
             const $rest = Immutable.fromJS(rest).toJS();
             // 防止递归问题
             if ($rest.type) delete $rest.type;
-            return (<UiV4Icon {...rest}/>)
+
+            // onClick 注入
+            if(attrs.onClick){
+                $rest.onClick = attrs.onClick;
+            };
+            return (<UiV4Icon {...$rest}/>)
         } else return false;
     } else {
         if(type && type.$$typeof){
-            return type;
+
+            // onClick 注入
+            if(type.props && attrs.onClick){
+                return React.cloneElement(type, {onClick: attrs.onClick});
+            }else{
+                return type;
+            }
         }
         return v4Icon(type.type, type);
     }

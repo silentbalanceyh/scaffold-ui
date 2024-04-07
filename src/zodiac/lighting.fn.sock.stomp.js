@@ -30,9 +30,14 @@ const sockSubscribe = (client, {
              * æ¨æä¸å¼ æ°çæ¿é´é¢å®è®¢åï¼åå·ï¼
              * 这种，这种格式并非乱码，而是需要直接调用 decodeURIComponent 和 escape 方法
              * 对这种格式的文本进行解码，如此才会正常操作。
+             * 从 headers 中抽取 message_id 作为 name / code 专用。
              */
+            const message_id = message.headers['message-id'];
             const body = decodeURIComponent(escape(message.body));
             const data = JSON.parse(body);
+            if(message_id){
+                data.messageId = message_id;
+            }
             fn(data, reference);
         }
     })

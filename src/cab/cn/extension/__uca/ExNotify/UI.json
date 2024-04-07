@@ -1,0 +1,10 @@
+{
+    "_config": {
+        "drawer": "消息列表,right,480,true,false",
+        "action": {
+            "readAll": "全部已读",
+            "clear": "清空列表",
+            "read": "标记已读"
+        }
+    }
+}

@@ -5,14 +5,31 @@ import {Stomp} from 'stompjs';
 const Cv = __Zn.Env;
 
 const __buildClient = () => {
+    let sockEndpoint = Cv['SOCK'];
+    if(!sockEndpoint){
+        return;
+    }
     // 连接SockJs对应的 EndPoint
     let endpoint = Cv['ENDPOINT'];
     if (endpoint.startsWith("http:")) {
         // Stomp URI Modify
         endpoint = endpoint.replace("http:", "ws:");
     }
+    // 地址计算
+    if (endpoint.endsWith("/")) {
+        endpoint = endpoint.substring(0, endpoint.length - 1);
+    }
+    if (!sockEndpoint.startsWith("/")) {
+        sockEndpoint = `/${sockEndpoint}`
+    }
+    /*
+     * 最终计算结果
+     * - endpoint 不带最后的 /
+     * - sockEndpoint 以 / 开头
+     */
+    const sockAddr = `${endpoint}${sockEndpoint}`;
     // 获取STOMP自协议的客户端对象
-    const stompClient = Stomp.client(`${endpoint}/api/web-socket`);
+    const stompClient = Stomp.client(sockAddr);
     // 关闭日志：
     stompClient.debug = null;
     return stompClient;
@@ -45,6 +62,9 @@ const sockSubscribe = (client, {
 
 const sockOn = (websocket = {}, componentRef) => {
     let stompClient = __buildClient();
+    if(!stompClient){
+        return;
+    }
     // 自定义客户端的认证信息，按需求配置
     const headers = __O.headerMimeS({}, true);
     const headerJ = {};

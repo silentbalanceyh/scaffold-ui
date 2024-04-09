@@ -1,0 +1,25 @@
+{
+    "_page": {
+        "title": "我的提醒设置",
+        "className": "ux_card_form"
+    },
+    "_form": {
+        "ui": [
+            [
+                {
+                    "metadata": "$button",
+                    "optionJsx.grouped": true,
+                    "optionJsx.extension": [
+                        "$opSave,保存配置,SUBMIT,primary"
+                    ],
+                    "span": 24
+                }
+            ]
+        ]
+    },
+    "_modal": {
+        "success": {
+            "saved": "您的提醒设置已经成功保存，由于提醒是全局设置，为了使提醒生效，请刷新页面或注销系统后重新登录！"
+        }
+    }
+}

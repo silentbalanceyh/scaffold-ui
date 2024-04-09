@@ -34,7 +34,7 @@ const storeApp = (data, isKey = false) => {
             fnPutDirect(Cv.X_APP_ID, appData.key);
             fnPutDirect(Cv.X_SIGMA, appData.sigma);
         }
-        __Zn.dgDebug(data, "更新应用程序配置数据！", "#00CDCD");
+        __Zn.dgDebug(data, "更新应用程序配置数据！", "#008B8B");
     }
     return data;
 };
@@ -57,7 +57,7 @@ const storeModule = (data, configKey) => {
             __Zn.dgDebug({
                 key: configKey,
                 data,
-            }, "刷新模块配置数据！", "#00CDCD");
+            }, "刷新模块配置数据！", "#008B8B");
             storeApp(app, true);
         }
     }

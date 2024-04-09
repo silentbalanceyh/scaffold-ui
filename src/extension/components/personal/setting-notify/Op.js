@@ -78,6 +78,9 @@ export default {
                     }
                     user.setting.notification = stored;
                     Ux.storeUser(user);
+
+                    // 自动刷新界面
+                    window.location.href = window.location.href;
                 })
         }
     }

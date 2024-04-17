@@ -13,14 +13,29 @@ import Ux from "ux";
 export default (ref, required) => {
     return (reference, jsx) => {
         return Ux.aiRadio(reference, jsx, (event) => {
+
             const mode = Ux.ambEvent(event);
             const params = {};
             params.amount = required;
-            if ("RUN_UP" === mode) {
+            if ("RUN_UP" === mode || "DEBT"===mode) {
+                if("DEBT"===mode){
+                    // 现结，直接用金额执行计算
+                    const input = {};
+                    input.amount = required;
+                    const values = __Fn.payGap(input);
+                    // rounded 和 payment 的还原
+                    values.payment = [];
+                    values.payment.push({
+                        key: "Cash",
+                        name: "Cash",
+                        amount: input.amountActual
+                    })
+                    Object.assign(params, values);
+                }
                 // 延迟结账（挂账），重设某部分值
                 params.amountActual = params.amount;
                 params.amountGap = 0;
-            } else {
+            }else {
                 // 现结，直接用金额执行计算
                 const input = {};
                 input.amount = required;

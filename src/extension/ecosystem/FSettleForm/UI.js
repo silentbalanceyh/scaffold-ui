@@ -74,6 +74,7 @@ class Component extends React.PureComponent {
                             $form={$form} $op={Op.actions}
                             // 关闭之后处理选择信息
                             rxClose={(data = {}, addOn = {}) => {
+                                data.key = ref.state.$key
                                 const ref = Ux.onReference(this, 1);
                                 Ux.of(ref).in({$selected:[]}).handle(() => {
                                     // 调用外层函数

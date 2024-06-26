@@ -127,19 +127,12 @@ export default {
     },
     // rxFinishType
     rxFinishType: (reference) => (event) => {
-        const value = Ux.ambEvent(event);
         let formValues = {};
-        if("STANDARD" === value){
-            const { $selected = {}} = reference.state;
-            const params = Ux.isMod('mHotel');
-            const rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
-            const amountAttach = __valueAmount($selected.items, rounded);
-            Object.assign(formValues, amountAttach);
-        }else{
-            formValues.amountActual = 0;
-            formValues.amountGap = 0;
-            formValues.rounded = undefined;
-        }
+        const { $selected = {}} = reference.state;
+        const params = Ux.isMod('mHotel');
+        const rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
+        const amountAttach = __valueAmount($selected.items, rounded);
+        Object.assign(formValues, amountAttach);
         Ux.formHits(reference, formValues);
     }
 }

@@ -66,7 +66,7 @@ const aiAction = (reference, jsx = {}) => __jsxAction(jsx, (config = {}) => {
             rest.icon = __Zn.v4Icon(rest.icon);
         }
         return (
-            <Button {...rest} style={config.style}>{text}</Button>
+            <Button {...rest} key={rest.key} style={config.style}>{text}</Button>
         );
     })
 });

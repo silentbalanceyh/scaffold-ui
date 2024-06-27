@@ -37,7 +37,7 @@ const _renderInput = (reference) => {
                       key='inputSearch'
                       disabled={disabled}
                       value={searchText}/>,
-        <Button {...attrKwClean}/>
+        <Button {...attrKwClean} key={attrKwClean.key}/>
     ]
 };
 

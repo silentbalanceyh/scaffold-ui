@@ -85,10 +85,10 @@ const _renderButton = (reference, config = {}) => {
     }
     if (text) {
         /* 标准按钮 */
-        return (<Button {...$rest}>{text}</Button>);
+        return (<Button {...$rest} key={$rest.key}>{text}</Button>);
     } else {
         /* 非标准按钮 */
-        return (<Button {...$rest}/>);
+        return (<Button {...$rest} key={$rest.key}/>);
     }
 };
 

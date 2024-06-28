@@ -1,5 +1,5 @@
 import React from 'react';
-import {Tooltip, Badge} from "antd";
+import {Badge, Tooltip} from "antd";
 import Ux from 'ux';
 import Op from './Op';
 import Rdr from './Web';
@@ -9,8 +9,8 @@ import "./Cab.norm.scss";
 
 const UCA_NAME = "ExNotify";
 const componentInit = (reference) => {
-    const { $websocket = {}} = reference.props;
-    if(Ux.isNotEmpty($websocket)){
+    const {$websocket = {}} = reference.props;
+    if (Ux.isNotEmpty($websocket)) {
         Ux.sockOn($websocket, reference);
     }
     Ux.ajaxGet("/api/message/type/MESSAGE").then(response => {
@@ -26,19 +26,20 @@ const componentInit = (reference) => {
 )
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     componentDidMount() {
         componentInit(this);
     }
 
     render() {
         const {config = {}, $websocket = {}} = this.props;
-        if(Ux.isEmpty($websocket)){
+        if (Ux.isEmpty($websocket)) {
             // 无内容
             return false;
         }
-        const { label, key, icon } = config;
+        const {label, key, icon} = config;
         // state -> $data
-        const { $data = []} = this.state ? this.state: {};
+        const {$data = []} = this.state ? this.state : {};
         const messages = $data.filter(item => "SENT" === item.status);
 
         const attrTip = {};
@@ -47,14 +48,14 @@ class Component extends React.PureComponent {
 
         const attrMix = Sk.mixEx(UCA_NAME);
         const attrBadge = {};
-        if(messages.length){
+        if (messages.length) {
             attrBadge.count = messages.length;
         }
         return (
             <div {...attrMix}>
                 <Badge {...attrBadge}>
-                    <Tooltip {...attrTip}>
-                        {Ux.v4Icon(icon, { onClick: Op.rxVisible(this)})}
+                    <Tooltip {...attrTip} key={attrTip.key}>
+                        {Ux.v4Icon(icon, {onClick: Op.rxVisible(this)})}
                     </Tooltip>
                 </Badge>
                 {Rdr.renderDrawer(this)}

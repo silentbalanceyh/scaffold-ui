@@ -32,7 +32,7 @@ const __aiInput = (reference, values) => (cell = {}) => {
          * */
         const colAttrs = __FT.connectItem(cell);
         return (
-            <Col {...colAttrs}>
+            <Col {...colAttrs} key={colAttrs.key}>
                 {cell.render ? cell.render(values, cell, reference) : false}
             </Col>
         )
@@ -42,7 +42,7 @@ const aiField = (reference, values = {}, raft = {}) =>
     (__Zn.isArray(raft.rows)) ? raft.rows.map((row) => {
         const {cells = [], ...rest} = row;
         return (
-            <Row {...rest}>
+            <Row {...rest} key={rest.key}>
                 {/* 单元格 */}
                 {cells.map(__aiInput(reference, values))}
             </Row>

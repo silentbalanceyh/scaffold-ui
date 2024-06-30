@@ -97,6 +97,12 @@
             ],
             [
                 "settlements,结算单,24"
+            ],
+            [
+                "title=结算记录"
+            ],
+            [
+                "SettlementRecords,结算单,24"
             ]
         ],
         "hidden": [

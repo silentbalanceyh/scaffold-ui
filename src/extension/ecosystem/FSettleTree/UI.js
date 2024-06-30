@@ -69,7 +69,7 @@ class Component extends React.PureComponent {
             return (
                 <div {...attrs}>
                     <Table {...$table} dataSource={dataSource}
-                           expandable={{
+                           expandable={this.props.dataItems!==undefined && {
                                expandedRowRender:record => {
                                    const inherit = Ex.yoAmbient(this);
                                    return (<FSettleItems {...inherit} data={record.items}

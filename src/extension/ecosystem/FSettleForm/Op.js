@@ -15,7 +15,7 @@ const __verifyPayment = (reference, params = {}) => {
 
 const __valueAmount = (items = [], rounded = "HALF") => {
     const values = {};
-    values.amount = Ex.paySum(items);
+    values.amount = Ex.paySum(items.filter(item=>item.finishedId===undefined).filter(item=>item.debtId===undefined));
     values.rounded = rounded;
     const attachAmount = Ex.payGap({
         amount: values.amount,
@@ -52,7 +52,7 @@ export default {
     },
     yoAmount: (reference) => {
         const { $selected = {} } = reference.state;
-        return Ex.paySum($selected.items);
+        return Ex.paySum($selected.items.filter(item=>item.finishedId===undefined).filter(item=>item.debtId===undefined));
     },
     yoValue: (reference) => {
         const {$inited = {}} = reference.props;

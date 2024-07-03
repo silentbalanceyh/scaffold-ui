@@ -29,7 +29,7 @@ class Component extends React.PureComponent {
                 const { $selectedKeys = [], rxCascade = () => false, data = [] } = this.props;
                 const $selected = [];
                 data.forEach(record => {
-                    if(!record.finishedId && $selectedKeys.includes(record.key)){
+                    if(!record.finishedId && $selectedKeys.includes(record.key)&&record.debtId===undefined){
                         $selected.push(record.key);
                     }
                 })
@@ -38,7 +38,7 @@ class Component extends React.PureComponent {
                     onChange: rxCascade,
                     getCheckboxProps: (record = {}) => {
                         const props = {};
-                        if(record.finishedId){
+                        if(record.debtId||record.finishedId){
                             props.disabled = true;
                         }
                         return props;
@@ -48,7 +48,6 @@ class Component extends React.PureComponent {
         }
 
         const attrs = Sk.mixF(UCA_NAME);
-
         const { isReport = true } = this.props;
         if(isReport){
             table.footer = (data = []) => Op.reportFooter(this, data);

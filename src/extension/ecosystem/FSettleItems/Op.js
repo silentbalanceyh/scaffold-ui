@@ -5,9 +5,9 @@ import React from 'react';
 
 const EXECUTOR = {
     SUM_C_ALL: (data = []) => data.length,                                              // 总数量
-    SUM_C_FINISHED: (data = []) => data.filter(item => !!item.finishedId).length,       // finishedId 有值
+    SUM_C_FINISHED: (data = []) => data.filter(item=>item.finishedId===undefined).filter(item=>item.debtId===undefined).length,       // finishedId 有值
     SUM_A_ALL: (data = []) => Ex.paySum(data),                                        // 总金额
-    SUM_A_FINISHED: (data = []) => Ex.paySum(data.filter(item => !!item.finishedId)), // 完成总额
+    SUM_A_FINISHED: (data = []) => Ex.paySum(data.filter(item=>item.finishedId===undefined).filter(item=>item.debtId===undefined)), // 完成总额
     SUM_A_PROCESS: (data = [], reference) => {
         const { $selectedKeys = []} = reference.props;
         const items = data.filter(item => $selectedKeys.includes(item.key));

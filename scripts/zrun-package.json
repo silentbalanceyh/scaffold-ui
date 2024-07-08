@@ -36,5 +36,6 @@
     "webpack-dev-server": "^4.15.1",
     "eslint": "8.57.0",
     "css-loader": "^6.10.0",
-    "style-loader": "^3.3.4"
+    "style-loader": "^3.3.4",
+    "@antv/g6": "^4.8.24"
 }

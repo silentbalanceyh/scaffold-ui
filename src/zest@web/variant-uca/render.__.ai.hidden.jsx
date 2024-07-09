@@ -3,7 +3,7 @@ import {Input} from "antd";
 
 const aiHidden = (reference, jsx = {}, onChange) => {
     jsx.type = "hidden";
-    return (<Input {...jsx}/>);
+    return (<Input {...jsx} key={jsx.key}/>);
 };
 export default {
     aiHidden

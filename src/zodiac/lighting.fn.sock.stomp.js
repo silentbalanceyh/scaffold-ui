@@ -6,7 +6,7 @@ const Cv = __Zn.Env;
 
 const __buildClient = () => {
     let sockEndpoint = Cv['SOCK'];
-    if(!sockEndpoint){
+    if (!sockEndpoint) {
         return;
     }
     // 连接SockJs对应的 EndPoint
@@ -41,7 +41,7 @@ const sockSubscribe = (client, {
     reference,
 }) => {
     client.subscribe(address, (message) => {
-        if(__Zn.isFunction(fn)){
+        if (__Zn.isFunction(fn)) {
             /*
              * 这行代码是必须的，从远处得到的消息信息是 UTF-8 的格式，但这个消息类似：
              * æ¨æä¸å¼ æ°çæ¿é´é¢å®è®¢åï¼åå·ï¼
@@ -52,7 +52,7 @@ const sockSubscribe = (client, {
             const message_id = message.headers['message-id'];
             const body = decodeURIComponent(escape(message.body));
             const data = JSON.parse(body);
-            if(message_id){
+            if (message_id) {
                 data.messageId = message_id;
             }
             fn(data, reference);
@@ -62,7 +62,7 @@ const sockSubscribe = (client, {
 
 const sockOn = (websocket = {}, componentRef) => {
     let stompClient = __buildClient();
-    if(!stompClient){
+    if (!stompClient) {
         return;
     }
     // 自定义客户端的认证信息，按需求配置
@@ -72,11 +72,11 @@ const sockOn = (websocket = {}, componentRef) => {
         headerJ[key] = value);
     // 发起 Ws Socket 连接
     stompClient.connect(headerJ, (res) => {
-        __Zn.dgDebug(res, `连接成功！${stompClient.ws?.url}`,"#8B4513");
+        __Zn.dgDebug(res, `连接成功！${stompClient.ws?.url}`, "#8B4513");
         const addresses = Object.keys(websocket);
         addresses.forEach(address => {
             const fn = websocket[address];
-            __Zn.dgDebug(res, `订阅地址！${address}`,"#6B8E23");
+            __Zn.dgDebug(res, `订阅地址！${address}`, "#6B8E23");
             sockSubscribe(stompClient, {
                 address,
                 fn,

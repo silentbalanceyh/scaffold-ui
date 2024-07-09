@@ -137,7 +137,7 @@ const renderButton = (reference, topBar, key = "left", disabled = {}) => {
                 }
                 const {text, ...rest} = $item;
                 return (
-                    <Button {...rest}>{text}</Button>
+                    <Button {...rest} key={rest.key}>{text}</Button>
                 )
             })}
         </Button.Group>

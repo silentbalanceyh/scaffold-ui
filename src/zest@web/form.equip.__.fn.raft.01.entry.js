@@ -66,7 +66,7 @@ const raftHidden = (raft = {}, $form, reference) => {
                     // Ant 4.0
                     const attrs = __Zn.v4FormHidden(reference, field, values);
                     return (
-                        <Form.Item {...attrs}>
+                        <Form.Item {...attrs} key={attrs.key}>
                             {UcaField.aiHidden(reference, jsx)}
                         </Form.Item>
                     )

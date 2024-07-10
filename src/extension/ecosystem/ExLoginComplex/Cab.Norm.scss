@@ -1,0 +1,44 @@
+.uex {
+  &_ExLoginComplex {
+    .ant-tabs-nav-list {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+
+      .ant-tabs-ink-bar {
+        display: none;
+      }
+    }
+
+    .ant-tabs-content-holder {
+      min-height: 480px;
+    }
+
+    .ant-card-head-title {
+      font-size: 18px;
+    }
+
+    .ant-card-body {
+      padding: 24px 16px;
+    }
+
+    .auth_method {
+      text-align: center;
+      display: inline-block;
+      padding: 18px;
+
+      img {
+        width: 42px;
+        height: 42px;
+      }
+    }
+
+    .auth_selected {
+      img {
+        width: 24px;
+        height: 24px;
+        margin-right: 16px;
+      }
+    }
+  }
+}

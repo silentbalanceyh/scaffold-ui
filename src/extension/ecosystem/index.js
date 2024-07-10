@@ -1,4 +1,3 @@
-export {default as ExEntry} from './ExEntry/UI';                        /* （会员入口）   ----- ExEntry 会员登录专用 */
 export {default as ExAccount} from './ExAccount/UI';                    /* （账号信息）用户数据（左边专用的用户基本信息） */
 export {default as ExAdmin} from './ExAdmin/UI';                        /* （管理员模板） ----- ExAdmin 模板专用 */
 export {default as ExAuthority} from './ExAuthority/UI';                /*  权限管理主界面 */
@@ -13,7 +12,6 @@ export {default as ExHistory} from './ExHistory/UI';                    /* （�
 export {default as ExListComplex} from './ExListComplex/UI';          // 复杂列表
 export {default as ExListFast} from './ExListFast/UI';                // 全窗口操作列表
 // export {default as ExListQuery} from './ExListQuery/UI';              // 简单结果呈现列表
-export {default as ExLogin} from './ExLogin/UI';                        /* （管理员入口） ----- ExLogin 后台登录专用界面 */
 export {default as ExRecord} from './ExRecord/UI';                      /*  UI_FORM / Record 合并到一起（动态表单） */
 export {default as ExRegiment} from './ExRegiment/UI';                  /* （通用选择器）搜索、选择、多选、反选专用面板 */
 export {default as ExRelation} from './ExRelation/UI';
@@ -26,6 +24,13 @@ export {default as ExTrackField} from './ExTrackField/UI';
 export {default as ExWizard} from './ExWizard/UI';                      /* 双表单依赖搜索专用 */
 export {default as ExAnnounce} from './ExAnnounce/UI';                  /* 公告 */
 export {default as ExAnnounceView} from './ExAnnounceView/UI';          /* 公告详情 */
+
+// 登录专用
+export {default as ExLogin} from './ExLogin/UI';                        /* 无验证码登录入口 */
+export {default as ExLoginBuiltIn} from './ExLoginBuiltIn/UI';          /* 验证码登录 */
+export {default as ExLoginWechat} from './ExLoginWechat/UI';            /* 微信登录 */
+export {default as ExLoginSms} from './ExLoginSms/UI';                  /* 短信登录 */
+export {default as ExLoginComplex} from './ExLoginComplex/UI';          /* 3合一入口，根据配置提取 */
 
 // 模板专用方法
 export {default as ExLogged} from './ExLogged/UI';

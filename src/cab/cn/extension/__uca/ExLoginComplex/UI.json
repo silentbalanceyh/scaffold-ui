@@ -1,0 +1,21 @@
+{
+    "_way": [
+        {
+            "key": "keyAccount",
+            "text": "账号登录",
+            "icon": "ACCOUNT"
+        },
+        {
+            "key": "keyWechat",
+            "condition": "pLoginWechat",
+            "text": "微信登录",
+            "icon": "WECHAT"
+        },
+        {
+            "key": "keySMS",
+            "condition": "pLoginSMS",
+            "text": "手机登录",
+            "icon": "SMS"
+        }
+    ]
+}

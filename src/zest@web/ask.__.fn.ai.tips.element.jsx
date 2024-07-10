@@ -57,7 +57,7 @@ const aiSubject = (reference, cell) => {
     attrRest.className = `ux_subject`;
     attrRest.span = 24;
     return (
-        <Col {...attrRest}>
+        <Col {...attrRest} key={attrRest.key}>
             <img src={Cv.V_IMAGE.ICON_BLOCK[data['uiIcon']]} alt={data.name}/>
             <div className={"ux_subject_tip"}>
                 {data.subject}

@@ -6,7 +6,6 @@ declare module "ei" {
     export {default as ExArbor} from './ExArbor/UI';                        /* （通用树）左边的树形结构 */
     export {default as ExCategory} from './ExCategory/UI';                  /* （Category专用）分类管理 */
     export {default as ExDeploy} from './ExDeploy/UI';
-    export {default as ExEntry} from './ExEntry/UI';                        /* （会员入口）   ----- ExEntry 会员登录专用 */
     export {default as ExForm} from './ExForm/UI';                          /* （通用表单）*/
     export {default as ExGraphicEditor} from './ExGraphicEditor/UI';        /* 拓扑图编辑器 */
     export {default as ExGraphicViewer} from './ExGraphicViewer/UI';        /* 拓扑图查看器 */
@@ -14,7 +13,6 @@ declare module "ei" {
     export {default as ExListComplex} from './ExListComplex/UI';            // 复杂列表
     export {default as ExListFast} from './ExListFast/UI';                  // 全窗口操作列表
     // export {default as ExListQuery} from './ExListQuery/UI';                // 简单结果呈现列表
-    export {default as ExLogin} from './ExLogin/UI';                        /* （管理员入口） ----- ExLogin 后台登录专用界面 */
     export {default as ExRecord} from './ExRecord/UI';                      /*  UI_FORM / Record 合并到一起（动态表单） */
     export {default as ExRegiment} from './ExRegiment/UI';                  /* （通用选择器）搜索、选择、多选、反选专用面板 */
     export {default as ExRelation} from './ExRelation/UI';
@@ -27,6 +25,13 @@ declare module "ei" {
     export {default as ExWizard} from './ExWizard/UI';                      /* 双表单依赖搜索专用 */
     export {default as ExAnnounce} from './ExAnnounce/UI';                  /* 公告 */
     export {default as ExAnnounceView} from './ExAnnounceView/UI';          /* 公告详情 */
+    
+    // 登录专用
+    export {default as ExLogin} from './ExLogin/UI';                        /* 无验证码登录入口 */
+    export {default as ExLoginBuiltIn} from './ExLoginBuiltIn/UI';          /* 验证码登录 */
+    export {default as ExLoginWechat} from './ExLoginWechat/UI';            /* 微信登录 */
+    export {default as ExLoginSms} from './ExLoginSms/UI';                  /* 短信登录 */
+    export {default as ExLoginComplex} from './ExLoginComplex/UI';          /* 3合一入口，根据配置提取 */
 
     // 模板专用方法
     export {default as ExLogged} from './ExLogged/UI';

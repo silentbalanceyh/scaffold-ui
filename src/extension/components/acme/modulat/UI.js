@@ -103,7 +103,6 @@ class Component extends React.PureComponent {
                 // 正式渲染
                 const {$inited = {}} = this.state;
                 const form = Ex.yoForm(this, null, Ux.clone($inited));
-                console.log(form);
                 return (
                     <PageCard reference={this}>
                         <ExForm {...form} $height={"200px"}

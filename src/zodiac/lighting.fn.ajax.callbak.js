@@ -213,7 +213,24 @@ const ajax2True = (consumer, content) => (result) => {
         return __Zn.fxReject(10107);
     }
 };
+const ajaxReject = (reference, key, data = {}) => {
+    const {config = {}} = reference.props;
+    const {dialog = {}} = config;
+    let modal;
+    // 双线处理流程
+    if (dialog.modal) {
+        modal = dialog.modal;
+    } else {
+        const {$hoc} = reference.state ? reference.state : {};
+        modal = ($hoc) ? $hoc._("modal") : null;
+    }
+    const dialogConfig = {};
+    __dialogType(dialogConfig, modal, key);
+    const info = __Zn.formatExpr(dialogConfig.pattern, data);
+    return Promise.reject({data: {info, code: -10000}});
+}
 export default {
+    ajaxReject,
     ajaxError,
     ajaxDialog,
     ajaxMessage,

@@ -1,37 +1,27 @@
-import Ux from "ux";
-import {_I} from 'zet';
+import Ux from 'ux';
+import {_I} from "zet";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (reference) => {
-    let pwdChange = false;
     return (params) => {
-        const password = params.password;
-        // 验证码专用
+        const {$message = false} = reference.state;
+        if (!$message) {
+            // 验证码过期
+            return Ux.ajaxReject(reference, "waiting");
+        }
+        /*
+         * mUsername
+         * mMessage
+         */
         const headers = {};
         const {$session} = reference.state ? reference.state : {};
         if ($session) {
             headers[Ux.Env.X_HEADER.X_SESSION] = $session;
         }
-        return _I.login(params, {headers})
-            .then((data = {}) => {
-                // 交换授权码专用请求
-                const request = {};
-                request.client_id = data['key'];
-                request.client_secret = data['clientSecret'];
-                request.scope = data['scope'];
-                if (data.hasOwnProperty('password')) {
-                    // 是否初始登录修改密码
-                    pwdChange = !data['password'];
-                }
-                // 授权码处理
-                return _I.authorize(request);
-            })
-            .then((data = {}) => {
-                // 交换令牌专用请求
-                const token = {};
-                token.code = data['code'];
-                token.client_id = data['client_id'];
-                return _I.token(token);
-            })
+        const request = {};
+        request.mobile = params.mUsername;
+        request.message = params.mMessage;
+        return Ux.ajaxPush("/mobile/login", request, {headers})
             .then((response = {}) => {
                 // 读取Token信息
                 const user = {};
@@ -66,19 +56,9 @@ export default (reference) => {
             .then(logged => {
                 /* Redux防重复提交完成 */
                 Ux.writeSubmit(reference, false);
-                /* 定向地址 */
-                if (pwdChange) {
-                    /* 重定向到密码更改页 */
-                    logged.password = password;
-                    logged.limitation = pwdChange;
-                    /* 第二次存储 */
-                    Ux.storeUser(logged);
-                    Ux.toPassword(reference);
-                } else {
-                    /* 第二次存储 */
-                    Ux.storeUser(logged);
-                    Ux.toOriginal(reference);
-                }
+                /* 第二次存储 */
+                Ux.storeUser(logged);
+                Ux.toOriginal(reference);
             })
             .catch(error => {
                 // 特殊流程（一旦登录失败刷新验证码）

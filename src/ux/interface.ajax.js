@@ -360,6 +360,8 @@ const messageConfirm = (content, onOk, width = 600) =>
 const ajaxError = (reference, error = {}, redux = false) =>
     __Zo.ajaxError(reference, error, redux);
 
+const ajaxReject = (reference, key, data = {}) =>
+    __Zo.ajaxReject(reference, key, data);
 
 /**
  *
@@ -869,6 +871,7 @@ export default {
     ajaxError,
     ajaxDialog,
     ajaxMessage,
+    ajaxReject,
 
     ajax2Dialog,    // 2阶
     ajax2Message,   // 2阶

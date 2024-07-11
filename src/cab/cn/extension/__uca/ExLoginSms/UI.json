@@ -10,6 +10,10 @@
                             {
                                 "required": true,
                                 "message": "请输入手机号！"
+                            },
+                            {
+                                "pattern": "[0-9-()（）]{7,18}",
+                                "message": "格式错误,请正确输入手机号！"
                             }
                         ]
                     },
@@ -85,8 +89,7 @@
                             "error": {
                                 "501": "对不起，您的服务端不支持短信验证码功能！",
                                 "mobile": "请输入您的手机号码！",
-                                "agree": "请同意\"用户协议\"和\"隐私策略\"！",
-                                "verify": "请输入验证码！"
+                                "captcha": "请输入验证码！"
                             },
                             "button": {
                                 "text": "发送验证码",
@@ -94,25 +97,12 @@
                             },
                             "input": {
                                 "mobile": "mUsername",
-                                "verify": "mCaptcha",
-                                "agree": "mAgree"
+                                "captcha": "mCaptcha"
                             }
                         }
                     },
                     "optionItem": {
                         "hasFeedback": true
-                    }
-                }
-            ],
-            [
-                {
-                    "field": "mAgree",
-                    "$render": "aiCheckbox",
-                    "optionJsx": {
-                        "label": "同意\"用户协议\"和\"隐私策略\"。"
-                    },
-                    "optionConfig": {
-                        "valuePropName": "checked"
                     }
                 }
             ],
@@ -132,7 +122,7 @@
         "success": {
         },
         "error": {
-            "user": "账号不存在！",
+            "waiting": "请重新发送短信验证码，短信验证码非法！",
             "password": "密码错误，请输入正确密码！"
         }
     }

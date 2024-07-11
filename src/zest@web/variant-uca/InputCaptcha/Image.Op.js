@@ -2,11 +2,11 @@ import __Zn from '../zero.uca.dependency';
 
 const asyncImage = (config = {}, $session) => {
     const {uri = "", method = "POST"} = config.ajax ? config.ajax : {};
-    const headers = {};
-    if ($session) {
-        headers[__Zn.Env.X_HEADER.X_SESSION] = $session;
-    }
     if ("POST" === method) {
+        const headers = {};
+        if ($session) {
+            headers[__Zn.Env.X_HEADER.X_SESSION] = $session;
+        }
         return __Zn.ajaxPull(uri, {}, {headers}).then(response => new Promise(resolve => {
             const reader = new FileReader();
             reader.onload = (event) => resolve(event.target.result);

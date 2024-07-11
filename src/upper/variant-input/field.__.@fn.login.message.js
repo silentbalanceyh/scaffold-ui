@@ -7,7 +7,11 @@ export default (reference, jsx) => {
         Ux.connectId(connectId);
     };
     // $session 处理
-    const {$session} = reference.state ? reference.state : {};
+    const {
+        $session,
+        $message = false
+    } = reference.state ? reference.state : {};
+    jsx.$message = $message;
     if ($session) {
         jsx.$session = $session;
     }

@@ -114,7 +114,6 @@ export default {
     // aiPassword
     ...__AI_PASSWORD,
 
-
     // aiSearchInput
     ...__AI_QR_SEARCH_INPUT,
     // aiSearchRangeDate

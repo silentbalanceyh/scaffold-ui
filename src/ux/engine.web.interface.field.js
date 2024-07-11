@@ -406,7 +406,9 @@ const aiBraftEditor = (reference, jsx = {}, onChange) => __UCA.aiBraftEditor(ref
  */
 const aiTableTransfer = (reference, jsx = {}, onChange) => __UCA.aiTableTransfer(reference, jsx, onChange);
 const exported = {
-    // 验证码
+    /*
+     * 验证码 / 短信验证码
+     */
     aiCaptcha,
     /**
      * ## 「标准」`Ux.ai2Captcha`

@@ -82,9 +82,9 @@ import Ex from 'ex';
  * > `Ux.storeUser`在整个流程中调用了两次，第一次是直接提取用户信息，第二次会将`rxLogin`以及用户数据合并到一起重写SessionStorage中存储的数据。
  *
  * @memberOf module:uca/extension
- * @method ExEntry
+ * @method ExLoginBuiltIn
  **/
-const UCA_NAME = "ExEntry";
+const UCA_NAME = "ExLoginBuiltIn";
 const componentInit = (reference) => {
     const state = {};
     state.$session = Ux.randomString(48);

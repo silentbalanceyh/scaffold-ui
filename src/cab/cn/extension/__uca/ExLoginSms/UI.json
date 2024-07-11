@@ -1,0 +1,139 @@
+{
+    "_form": {
+        "layout": "horizontal",
+        "ui": [
+            [
+                {
+                    "field": "mUsername",
+                    "optionConfig": {
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入手机号！"
+                            }
+                        ]
+                    },
+                    "optionJsx": {
+                        "placeholder": "手机号",
+                        "prefix": {
+                            "type": "mobile"
+                        }
+                    },
+                    "optionItem": {
+                        "hasFeedback": true
+                    }
+                }
+            ],
+            [
+                {
+                    "field": "mCaptcha",
+                    "$render": "aiCaptcha",
+                    "optionConfig": {
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入验证码！"
+                            }
+                        ]
+                    },
+                    "optionJsx": {
+                        "placeholder": "验证码",
+                        "prefix": {
+                            "type": "code"
+                        },
+                        "config": {
+                            "type": "image",
+                            "connectId": "$opLoginSMS",
+                            "ajax": {
+                                "uri": "/captcha/image",
+                                "method": "POST"
+                            },
+                            "error": {
+                                "501": "对不起，您的服务端不支持验证码功能！"
+                            }
+                        }
+                    },
+                    "optionItem": {
+                        "hasFeedback": true
+                    }
+                }
+            ],
+            [
+                {
+                    "field": "mMessage",
+                    "$render": "aiCaptcha",
+                    "optionConfig": {
+                        "rules": [
+                            {
+                                "required": true,
+                                "message": "请输入短信验证码！"
+                            }
+                        ]
+                    },
+                    "optionJsx": {
+                        "placeholder": "短信验证码",
+                        "prefix": {
+                            "type": "message"
+                        },
+                        "config": {
+                            "type": "sms",
+                            "connectId": "$opLoginSMS",
+                            "ajax": {
+                                "uri": "/mobile/send",
+                                "method": "POST"
+                            },
+                            "error": {
+                                "501": "对不起，您的服务端不支持短信验证码功能！",
+                                "mobile": "请输入您的手机号码！",
+                                "agree": "请同意\"用户协议\"和\"隐私策略\"！",
+                                "verify": "请输入验证码！"
+                            },
+                            "button": {
+                                "text": "发送验证码",
+                                "waiting": "等待（ss）秒..."
+                            },
+                            "input": {
+                                "mobile": "mUsername",
+                                "verify": "mCaptcha",
+                                "agree": "mAgree"
+                            }
+                        }
+                    },
+                    "optionItem": {
+                        "hasFeedback": true
+                    }
+                }
+            ],
+            [
+                {
+                    "field": "mAgree",
+                    "$render": "aiCheckbox",
+                    "optionJsx": {
+                        "label": "同意\"用户协议\"和\"隐私策略\"。"
+                    },
+                    "optionConfig": {
+                        "valuePropName": "checked"
+                    }
+                }
+            ],
+            [
+                {
+                    "metadata": "$button",
+                    "optionJsx.align": "center",
+                    "optionJsx.buttons": {
+                        "submit": "$opLoginSMS,登录"
+                    },
+                    "span": 24
+                }
+            ]
+        ]
+    },
+    "_modal": {
+        "success": {
+        },
+        "error": {
+            "user": "账号不存在！",
+            "password": "密码错误，请输入正确密码！"
+        }
+    }
+}

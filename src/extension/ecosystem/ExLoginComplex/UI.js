@@ -16,7 +16,7 @@ const componentInit = (reference) => {
     const params = Ux.isMod("mSetting");
     const items = Ux.inHoc(reference, "way");
     const tab = {};
-    tab.defaultActiveKey = "keyAccount";
+    tab.defaultActiveKey = "keySMS";
     tab.tabPosition = "bottom";
     tab.items = [];
     items.forEach(item => {

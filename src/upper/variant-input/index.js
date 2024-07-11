@@ -1,6 +1,7 @@
 import login_username from './field.__.@fn.login.username';
 import login_password from './field.__.@fn.login.password';
 import login_captcha from './field.__.@fn.login.captcha';
+import login_message from './field.__.@fn.login.message';
 
 import address_region_id from './field.__.@fn.address.regionid';
 
@@ -11,6 +12,9 @@ import pay_items from './field.__.@fn.pay.items';
 import pay_payment from './field.__.@fn.pay.payment';
 import pay_rounded from './field.__.@fn.pay.rounded';
 import pay_finishType_fn from './field.__.@@fn.pay.finishType';
+
+import Ux from 'ux';
+
 export default {
 
     /**
@@ -68,6 +72,12 @@ export default {
             username: login_username,
             password: login_password,
             captcha: login_captcha,
+        },
+        LoginSMS: {
+            mUsername: login_username,
+            mCaptcha: login_captcha,
+            mMessage: login_message,
+            mAgree: Ux.aiCheckbox,
         },
         /*
          * 常用地址选择（带Linker）

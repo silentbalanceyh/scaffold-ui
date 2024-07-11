@@ -33,7 +33,12 @@ const aiCheckbox = (reference, jsx = {}, onChange) => {
         if ("SWITCH" === mode) {
             return (<Switch {...left} onChange={onChange}/>)
         } else {
-            return (<Checkbox {...left} onChange={onChange}/>)
+            const {label} = $rest;
+            if (label) {
+                return (<Checkbox {...left} onChange={onChange}>{label}</Checkbox>)
+            } else {
+                return (<Checkbox {...left} onChange={onChange}/>)
+            }
         }
     }
 };

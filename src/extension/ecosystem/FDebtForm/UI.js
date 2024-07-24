@@ -56,6 +56,13 @@ class Component extends React.PureComponent {
                                         <FSettleTree {...inherit} data={$inited.settlements}
                                                      dataItems={$inited.items}/>
                                     )
+                                },
+                                SettlementRecords:(reference , jsx)=>{
+                                    const { $inited = {}} = reference.state;
+                                    const inherit = Ex.yoAmbient(this);
+                                    return (
+                                        <FSettleTree {...inherit} data={$inited.transactions}/>
+                                    )
                                 }
                             }}/>
                 </div>

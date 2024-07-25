@@ -15,9 +15,13 @@ const __v4ChildOne = (child) => {
          *     label,
          *     children
          * }
-         * 此处 fnChild 会被替换成 children 实现整体统一，不再需要
-         * Component
+         * 此处 fnChild 会被替换成 children 实现整体统一，不再需要 Component
+         * 新版处理过程中，icon 的渲染有变化，所以此处去掉 icon 属性才可以保证 block 模式
+         * 之下 icon 的显示变得正常
          */
+        if ($rest.icon) {
+            delete $rest.icon;
+        }
         return $rest;
     } else {
         __Zn.dgDebug({child}, "[ Ux ] 未检测到 fnChild 函数，返回 false", "red");

@@ -69,9 +69,6 @@ const tabRemote = (reference, key) => {
     let {tabs = {}} = reference.state;
     tabs = Ux.clone(tabs);
     let view = {};
-    if(tabs.length>0){
-        key = tabs.items[0].key
-    }
     let item = tabs.items.filter(item => key === item.key)[0];
     if (item) {
         const index = item.index - 1;

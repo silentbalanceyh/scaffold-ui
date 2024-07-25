@@ -19,7 +19,7 @@ const aiTitle = (reference, cell = {}) => {
     const {config = {}} = cell;
     if (config.description) {
         return (
-            <Col {...cellRest} span={24} className={"ux_comment"}>
+            <Col {...cellRest} key={cellRest.key} span={24} className={"ux_comment"}>
                 <LoadingAlert $alert={config}/>
             </Col>
         )
@@ -31,14 +31,14 @@ const aiTitle = (reference, cell = {}) => {
             attrs.style = config.style;
         }
         return (
-            <Col {...attrs} key={cellRest['key']} className={"ux-tips"}>
+            <Col {...attrs} key={cellRest.key} className={"ux-tips"}>
                 {title}
             </Col>
         )
     } else {
         cellRest.className = `ux_title`;
         return (
-            <Col {...cellRest} span={24}>
+            <Col {...cellRest} key={cellRest.key} span={24}>
                 {title}
             </Col>
         )

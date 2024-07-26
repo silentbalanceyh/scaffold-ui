@@ -24,7 +24,6 @@ import __Zn from './zero.module.dependency';
 const buildApps = (apps = [], reference) => {
     const {$menus} = reference.props;
     const menuData = $menus.to();
-    const appData = Ux.isInit();
     // 先根据 entryId 以及 apps 中的 entry 计算菜单信息
     const menuEntry = menuData.filter(item => {
         const found = Ux.elementUnique(apps, 'entry', item.name);
@@ -32,7 +31,7 @@ const buildApps = (apps = [], reference) => {
     });
     const menuWith = __Zn.a4MenuData(menuEntry);
     const appRet = [];
-    appData.forEach(app => {
+    apps.forEach(app => {
         const found = Ux.elementUnique(menuWith, 'name', app.entry);
         if (found) {
             // 拷贝 app
@@ -43,7 +42,7 @@ const buildApps = (apps = [], reference) => {
             appRet.push(appItem);
         }
     })
-    return appRet;
+    return appRet.sort(Ux.sorterAscTFn('order'));
 }
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

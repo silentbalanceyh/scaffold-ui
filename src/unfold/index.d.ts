@@ -26,5 +26,9 @@ declare module "zei" {
         _wf
     } from './aero-workflow';
 
+    export {
+        _Locator
+    } from './allocation.__.c.locator.navigation';
+
     export default entry;
 }

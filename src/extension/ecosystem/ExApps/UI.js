@@ -3,6 +3,8 @@ import React from 'react';
 import Ex from 'ex';
 import Ux from "ux";
 
+import {List} from 'antd';
+
 const UCA_NAME = "ExApps";
 /**
  * ## 「组件」`ExApps`
@@ -63,9 +65,16 @@ class Component extends React.PureComponent {
 
     render() {
         return Ex.ylCard(this, () => {
+            const {$data = []} = this.state;
             return (
                 <div>
-                    Test
+                    <List dataSource={$data} itemRender={item => {
+                        console.log(item);
+                        return (
+                            <div>
+                            </div>
+                        )
+                    }}/>
                 </div>
             );
         }, Ex.parserOfColor(UCA_NAME).component());

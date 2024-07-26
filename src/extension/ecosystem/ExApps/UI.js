@@ -1,8 +1,6 @@
 import React from 'react';
 
 import Ex from 'ex';
-import {Link} from "react-router-dom";
-import Ux from "ux";
 
 const UCA_NAME = "ExApps";
 /**
@@ -43,20 +41,7 @@ const UCA_NAME = "ExApps";
 // componentInit/componentUp
 // =====================================================
 const componentInit = (reference) => {
-    const state = {};
-    const {data = [], $app} = reference.props;
-    const $source = Ux.clone(data);
-    $source.forEach(item => item.sort = item.order);
-    /*
-     * 过滤菜单
-     */
-    let filtered = Ux.clone($source)
-        // .filter(item => Ux.Env.MENU_TYPE.APP === item.type)
-        .sort((left, right) => left.sort - right.sort);
-    state.$data = Ux.toLink(filtered, $app);
-    Ux.of(reference).in(state).ready().done();
-    // reference.?etState(state);
-    // state.$ready = true;
+
 };
 
 class Component extends React.PureComponent {
@@ -69,20 +54,10 @@ class Component extends React.PureComponent {
     render() {
 
         return Ex.yoRender(this, () => {
-            const {$data = []} = this.state;
+
             return (
-                <div className={"ux-app"}>
-                    {$data.map((menu, index) => (
-                        <Link key={menu.key} to={menu.uri}>
-                            {Ux.v4Icon(menu.icon, {
-                                style: {
-                                    color: "white",
-                                    backgroundColor: Ex.toColor(index)
-                                }
-                            })}
-                            <span className={"label"}>{menu.text}</span>
-                        </Link>
-                    ))}
+                <div>
+                    Test
                 </div>
             );
         }, Ex.parserOfColor(UCA_NAME).component());

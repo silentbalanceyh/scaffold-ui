@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Ex from 'ex';
+import Ux from "ux";
 
 const UCA_NAME = "ExApps";
 /**
@@ -41,9 +42,18 @@ const UCA_NAME = "ExApps";
 // componentInit/componentUp
 // =====================================================
 const componentInit = (reference) => {
-
+    const state = {};
+    Ux.ajaxGet("/api/apps/usable").then(app => {
+        // 构造应用列表
+        state.$data = Ex.buildApps(app, reference);
+        Ux.of(reference).in(state).ready().done();
+    })
 };
 
+@Ux.zero(Ux.rxEtat(require("./Cab"))
+    .cab("UI")
+    .to()
+)
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
 
@@ -52,9 +62,7 @@ class Component extends React.PureComponent {
     }
 
     render() {
-
-        return Ex.yoRender(this, () => {
-
+        return Ex.ylCard(this, () => {
             return (
                 <div>
                     Test

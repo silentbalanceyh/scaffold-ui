@@ -1,6 +1,7 @@
 import __Zn from './zero.module.dependency';
 import __SEC from './secure.fn.digit.signature';
 import _Storage from './store.c.storage';
+import _Store from './store.fn.is.configuration';
 
 const Cv = __Zn.Env;
 
@@ -25,20 +26,23 @@ const __headerSecure = (headers = {}, secure = false) => {
 // RESTful / Sock Shared
 const __headerApp = (headers = {}, secure = false) => {
     __headerSecure(headers, secure);
-    /* 启用 X_ 的 Header 请求 */
-    if (Cv.X_HEADER_SUPPORT) {
-        /* X_APP_KEY */
-        const appKey = _Storage.getDirect(Cv.X_APP_KEY);
-        if (appKey) headers.append(Cv.X_HEADER.X_APP_KEY, appKey);
-        /* X_APP_ID */
-        const appId = _Storage.getDirect(Cv.X_APP_ID);
-        if (appId) headers.append(Cv.X_HEADER.X_APP_ID, appId);
-        /* X_SIGMA */
-        const sigma = _Storage.getDirect(Cv.X_SIGMA);
-        if (sigma) headers.append(Cv.X_HEADER.X_SIGMA, sigma);
-        /* X_LANG */
-        const language = Cv.LANGUAGE ? Cv.LANGUAGE : Cv.K_VALUE.LANGUAGE;
-        if (language) headers.append(Cv.X_HEADER.X_LANG, language);
+    /* X_APP_KEY */
+    const appKey = _Storage.getDirect(Cv.X_APP_KEY);
+    if (appKey) headers.append(Cv.X_HEADER.X_APP_KEY, appKey);
+    /* X_APP_ID */
+    const appId = _Storage.getDirect(Cv.X_APP_ID);
+    if (appId) headers.append(Cv.X_HEADER.X_APP_ID, appId);
+    /* X_SIGMA */
+    const sigma = _Storage.getDirect(Cv.X_SIGMA);
+    if (sigma) headers.append(Cv.X_HEADER.X_SIGMA, sigma);
+    /* X_LANG */
+    const language = Cv.LANGUAGE ? Cv.LANGUAGE : Cv.K_VALUE.LANGUAGE;
+    if (language) headers.append(Cv.X_HEADER.X_LANG, language);
+
+    const user = _Store.isLogged();
+    if (__Zn.isNotEmpty(user)) {
+        const tenantId = user['tenantId'];
+        if (tenantId) headers.append(Cv.X_HEADER.X_TENANT_ID, tenantId);
     }
     /* X_SESSION */
     __headerXSRF(headers);

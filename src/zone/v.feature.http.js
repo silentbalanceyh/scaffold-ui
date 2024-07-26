@@ -5,7 +5,8 @@ export default {
         X_APP_ID: "X-App-Id",
         X_SIGMA: "X-Sigma",
         X_LANG: "X-Lang",
-        X_SESSION: "X-Session-Id"
+        X_SESSION: "X-Session-Id",
+        X_TENANT_ID: "X-Tenant-Id"
     },
     // Http Method
     HTTP_METHOD: {

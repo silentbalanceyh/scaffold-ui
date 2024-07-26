@@ -883,40 +883,6 @@ export default {
     DEBUG_QR: __Zn.Env.DEBUG_QR,
 
     /**
-     * ## 自定义请求头 `Z_X_HEADER_SUPPORT`
-     *
-     * * 来源：`process.env.Z_X_HEADER_SUPPORT`
-     *
-     * ### 基本介绍
-     *
-     * 是否开启自定义请求头的功能，开启之后以下几个请求头会被自动添加到所有请求中：
-     *
-     * 1. `X-Lang`：Zero UI的语言信息，追加 `Z_LANGUAGE` 中的语言信息到请求头中。
-     * 2. `X-App-Id / X-App-Key`：应用的ID和Key，非敏感数据环境和敏感数据环境的应用基础信息。
-     * 3. `X-Sigma`：统一标识符的变体，用作容器标识。
-     * 4. `X-Tenant-Id`：租户标识请求头，用于标识当前容器环境中运行的租户。
-     *
-     * Zero UI本身是支持 **多租户、多语言、多应用** 环境的，而请求本身是直接从自定义请求头开始就直接支持这些功能，因此您可以在此处开启自定义请求头的功能，从而实现多租户、多语言、多应用的功能。
-     *
-     * ### 常用自定义头
-     *
-     * X 系列的头部专用信息，用于处理 X 系列的核心头部信息，参考下表
-     *
-     * |变量值|Http请求头|说明|
-     * |---:|:---|:---|
-     * |`X_APP_KEY`|X-App-Key|多应用环境处理敏感信息的应用键专用。|
-     * |`X_APP_ID`|X-App-Id|多应用环境处理普通信息的应用键值专用（带业务）。|
-     * |`X_SIGMA`|X-Sigma|平台应用标识符，也称为统一标识符，在多应用环境中用于标识应用（不带业务）。|
-     * |`X_LANG`|X-Lang|多语言平台的语言值（头文件识别）。|
-     * |`X_TENANT_ID`|X-Tenant-Id|租户标识符，用于标识当前租户。|
-     *
-     * @constant X_HEADER_SUPPORT
-     * @memberOf module:constant/zone
-     * @type {Boolean}
-     */
-    X_HEADER_SUPPORT: __Zn.Env.X_HEADER_SUPPORT,
-
-    /**
      * ## Meta：应用配置
      *
      * ### 常量说明
@@ -1212,52 +1178,52 @@ export default {
      *
      * ```json
      {
-        "ACCEPT": "Accept",
-        "ACCEPT_CHARSET": "Accept-Charset",
-        "ACCEPT_ENCODING": "Accept-Encoding",
-        "ACCEPT_LANGUAGE": "Accept-Language",
-        "ACCEPT_RANGES": "Accept-Ranges",
-        "AGE": "Age",
-        "ALLOW": "Allow",
-        "AUTHORIZATION": "Authorization",
-        "CACHE_CONTROL": "Cache-Control",
-        "CONNECTION": "Connection",
-        "CONTENT_BASE": "Content-Base",
-        "CONTENT_ENCODING": "Content-Encoding",
-        "CONTENT_LENGTH": "Content-Length",
-        "CONTENT_LOCATION": "Content-Location",
-        "CONTENT_MD5": "Content-MD5",
-        "CONTENT_RANGE": "Content-Range",
-        "CONTENT_TYPE": "Content-Type",
-        "DATE": "Date",
-        "ETAG": "ETag",
-        "EXPIRES": "Expires",
-        "FORM": "Form",
-        "HOST": "Host",
-        "IF_MODIFIED_SINCE": "If-Modified-Since",
-        "IF_MATCH": "If-Match",
-        "IF_NONE_MATCH": "If-None-Match",
-        "IF_RANGE": "If-Range",
-        "IF_UNMODIFIED_SINCE": "If-Unmodified-Since",
-        "LAST_MODIFIED": "Last-Modified",
-        "LOCATION": "Location",
-        "MAX_FORWARDS": "Max-Forwards",
-        "PRAGMA": "Pragma",
-        "PROXY_AUTHENTICATE": "Proxy-Authenticate",
-        "PROXY_AUTHORIZATION": "Proxy-Authorization",
-        "PUBLIC": "Public",
-        "RANGE": "Range",
-        "REFENER": "Refener",
-        "RETRY_AFTER": "Retry-After",
-        "SERVER": "Server",
-        "TRANSFER_ENCODING": "Transfer-Encoding",
-        "UPGRADE": "Upgrade",
-        "USER_AGENT": "User-Agent",
-        "VARY": "Vary",
-        "WARNING": "Warning",
-        "WWW_AUTHENTICATE": "WWW-Authenticate",
-        "XSRF_TOKEN": "X-XSRF-TOKEN"
-    }
+     "ACCEPT": "Accept",
+     "ACCEPT_CHARSET": "Accept-Charset",
+     "ACCEPT_ENCODING": "Accept-Encoding",
+     "ACCEPT_LANGUAGE": "Accept-Language",
+     "ACCEPT_RANGES": "Accept-Ranges",
+     "AGE": "Age",
+     "ALLOW": "Allow",
+     "AUTHORIZATION": "Authorization",
+     "CACHE_CONTROL": "Cache-Control",
+     "CONNECTION": "Connection",
+     "CONTENT_BASE": "Content-Base",
+     "CONTENT_ENCODING": "Content-Encoding",
+     "CONTENT_LENGTH": "Content-Length",
+     "CONTENT_LOCATION": "Content-Location",
+     "CONTENT_MD5": "Content-MD5",
+     "CONTENT_RANGE": "Content-Range",
+     "CONTENT_TYPE": "Content-Type",
+     "DATE": "Date",
+     "ETAG": "ETag",
+     "EXPIRES": "Expires",
+     "FORM": "Form",
+     "HOST": "Host",
+     "IF_MODIFIED_SINCE": "If-Modified-Since",
+     "IF_MATCH": "If-Match",
+     "IF_NONE_MATCH": "If-None-Match",
+     "IF_RANGE": "If-Range",
+     "IF_UNMODIFIED_SINCE": "If-Unmodified-Since",
+     "LAST_MODIFIED": "Last-Modified",
+     "LOCATION": "Location",
+     "MAX_FORWARDS": "Max-Forwards",
+     "PRAGMA": "Pragma",
+     "PROXY_AUTHENTICATE": "Proxy-Authenticate",
+     "PROXY_AUTHORIZATION": "Proxy-Authorization",
+     "PUBLIC": "Public",
+     "RANGE": "Range",
+     "REFENER": "Refener",
+     "RETRY_AFTER": "Retry-After",
+     "SERVER": "Server",
+     "TRANSFER_ENCODING": "Transfer-Encoding",
+     "UPGRADE": "Upgrade",
+     "USER_AGENT": "User-Agent",
+     "VARY": "Vary",
+     "WARNING": "Warning",
+     "WWW_AUTHENTICATE": "WWW-Authenticate",
+     "XSRF_TOKEN": "X-XSRF-TOKEN"
+     }
      * ```
      *
      * @memberOf module:constant/zone

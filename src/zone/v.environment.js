@@ -48,8 +48,6 @@ export default {
     MOCK: __BOOLEAN("DEV_MOCK"),                        // DEV_MOCK
     SIGN: __BOOLEAN_EQ(ENV['SIGN']),
 
-    X_HEADER_SUPPORT: __BOOLEAN_EQ(ENV['X_HEADER_SUPPORT']),
-
     ENTRY_LOGIN: `/${process.env.ROUTE}${process.env.ENTRY_LOGIN}`,     // 登录页
     ENTRY_ADMIN: `/${process.env.ROUTE}${process.env.ENTRY_ADMIN}`,     // 管理页
     ENTRY_FIRST: `/${process.env.ROUTE}${process.env.ENTRY_FIRST}`,     // 首次登录更改密码

@@ -3,7 +3,12 @@ import React from 'react';
 import Ex from 'ex';
 import Ux from "ux";
 
-import {List} from 'antd';
+import {List, Tooltip} from 'antd';
+
+import Sk from 'skin';
+import './Cab.norm.scss';
+
+import Op from './Op';
 
 const UCA_NAME = "ExApps";
 /**
@@ -66,13 +71,23 @@ class Component extends React.PureComponent {
     render() {
         return Ex.ylCard(this, () => {
             const {$data = []} = this.state;
+
+            const attrs = Sk.mixEx(UCA_NAME);
             return (
-                <div>
-                    <List dataSource={$data} itemRender={item => {
-                        console.log(item);
+                <div {...attrs}>
+                    <List dataSource={$data} renderItem={item => {
                         return (
-                            <div>
-                            </div>
+                            <Tooltip title={
+                                <div>
+                                    {item.app.title}<br/>
+                                    {item.bag['nameFull']}
+                                </div>
+                            }>
+                                <List.Item.Meta className={"app"} key={item.key}
+                                                title={item.text}
+                                                onClick={Op.rxClickApp(this, item)}
+                                                avatar={<img src={item.icon} alt={item.name}/>}/>
+                            </Tooltip>
                         )
                     }}/>
                 </div>

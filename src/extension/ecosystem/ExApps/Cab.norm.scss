@@ -1,0 +1,27 @@
+.uex {
+  &_ExApps {
+    min-height: 120px;
+
+    .app {
+      display: inline-block;
+      padding: $uni-font * 0.5;
+      margin: 0 $uni-font * 0.6;
+
+      &:hover {
+        background-color: lightyellow;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .ant-list-item-meta-title {
+        text-align: center;
+        margin: 0 0;
+      }
+
+      img {
+        width: 90px;
+        height: 90px;
+      }
+    }
+  }
+}

@@ -38,6 +38,21 @@ dotenvFiles.forEach(dotenvFile => {
         const config = dotenv.config({
             path: dotenvFile,
         });
+        /*
+         * 实例模式的启动，追加的新内容，根据 Z_INSTANCE 执行 config.parsed 的更改
+         * 1）提取 Z_INSTANCE 启动变量
+         * 2）根据它计算文件路径
+         * 3）重写 config.parsed 中的内容
+         */
+        if(process.env.Z_INSTANCE){
+            const instanceConfig = dotenv.config({
+                path: `${paths.appPath}/running/${process.env.Z_INSTANCE}/.env.${NODE_ENV}.instance`
+            });
+            Object.assign(config.parsed, instanceConfig.parsed);
+            if(process.env.PORT !== instanceConfig.parsed.PORT){
+                process.env.PORT = instanceConfig.parsed.PORT;
+            }
+        }
         dotenvExpand.expand(config);
         /*
         require('dotenv-expand')(

@@ -49,9 +49,7 @@ dotenvFiles.forEach(dotenvFile => {
                 path: `${paths.appPath}/running/${process.env.Z_INSTANCE}/.env.${NODE_ENV}.instance`
             });
             Object.assign(config.parsed, instanceConfig.parsed);
-            if(process.env.PORT !== instanceConfig.parsed.PORT){
-                process.env.PORT = instanceConfig.parsed.PORT;
-            }
+            Object.assign(process.env, instanceConfig.parsed);
         }
         dotenvExpand.expand(config);
         /*

@@ -17,6 +17,8 @@ const componentInit = (reference) => {
         const state = {};
         state.$data = response;
         Ux.of(reference).in(state).done();
+    }).catch(error => {
+        // 防止异常信息出现
     })
 }
 

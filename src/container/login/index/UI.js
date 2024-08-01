@@ -29,6 +29,7 @@ class Component extends React.PureComponent {
 
     render() {
         const {component: Child, $app} = this.props;
+        const title = $app ? $app._("title"): null;
         return (
             <Layout {...Sk.mix(__.hm_login, () => ({
                 backgroundImage: `url(${imgBg})`
@@ -37,7 +38,7 @@ class Component extends React.PureComponent {
                     <Row>
                         <Col xl={10} xxl={10}>
                             <header>
-                                <img src={imgLogo} alt={$app._("title")}/>
+                                <img src={imgLogo} alt={title}/>
                                 <h2>{$app._("title")}</h2>
                             </header>
                         </Col>

@@ -290,7 +290,7 @@ class Component extends React.PureComponent {
                 return (
                     <WebField {...attrs} {...attrUca}>
                         {__Zn.aiErrorInput(this, !$visible)}
-                        <Table {...$table} dataSource={$value}
+                        <Table {...$table} key={$table.key} dataSource={$value}
                                className={"ux_table"}
                                loading={$submitting}/>
                     </WebField>
@@ -299,7 +299,7 @@ class Component extends React.PureComponent {
                 return (
                     <WebField {...attrs} {...attrUca}>
                         {__Zn.aiErrorInput(this, !$visible)}
-                        <Table {...$table} dataSource={$value}
+                        <Table {...$table} key={$table.key} dataSource={$value}
                                className={"ux_table"}
                                loading={$submitting}/>
                         <Dialog className={"ux_dialog"}

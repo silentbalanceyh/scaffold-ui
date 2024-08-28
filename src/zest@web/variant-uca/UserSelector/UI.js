@@ -118,7 +118,7 @@ class Component extends React.PureComponent {
                             </Col>
                             <Col span={20} className={"user-content"}>
                                 {renderTips(this)}
-                                <Table {...attrTable}
+                                <Table {...attrTable} key={attrTable.key}
                                        dataSource={dataSource}/>
                             </Col>
                         </Row>

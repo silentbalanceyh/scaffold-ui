@@ -3,6 +3,7 @@ import React from 'react';
 import {Tooltip} from 'antd';
 import __Zn from './zero.module.dependency';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (reference, menuData = [], config = {}) => {
     // Promise for Build extra
     const dataSource = __Zn.a4MenuWeb(menuData, Ux.Env.MENU_TYPE.EXTRA);

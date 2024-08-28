@@ -1,7 +1,7 @@
 import {_Locator} from "./allocation.__.c.locator.navigation";
 import __Rv from './allocation.__.fn.resolve.navigation';
 import React from 'react';
-import {Breadcrumb} from 'antd';
+import {Breadcrumb, Col, Row} from 'antd';
 import Ux from 'ux';
 import __Zn from './zero.module.dependency';
 import {HomeOutlined} from "@ant-design/icons";
@@ -78,8 +78,17 @@ const yoProPageHeader = (reference) => {
             navigator
                 .filter(item => !Ux.Env.ENTRY_ADMIN.endsWith(item.uri))
                 .forEach(each => items.push(__buildPage(reference, each)))
+            // 针对面包屑导航的右对齐处理
+            const { fnNavExtra = () => false } = reference.props;
             return (
-                <Breadcrumb items={items.filter(item => !!item)}/>
+                <Row>
+                    <Col span={16}>
+                        <Breadcrumb items={items.filter(item => !!item)}/>
+                    </Col>
+                    <Col span={8} style={{textAlign:"right"}}>
+                        {fnNavExtra(reference)}
+                    </Col>
+                </Row>
             )
         };
         page.header = header;

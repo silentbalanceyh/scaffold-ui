@@ -11,7 +11,7 @@ const aiButton = (reference, button = {}) => {
         rest.icon = __Zn.v4Icon(rest.icon);
     }
     return (
-        <Button {...rest}>{text}</Button>
+        <Button {...rest} key={rest.key}>{text}</Button>
     )
 };
 const aiButtonGroup = (reference, buttons = []) => {

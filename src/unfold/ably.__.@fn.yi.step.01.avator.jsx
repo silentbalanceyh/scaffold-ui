@@ -4,6 +4,7 @@ import __IMG from './aero-image';
 import __Zn from './zero.module.dependency';
 import {ExActionAvator} from './aero-extenion';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (reference, menuData = [], config = {}) => {
     // Promise for Build avator
     const user = Ux.isLogged();

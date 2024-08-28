@@ -2,6 +2,7 @@ import __IS_D from './fn.under.is.decision';
 import __IS_B from './fn.under.is.business';
 import __V from './v.feature.symbol';
 import Immutable from "immutable";
+import dayjs from "dayjs";
 
 const __Is = {
     ...__IS_B,
@@ -127,12 +128,21 @@ const isQrArg = (query) => {
      */
     return !!query.criteria;
 }
+
+const isRangeIn = (input, startAt, endAt, pattern) => {
+    const inputTime = __Is.isMoment(input) ? input: dayjs(input, pattern);
+    const startTime = __Is.isMoment(startAt) ? startAt: dayjs(startAt, pattern);
+    const endTime = __Is.isMoment(endAt) ? endAt: dayjs(endAt, pattern);
+    return inputTime.isAfter(startTime) && inputTime.isBefore(endTime);
+}
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     isDiff,
     isSame: (left, right) => !isDiff(left, right),
 
     isParent,
     isRange,
+    isRangeIn,
     isQr,
     isQrArg,
 }

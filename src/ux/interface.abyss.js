@@ -281,6 +281,7 @@ const isObject = (input) => __Zn.isObject(input);
  */
 const isRange = (input, literal) => __Zn.isRange(input, literal);
 
+const isRangeIn = (input, startAt, endAt, pattern) => __Zn.isRangeIn(input, startAt, endAt, pattern);
 /**
  * ## 「标准」`Ux.isFunction`
  *
@@ -1272,6 +1273,7 @@ export default {
 
     /* 复杂判断 */
     isRange,    /* 验证范围 */
+    isRangeIn,  /* 验证时间范围 */
     isDiff,
     /**
      * ## 「标准」`Ux.isSame`

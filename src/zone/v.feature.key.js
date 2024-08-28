@@ -2,6 +2,7 @@ const KEY_APP = `${process.env.K_SESSION}SESSION/APP/${process.env.APP.toUpperCa
 const KEY_USER = `${process.env.K_SESSION}SESSION/USER`;
 const KEY_MENU = `${process.env.K_SESSION}SESSION/MENU`;
 const PAGE_HOME = `${process.env.K_DEFAULT ? process.env.K_DEFAULT : "zero.desktop"}`
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     // For Allocation
     PAGE_HOME,
@@ -24,4 +25,5 @@ export default {
     X_SESSION: `${KEY_APP}/SESSION_ID`,
     // For Development
     KEY_MDATA: `${process.env.K_SESSION}MONITOR/DATA/`,
+    KEY_SDATA: `${process.env.K_SESSION}SESSION/DATA/`,
 }

@@ -165,6 +165,17 @@ import Sk from 'skin';
  * 如果您有什么疑问，请联系：[silentbalanceyh@126.com](mailto:silentbalanceyh@126.com)，整体框架相关链接参考左侧菜单。
  * @author 戒子猪
  */
+/**
+ * findDOMNode is deprecated and will be removed in the next major release. Instead, add a ref directly to the element you want to reference. Learn more about using refs safely here: https://fb.me/react-strict-mode-find-node
+ * 临时解决方案，处理掉 console.error 关于此处的打印功能。
+ */
+const originalFn = console.error;
+console.error = function(message) {
+    if(message.startsWith("Warning: findDOMNode is deprecated")){
+        return;
+    }
+    originalFn.apply(console, arguments)
+}
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(

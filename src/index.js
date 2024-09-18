@@ -171,7 +171,7 @@ import Sk from 'skin';
  */
 const originalFn = console.error;
 console.error = function(message) {
-    if(message.startsWith("Warning: findDOMNode is deprecated")){
+    if(message && message.toString().startsWith("Warning: findDOMNode is deprecated")){
         return;
     }
     originalFn.apply(console, arguments)

@@ -17,6 +17,26 @@ const componentInit = (reference) => {
         const state = {};
         state.$data = response;
         Ux.of(reference).in(state).done();
+    }).catch(error => {
+        /**
+         * 此处的 catch 方法是必须的，error 的数据结构
+         * {
+         *     "data": {
+         *         "code",
+         *         "id",
+         *         "message",
+         *         "status",
+         *         "statusText",
+         *         _error
+         *     }
+         * }
+         * 由于 notify 相关方法属于模板级别，有可能后端没有开启此功能，若没开启此功能，则此处 catch 会抛出 404 无法找到的问题
+         */
+        const { data = {} } = error;
+        console.warn("HTTP 状态码：", data.status);
+        console.warn("异常信息：", data.message);
+        console.warn("错误码：", data.code);
+        console.info("提醒功能未开启！");
     })
 }
 

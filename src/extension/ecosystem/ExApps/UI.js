@@ -80,7 +80,7 @@ class Component extends React.PureComponent {
                             <Tooltip title={
                                 <div>
                                     {item.app.title}<br/>
-                                    {item.bag['nameFull']}
+                                    {item.bag?.nameFull}
                                 </div>
                             }>
                                 <List.Item.Meta className={"app"} key={item.key}

@@ -33,7 +33,7 @@ const buildApps = (apps = [], reference) => {
     const appRet = [];
     apps.forEach(app => {
         const found = Ux.elementUnique(menuWith, 'name', app.entry);
-        if (found) {
+        if (found && found.bag) {
             // 拷贝 app
             const appItem = Ux.clone(found);
             // 设置 menu
@@ -41,7 +41,7 @@ const buildApps = (apps = [], reference) => {
             appItem.appName = app.name;
             appRet.push(appItem);
         }
-    })
+    });
     return appRet.sort(Ux.sorterAscTFn('order'));
 }
 // eslint-disable-next-line import/no-anonymous-default-export

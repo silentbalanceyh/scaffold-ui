@@ -36,14 +36,7 @@ const renderDynamic = (reference) => {
 
 @Ux.zero(Ux.rxEtat(require('./Cab'))
     .cab("UI")
-    .connect(state => Ux.dataIn(state)
-        .rework({datum: ["menus"]})
-        .revamp(["app", "user"])
-        .to()
-    )
-    .loading("app", "menus")
     .connect({
-        fnApp: Ex.epicInit,
         fnOut: Ux.fnOut,
     }, true)
     .state({

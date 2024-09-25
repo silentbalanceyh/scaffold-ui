@@ -38,7 +38,10 @@ class _I {
              * 最终导致跳转回到登录界面，但此处执行过程必须 catch
              * 异常信息以防止页面 Pending 在该页，一直处于 Loading
              */
-        ]).catch(error => console.error(error));
+        ]).catch(error => {
+            console.error("I.inited()", error);
+            return Promise.reject(error);
+        });
     }
 
     // GET /api/module

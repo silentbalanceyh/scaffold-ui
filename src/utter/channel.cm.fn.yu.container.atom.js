@@ -40,8 +40,7 @@ const yuContainer = (reference, virtualRef = {}) => {
          * 这行代码会引起闪屏的BUG
          * reference.setState({$ready: false});
          */
-        __Yi.yiContainer(reference)
-            .catch(error => console.error(error));
+        __Yi.yiContainer(reference);
     }
 };
 export default {

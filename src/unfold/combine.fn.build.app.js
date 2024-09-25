@@ -22,7 +22,7 @@ import __Zn from './zero.module.dependency';
  * @param apps 从远程读取的可用应用列表
  */
 const buildApps = (apps = [], reference) => {
-    const {$menus} = reference.props;
+    let {$menus} = reference.props;
     const menuData = $menus.to();
     // 先根据 entryId 以及 apps 中的 entry 计算菜单信息
     const menuEntry = menuData.filter(item => {

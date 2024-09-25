@@ -6,19 +6,25 @@ export default (reference = {}, config = {}) => {
 
     // ----------------------- 全局专用信息 -----------------
     /*
-     * $app
      * $user
      * $router
-     * $menus
      * $query
      * $synonym
      * $setting
      * */
     const uniform = Ux.onUniform(props,
-        "app", "user", "router",
-        "menus", "query",
+        "user", "router", "query",
         "synonym", "setting", "websocket"
     );
+    /*
+     * 新版去掉了 $app 和 $menus 中的 redux 流程，为了方便做登录控制或者全局异常，在这种场景之下，启用了 props 优先的基础规则：
+     * - 1. 如果 props 中存在，则证明此变量是通过继承的方式传递到下层，这样则直接使用，当前 state 不提供。
+     * - 2. 如果 props 中不存在，证明此变量只能是当前提供，现阶段用于 Container 容器级别。
+     * 目前牵涉到这个流程的主要是 $app 和 $menus 变量，还有一点需要注意就是整个流程中 redux 移除了，但依旧可以跨节点管理，所以
+     * Redux 中现存的 $submitting 这种状态变量依旧生效。
+     */
+    __SK.seekPropOrState(uniform, reference, "$app");
+    __SK.seekPropOrState(uniform, reference, "$menus");
     {
         const user = uniform.$user;
         if (user && !user.is()) {
@@ -70,7 +76,7 @@ export default (reference = {}, config = {}) => {
          * $loading：正在加载
          * $dirty：脏数据
          */
-        __SK.seekState(uniform, reference, "$submitting");
+        __SK.seekPropOrState(uniform, reference, "$submitting");
         /*
          * 特殊变量：
          * （主要用于配置无法处理继承的情况）
@@ -203,11 +209,11 @@ export default (reference = {}, config = {}) => {
                 uniform.$myDefault = $myDefault;
             }
         }
-        __SK.seekState(uniform, reference, "$myView");  // 视图专用
-        __SK.seekState(uniform, reference, "$qr");    // 查询条件专用
+        __SK.seekPropOrState(uniform, reference, "$myView");  // 视图专用
+        __SK.seekPropOrState(uniform, reference, "$qr");    // 查询条件专用
         // Fix: $synonym
         if (!uniform.hasOwnProperty('$synonym')) {
-            __SK.seekState(uniform, reference, '$synonym');  //
+            __SK.seekPropOrState(uniform, reference, '$synonym');  //
         }
     }
     Object.freeze(uniform.config);          // 锁定配置，不可在子组件中执行变更

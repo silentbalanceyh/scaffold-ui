@@ -47,12 +47,7 @@ const componentInit = (reference) => {
         plugins: {
             ExNotify
         }
-    }).then(Ux.ready).then(Ux.pipe(reference)).catch(error => {
-        console.trace(error);
-        Ux.of(reference).in({
-            error: error.message
-        }).done();
-    });
+    }).then(Ux.ready).then(Ux.pipe(reference));
 };
 
 @Ux.zero(Ux.rxEtat(require("./Cab.json"))
@@ -80,6 +75,10 @@ class Component extends React.PureComponent {
         Ux.DevTool(this).off();
     }
 
+    componentDidCatch(error, errorInfo) {
+        console.error("ExAdmin", error);
+    }
+
     render() {
         const attrMix = Sk.mixEx(UCA_NAME);
         return Ex.yoRender(this, () => {
@@ -104,7 +103,7 @@ class Component extends React.PureComponent {
                             ) : false}
                             {attrDrawer ? (<SettingDrawer {...attrDrawer}/>) : false}
                         </ProLayout>
-                        {/* 开发工具专用，DEV_MONITOR 开启时使用 */}
+                         {/* 开发工具专用，DEV_MONITOR 开启时使用 */}
                         {Ux.DevTool(this).render(ExDevTool)}
                     </ProConfigProvider>
                 </div>

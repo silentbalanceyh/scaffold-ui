@@ -47,7 +47,10 @@ function parallel(promises = [], ...keys) {
          * 直接返回 all
          */
         return Promise.all(promises)
-            .catch(error => console.error(error));
+            .catch(error => {
+                console.error("parallel 0 == keys", error);
+                return Promise.reject(error);
+            });
     } else {
         /*
          * 返回 处理结果
@@ -65,7 +68,10 @@ function parallel(promises = [], ...keys) {
                 }
             });
             return promise(result);
-        }).catch(error => console.error(error));
+        }).catch(error => {
+            console.error("parallel 0 < keys", error);
+            return Promise.reject(error);
+        });
     }
 }
 
@@ -86,42 +92,11 @@ const passion = async (generator = [], input) => {
                 return await processor;
             }
         } catch (error) {
-            console.error(error);
+            console.error("passion", error);
+            throw error;
         }
     }
 };
-//
-// function pipe() {
-//     if (1 === arguments.length) {
-//         const input = arguments[0];
-//         if (input) {
-//             if (__Is.isFunction(input.setState)) {
-//                 // 解决异步处理Bug
-//                 return state => {
-//                     console.log(state);
-//                     return new Promise((resolve) => {
-//                         input.setState(state, () => {
-//                             resolve(input.state);
-//                         });
-//                     })
-//                 }
-//                 // {
-//                 //     try {
-//                 //         input.setState(state);
-//                 //     } catch (error) {
-//                 //     }
-//                 //     return promise(state);
-//                 // }
-//             } else {
-//                 console.error("[ Ux ] 必须传入 reference 变量，当前不合法", input);
-//             }
-//         } else {
-//             throw new Error("[ Ux ] pipe 方法为特殊方法，必须保证参数，当前参数不存在！");
-//         }
-//     } else {
-//         throw new Error("[ Ux ] pipe 方法参数长度不对！");
-//     }
-// }
 
 const ready = (state = {}) => {
     state.$ready = true;

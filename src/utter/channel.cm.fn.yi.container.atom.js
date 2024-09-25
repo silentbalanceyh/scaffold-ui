@@ -1,5 +1,6 @@
 import I from './levy.c.api.interface';
 import Ux from 'ux';
+import {Dsl} from 'entity';
 import __SK from './channel.__.fn.seek.yi.processor';
 import __MOD from './channel.macrocosm.fn.yi.modulat';
 import __YO from './channel.cm.fn.yo.container.norm';
@@ -40,23 +41,31 @@ const __yiContainer = (reference) => {
 }
 
 const yiContainer = (reference) => __yiContainer(reference).then(state => {
-    const {$secure = true, $menus} = reference.props;
+    const {$secure = true} = reference.props;
     state.$componentKey = Ux.randomUUID();
     if ($secure) {
+        const {$menus} = reference.state;
         // 登陆控制（框架专用）
         Ux.isAuthorized(reference);
         // 在登录控制时，只有菜单不存在的时候才执行 fnApp 初始化菜单
         if (!$menus || !$menus.is()) {
             // 在登录控制的时候执行 $router 的跳转
-            reference.props.fnApp();
+            return I.inited().then(response => {
+                const [$app, $menus] = response;
+                // 重写 app 不分
+                Ux.storeApp($app, true);
+                state.$app = Dsl.getObject($app);
+                state.$menus = Dsl.getArray($menus);
+                return Ux.of(reference).in(state).next()
+            });
+        } else {
+            return Ux.of(reference).in(state).next();
         }
-        Ux.of(reference).in(state).done();
         // reference.?etState(state);
     } else {
-        Ux.of(reference).in(state).done();
+        return Ux.of(reference).in(state).next();
         // reference.?etState(state);
     }
-    return Ux.promise(state);
 });
 
 function yiControl() {

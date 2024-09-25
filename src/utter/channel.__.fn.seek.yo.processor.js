@@ -1,6 +1,6 @@
 import Ux from 'ux';
 
-const seekState = (uniform = {}, reference, key) => {
+const seekPropOrState = (uniform = {}, reference, key) => {
     /*
      * 先在属性中查询（属性优先）
      * Fix: https://gitee.com/silentbalanceyh/vertx-zero-scaffold/issues/I6VR5V
@@ -92,7 +92,8 @@ const seekContainer = (attrs = {}, control = {}, componentType) => {
     }
 };
 export default {
-    seekState,
+    seekPropOrState,
+
     seekSelected,
     seekComponent,
     seekContainer,

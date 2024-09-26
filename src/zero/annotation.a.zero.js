@@ -46,6 +46,7 @@ export default (options = {}) => {
             }
 
             componentDidMount() {
+
                 // 启用异步 Raft模式，主要针对Form
                 if (options.form) {
                     __Zt.raftForm(this, options.raft).then(raft => {

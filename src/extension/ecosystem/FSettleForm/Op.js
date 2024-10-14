@@ -6,7 +6,9 @@ const __verifyPayment = (reference, params = {}) => {
     const finishType = params.finishType;
     if("STANDARD" === finishType){
         // 标准结账，标准结账验证 payment
-        return Ex.inPrePay(reference, params, {}, true);
+        const $params = Ux.clone(params);
+        $params.amountActual = params.amountActual;
+        return Ex.inPrePay(reference, $params, {}, true);
     }else{
         // 延迟（应收/退款）
         return Ux.promise(params);
@@ -37,7 +39,7 @@ export default {
             request.amountActual = Ex.paySum($selected.items);
             const attachAmount = __valueAmount($selected.items, request.rounded);
             Object.assign(request, attachAmount);
-
+            request.amountActual = params.amountActual
             if(0 === request.settlements.length || 0 === request.items.length){
                 const modal = Ux.fromHoc(ref, "modal");
                 const {error = {}} = modal;

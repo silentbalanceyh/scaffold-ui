@@ -93,7 +93,7 @@ const inPrePay = (reference, params = {}, config = {}, pAsync = false) => {
      * - FLOOR / 零头舍弃
      * - CEIL / 零头入进
      */
-    if (amountActual !== sum) {
+    if (parseFloat(parseFloat(amountActual).toFixed(2)) !== parseFloat(sum.toFixed(2))) {
         const data = outMessage(reference, eAmount, pAsync);
         return outError(reference, data, {pFlow, pAsync});
     }

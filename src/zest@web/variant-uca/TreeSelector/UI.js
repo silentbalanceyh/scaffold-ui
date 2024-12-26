@@ -88,8 +88,10 @@ import Sk from 'skin';
 // componentInit/componentUp
 // =====================================================
 const UCA_NAME = "TreeSelector";
+
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     constructor(props) {
         super(props);
         this.state = Op.yiDefault(this);

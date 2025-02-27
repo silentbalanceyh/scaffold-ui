@@ -27,7 +27,8 @@ class Component extends React.PureComponent {
                             {info.directory}
                         </div>
                         <Card className={"tree"}
-                              bodyStyle={Ux.toHeightStyle(272)}
+                            // Fix: Warning: [antd: Card] `bodyStyle` is deprecated. Please use `styles.body` instead. Error Component Stack
+                              styles={{body: Ux.toHeightStyle(272)}}
                               actions={Rdr.renderDirAction(this)}>
                             {Rdr.renderDirTree(this)}
                         </Card>

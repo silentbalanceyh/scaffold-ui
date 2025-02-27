@@ -59,7 +59,7 @@ export default (reference, card) => {
     }
     const {$tree = {}} = reference.state;
     return (
-        <Card key={card.key} title={card.title} bodyStyle={bodyStyle}>
+        <Card key={card.key} title={card.title} styles={{body: bodyStyle}}>
             <Tree {...$tree}
                   treeData={treeData}
                   checkedKeys={Array.from($keySet)}

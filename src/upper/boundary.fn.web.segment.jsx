@@ -45,7 +45,7 @@ export default {
                     };
                     attrs.icon = Ux.v4Icon(rest.icon);
                     return (
-                        <Button {...attrs}>
+                        <Button {...attrs} key={attrs.key}>
                             {text}
                         </Button>
                     )
@@ -80,7 +80,7 @@ export default {
                 attrs.loading = $loading;
                 attrs.onClick = action(reference);      // Dim 2 function
                 return (
-                    <Button {...attrs}/>
+                    <Button {...attrs} key={attrs.key}/>
                 )
             } else {
                 // Nothing to render

@@ -40,7 +40,8 @@ export default {
                     <img src={ICON_DATA[item.icon]} alt={""}/>
                     {item.text}
                 </div>
-            } bordered={false}>
+                // [antd: Card] `bordered` is deprecated. Please use `variant` instead. Error Component Stack
+            } variant={"outlined"}>
                 <Component {...Ex.yoAmbient(reference)}/>
             </Card>
         );

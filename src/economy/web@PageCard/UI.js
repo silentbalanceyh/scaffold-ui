@@ -220,7 +220,8 @@ class Component extends React.PureComponent {
                 attrs.className = className;
             }
             return (
-                <Card bordered={false} {...attrs}>
+                // [antd: Card] `bordered` is deprecated. Please use `variant` instead. Error Component Stack
+                <Card variant={"outlined"} {...attrs}>
                     {children}
                 </Card>
             );

@@ -63,7 +63,7 @@ const renderMenu = (reference, cell = {}) => {
         minHeight: height / 2
     }
     return (
-        <Card {...cardAttrs} bodyStyle={bodyStyle}>
+        <Card {...cardAttrs} key={cardAttrs.key} styles={{body: bodyStyle}}>
             <Tree {...treeAttrs}
                   onCheck={__Zn.aclE.rxCheckFn(reference, treeData)}/>
         </Card>

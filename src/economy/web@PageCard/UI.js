@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Card} from 'antd';
+import {Button, Card, Space} from 'antd';
 import Ux from 'ux';
 import {Dsl} from 'entity';
 import {uca} from "zi";
@@ -109,7 +109,8 @@ const componentInit = (ref) => {
 const renderButton = (reference, topBar, key = "left", disabled = {}) => {
     const buttons = topBar[key] ? topBar[key] : [];
     return (
-        <Button.Group>
+        // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+        <Space.Compact>
             {buttons.map(button => {
                 const $item = Ux.clone(button);
                 /*
@@ -140,7 +141,7 @@ const renderButton = (reference, topBar, key = "left", disabled = {}) => {
                     <Button {...rest} key={rest.key}>{text}</Button>
                 )
             })}
-        </Button.Group>
+        </Space.Compact>
     )
 };
 const renderBack = (ref, topBar) => {

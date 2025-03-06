@@ -1,7 +1,7 @@
 import {Dsl} from 'entity';
 import uiTotal from './Web.Total';
 import __Zn from '../zero.uca.dependency';
-import {Button} from 'antd';
+import {Button, Space} from 'antd';
 
 const renderColumn = (reference) => {
     return {
@@ -9,7 +9,8 @@ const renderColumn = (reference) => {
         className: "op-cell",
         render: (text, record, index) => {
             return (
-                <Button.Group>
+                // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+                <Space.Compact>
                     <Button icon={__Zn.v4Icon("edit")} size={"small"}
                             onClick={onEdit(reference, record)}/>
                     {(() => {
@@ -22,7 +23,7 @@ const renderColumn = (reference) => {
                             );
                         }
                     })()}
-                </Button.Group>
+                </Space.Compact>
             );
         }
     };

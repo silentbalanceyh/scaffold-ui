@@ -1,5 +1,5 @@
 import __Zn from './zero.module.dependency';
-import {Button} from "antd";
+import {Button, Space} from "antd";
 import React from 'react';
 
 const aiButton = (reference, button = {}) => {
@@ -20,12 +20,14 @@ const aiButtonGroup = (reference, buttons = []) => {
         return aiButton(reference, button);
     } else {
         return (
-            <Button.Group>
+            // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+            <Space.Compact>
                 {buttons.map(button => aiButton(reference, button))}
-            </Button.Group>
+            </Space.Compact>
         )
     }
 };
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     aiButton,
     aiButtonGroup,

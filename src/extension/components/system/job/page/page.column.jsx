@@ -1,6 +1,6 @@
 import React from 'react';
 import Ux from 'ux';
-import {Button, Tooltip} from 'antd';
+import {Button, Space, Tooltip} from 'antd';
 import FUNS from '../event';
 /*
  * 按照状态设置按钮
@@ -57,7 +57,8 @@ export default (reference) => {
                     items = items.filter(item => "edit" !== item);
                 }
                 return (
-                    <Button.Group key={text}>
+                    // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+                    <Space.Compact key={text}>
                         {items.map(item => {
                             let onClick = FUNS.op[item];
                             if (Ux.isFunction(onClick)) {
@@ -68,7 +69,7 @@ export default (reference) => {
                                 return renderBar(reference, config, item, onClick);
                             } else return false;
                         })}
-                    </Button.Group>
+                    </Space.Compact>
                 )
             } else return false;
         }

@@ -1,5 +1,6 @@
 import __Zn from './zero.module.dependency';
-import {Button, Popover, Tooltip} from "antd";
+import {Button, Popover, Space, Tooltip} from "antd";
+import React from 'react';
 
 const aiAddRemove = (reference, config = {}) => {
     const {
@@ -44,10 +45,12 @@ const aiAddRemove = (reference, config = {}) => {
             // reference.?etState(state);
         }
         return (
-            <Button.Group>
-                <Button {...left}/>
-                <Button {...right}/>
-            </Button.Group>
+            // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+            // @ts-ignore
+            <Space.Compact>
+                <Button key={left.key} {...left}/>
+                <Button key={right.key} {...right}/>
+            </Space.Compact>
         )
     } else {
         return false;
@@ -174,9 +177,10 @@ function aiCommand() {
                         }
                     } else {
                         return (
-                            <Button.Group>
+                            // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+                            <Space.Compact>
                                 {config.map(item => fnCommand(item))}
-                            </Button.Group>
+                            </Space.Compact>
                         )
                     }
                 } else {
@@ -195,7 +199,8 @@ function aiCommand() {
 
 const aiTopBar = (reference, buttons = [], disabled = {}) => {
     return (
-        <Button.Group>
+        // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+        <Space.Compact>
             {buttons.map(button => {
                 const $item = __Zn.clone(button);
                 /*
@@ -226,9 +231,10 @@ const aiTopBar = (reference, buttons = [], disabled = {}) => {
                     <Button {...rest}>{text}</Button>
                 )
             })}
-        </Button.Group>
+        </Space.Compact>
     )
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     aiCommand,
     aiAddRemove,

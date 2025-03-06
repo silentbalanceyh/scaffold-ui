@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Popover, Tag, Tooltip} from 'antd';
+import {Button, Popover, Space, Tag, Tooltip} from 'antd';
 import Op from './Op';
 import {Dialog, uca} from "zi";
 
@@ -28,7 +28,8 @@ class Component extends React.PureComponent {
             const {value = {}} = this.props;
             return (
                 <div className={"web-param-parser"}>
-                    <Button.Group>
+                    {/* FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack */}
+                    <Space.Compact>
                         <Tooltip title={$op.edit}>
                             <Button icon={__Zn.v4Icon("edit")} className={"uc_brown"} onClick={(event) => {
                                 __Zn.prevent(event);
@@ -45,7 +46,7 @@ class Component extends React.PureComponent {
                                 <Button icon={__Zn.v4Icon("search")}/>
                             </Popover>
                         </Tooltip>
-                    </Button.Group>
+                    </Space.Compact>
                     &nbsp;&nbsp;
                     <Tag style={{
                         fontSize: 14

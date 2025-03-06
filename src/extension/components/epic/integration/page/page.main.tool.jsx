@@ -1,4 +1,4 @@
-import {Button, Checkbox, Col, Input, Row} from 'antd';
+import {Button, Checkbox, Col, Input, Row, Space} from 'antd';
 import React from 'react';
 import Ux from 'ux';
 import Event from '../event';
@@ -19,7 +19,8 @@ const renderButton = (reference, tool = {}) => {
     const {button = {}} = tool;
     const {$query, $loading = false} = reference.state;
     return (
-        <Button.Group>
+        // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+        <Space.Compact>
             <Button icon={Ux.v4Icon("redo")}
                     className={"uc_red"}
                     loading={$loading}
@@ -32,7 +33,7 @@ const renderButton = (reference, tool = {}) => {
                     onClick={Event.onClean(reference)}>
                 {button.clean}
             </Button>
-        </Button.Group>
+        </Space.Compact>
     );
 }
 

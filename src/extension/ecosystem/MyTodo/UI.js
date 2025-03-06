@@ -12,7 +12,8 @@ const renderExtra = (reference, extra = {}) => {
         rest.icon = Ux.v4Icon(rest.icon);
     }
     return (
-        <Button {...rest} onClick={(event) => {
+        // Warning: A props object containing a "key" prop is being spread into JSX:
+        <Button key={rest.key} {...rest} onClick={(event) => {
             Ux.prevent(event);
             if (route) {
                 Ux.toRoute(reference, route);

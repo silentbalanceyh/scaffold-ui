@@ -60,8 +60,9 @@ const uiButton = (actions, executor = {}, reference) => {
                 $confirm.onConfirm = onClick;
             }
             return (
-                <Popconfirm {...$confirm} key={attrs.key}>
-                    <Button {...attrs}>
+                <Popconfirm key={$confirm.key} {...$confirm}>
+                    {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                    <Button key={attrs.key} {...attrs}>
                         {text}
                     </Button>
                 </Popconfirm>
@@ -72,7 +73,8 @@ const uiButton = (actions, executor = {}, reference) => {
             }
             // 是不是禁用
             return (
-                <Button {...attrs}>
+                // Warning: A props object containing a "key" prop is being spread into JSX:
+                <Button key={attrs.key} {...attrs}>
                     {text}
                 </Button>
             )

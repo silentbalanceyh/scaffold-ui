@@ -12,7 +12,8 @@ export default (reference, $buttons = []) => {
                 const {text, onClick, ...rest} = each;
                 return (
                     <Tooltip title={text} key={rest['key']}>
-                        <Button {...rest} loading={$submitting} onClick={event => {
+                        {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                        <Button key={rest.key} {...rest} loading={$submitting} onClick={event => {
                             Ux.prevent(event);
                             Ux.of(reference).submitting().handle(() => {
                                 if (Ux.isFunction(onClick)) {

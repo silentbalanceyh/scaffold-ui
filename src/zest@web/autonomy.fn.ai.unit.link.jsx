@@ -82,12 +82,14 @@ const __aiAnchor = (item = {}, onClick, defaultType = "BUTTON") => {
         if (text) {
             // 有文字按钮
             return (
-                <Button {...rest}>{text}</Button>
+                // Warning: A props object containing a "key" prop is being spread into JSX:
+                <Button key={rest.key} {...rest}>{text}</Button>
             )
         } else {
             // 无文字按钮
             return (
-                <Button {...rest}/>
+                // Warning: A props object containing a "key" prop is being spread into JSX:
+                <Button key={rest.key} {...rest}/>
             )
         }
     } else {

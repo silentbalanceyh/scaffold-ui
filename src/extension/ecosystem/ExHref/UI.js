@@ -33,6 +33,7 @@ const rxRoute = (reference, route = {}) => (event) => {
 
 class Component extends React.PureComponent {
     displayName = UCA_NAME;
+
     render() {
         const {config = {}} = this.props;
         const {action, route} = config;
@@ -40,7 +41,8 @@ class Component extends React.PureComponent {
             const {text, ...buttonAttrs} = action;
             buttonAttrs.icon = Ux.v4Icon(buttonAttrs.icon);
             return (
-                <Button {...buttonAttrs}
+                // Warning: A props object containing a "key" prop is being spread into JSX:
+                <Button key={buttonAttrs.key} {...buttonAttrs}
                         className={"open-button"}
                         onClick={rxRoute(this, route)}>
                     {text}

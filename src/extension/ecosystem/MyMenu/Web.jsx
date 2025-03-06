@@ -1,5 +1,5 @@
 import Ux from "ux";
-import {Button, Empty, Modal, Tooltip, Space} from "antd";
+import {Button, Empty, Modal, Space, Tooltip} from "antd";
 import React from "react";
 import Op from "./Op";
 import UITransfer from './UI.Transfer';
@@ -41,7 +41,8 @@ const renderButton = (reference, {data, first, last}) => {
                     const {tooltip, ...rest} = each;
                     return (
                         <Tooltip title={tooltip} key={each.key}>
-                            <Button {...rest} onClick={event[each.key]}/>
+                            {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                            <Button key={rest.key} {...rest} onClick={event[each.key]}/>
                         </Tooltip>
                     )
                 })}

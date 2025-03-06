@@ -130,7 +130,9 @@ const renderTooltip = (reference, each) => {
                 button.key = icon;
                 return (
                     <Tooltip title={mask[icon]} key={button.key} placement={"left"}>
-                        <Button {...button}/>
+                        {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                        {/* @ts-ignore */}
+                        <Button key={button.key} {...button}/>
                     </Tooltip>
                 )
             })}
@@ -138,6 +140,7 @@ const renderTooltip = (reference, each) => {
     )
 }
 
+// @ts-ignore
 @Ux.zero(Ux.rxEtat(require("./Cab"))
     .cab("UI")
     .to()

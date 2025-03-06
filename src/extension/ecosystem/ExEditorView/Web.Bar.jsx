@@ -43,7 +43,8 @@ export default (reference) => {
                         const {tooltip, ...rest} = plus;
                         return Op.isEdit(reference) ? (
                             <Tooltip title={tooltip}>
-                                <Button {...rest}
+                                {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                                <Button key={rest.key} {...rest}
                                         icon={Ux.v4Icon(rest.icon)}     // v4
                                         onClick={Op.rxOpen(reference, {}, Ux.Env.FORM_MODE.ADD)}/>
                             </Tooltip>
@@ -58,6 +59,7 @@ export default (reference) => {
                         <Popconfirm title={confirm}
                                     onConfirm={Op.rxDeleteBatch(reference, batch)}
                                     disabled={0 === $selectedKeys.length}>
+                            {/* @ts-ignore */}
                             <Link disabled={0 === $selectedKeys.length} to={""} onClick={event => Ux.prevent(event)}>
                                 {Ux.v4Icon(icon)}
                                 &nbsp;{text}

@@ -11,7 +11,8 @@ const aiButton = (reference, button = {}) => {
         rest.icon = __Zn.v4Icon(rest.icon);
     }
     return (
-        <Button {...rest} key={rest.key}>{text}</Button>
+        // Warning: A props object containing a "key" prop is being spread into JSX:
+        <Button key={rest.key} {...rest}>{text}</Button>
     )
 };
 const aiButtonGroup = (reference, buttons = []) => {

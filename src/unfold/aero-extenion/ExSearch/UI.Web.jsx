@@ -1,6 +1,6 @@
 import Op from './UI.Op';
 import React from 'react';
-import {Button, Input, Tooltip, Space} from 'antd';
+import {Button, Input, Space, Tooltip} from 'antd';
 import Ux from "ux";
 import "./Cab.norm.scss";
 import __Zn from '../zero.aero.dependency';
@@ -37,7 +37,8 @@ const _renderInput = (reference) => {
                       key='inputSearch'
                       disabled={disabled}
                       value={searchText}/>,
-        <Button {...attrKwClean} key={attrKwClean.key}/>
+        // Warning: A props object containing a "key" prop is being spread into JSX:
+        <Button key={attrKwClean.key} {...attrKwClean}/>
     ]
 };
 

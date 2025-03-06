@@ -148,14 +148,16 @@ function aiCommand() {
                                 // 提取子组件 Popover
                                 if (text) {
                                     $restIn.icon = __Zn.v4Icon($restIn.icon);
+                                    // Warning: A props object containing a "key" prop is being spread into JSX:
                                     return (
-                                        <Button {...$restIn}>
+                                        <Button key={$restIn.key} {...$restIn}>
                                             {text}
                                         </Button>
                                     )
                                 } else {
                                     $restIn.icon = __Zn.v4Icon($restIn.icon);
-                                    return (<Button {...$restIn}/>)
+                                    // Warning: A props object containing a "key" prop is being spread into JSX:
+                                    return (<Button key={$restIn.key} {...$restIn}/>)
                                 }
                             }
                         }
@@ -228,7 +230,7 @@ const aiTopBar = (reference, buttons = [], disabled = {}) => {
                 }
                 const {text, ...rest} = $item;
                 return (
-                    <Button {...rest}>{text}</Button>
+                    <Button key={rest.key} {...rest}>{text}</Button>
                 )
             })}
         </Space.Compact>

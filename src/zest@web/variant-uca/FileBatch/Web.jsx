@@ -110,16 +110,19 @@ const renderBar = (reference) => {
                 {/* FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack */}
                 <Space.Compact className={"action"}>
                     <Tooltip title={info['vSave']}>
+                        {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
                         {/* @ts-ignore */}
-                        <Button {...btnClean}/>
+                        <Button key={btnClean.key} {...btnClean}/>
                     </Tooltip>
                     <Tooltip title={info['vCard']}>
+                        {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
                         {/* @ts-ignore */}
-                        <Button {...btnCard}/>
+                        <Button key={btnCard.key} {...btnCard}/>
                     </Tooltip>
                     <Tooltip title={info['vList']}>
+                        {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
                         {/* @ts-ignore */}
-                        <Button {...btnList}/>
+                        <Button key={btnList.key} {...btnList}/>
                     </Tooltip>
                 </Space.Compact>
                 <Tag color={"magenta"}>

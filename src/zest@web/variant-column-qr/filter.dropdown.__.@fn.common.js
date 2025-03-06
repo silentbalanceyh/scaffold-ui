@@ -102,10 +102,12 @@ const FilterCheckBox = (props) => {
                 ))}
             </Checkbox.Group>
             <div style={CSS_BUTTON_REGION}>
-                <Button {...attrYes}>
+                {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                <Button key={attrYes.key} {...attrYes}>
                     {button.yes ? button.yes : false}
                 </Button>
-                <Button {...attrNo}>
+                {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                <Button key={attrNo.key} {...attrNo}>
                     {button.reset ? button.reset : false}
                 </Button>
             </div>

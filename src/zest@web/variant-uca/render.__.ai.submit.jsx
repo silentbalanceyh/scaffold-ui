@@ -18,12 +18,14 @@ const aiSubmit = (reference, optionJsx = {}) => {
         const {text, ...rest} = action;
         rest.loading = $loading;
         return (
-            <Button {...rest}>{text}</Button>
+            // Warning: A props object containing a "key" prop is being spread into JSX:
+            <Button key={rest.key} {...rest}>{text}</Button>
         )
     } else {
         throw new Error("aiSubmit必须配置单独的SUBMIT操作！");
     }
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     aiSubmit,
 }

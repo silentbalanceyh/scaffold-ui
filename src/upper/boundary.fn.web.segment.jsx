@@ -45,7 +45,8 @@ export default {
                     };
                     attrs.icon = Ux.v4Icon(rest.icon);
                     return (
-                        <Button {...attrs} key={attrs.key}>
+                        // Warning: A props object containing a "key" prop is being spread into JSX:
+                        <Button key={attrs.key} {...attrs}>
                             {text}
                         </Button>
                     )
@@ -80,7 +81,8 @@ export default {
                 attrs.loading = $loading;
                 attrs.onClick = action(reference);      // Dim 2 function
                 return (
-                    <Button {...attrs} key={attrs.key}/>
+                    // Warning: A props object containing a "key" prop is being spread into JSX:
+                    <Button key={attrs.key} {...attrs} />
                 )
             } else {
                 // Nothing to render

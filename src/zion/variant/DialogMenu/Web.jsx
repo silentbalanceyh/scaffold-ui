@@ -90,7 +90,8 @@ const renderMenu = (reference, item) => {
     return (
         <Dropdown key={item.key} disabled={rest.disabled}
                   menu={attrMenu}>
-            <Button {...rest}>
+            {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+            <Button key={rest.key} {...rest}>
                 {text}
             </Button>
         </Dropdown>
@@ -99,6 +100,7 @@ const renderMenu = (reference, item) => {
 const renderButton = (reference, item = {}) => {
     const {text, confirm, ...rest} = item.button;
     return (
+        // Warning: A props object containing a "key" prop is being spread into JSX:
         <Button key={item.key} {...rest}>
             {text}
         </Button>

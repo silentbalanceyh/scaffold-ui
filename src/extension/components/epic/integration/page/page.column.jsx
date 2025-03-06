@@ -18,13 +18,15 @@ const renderBar = (reference, config = {}, item, onClick) => {
         /* Confirm */
         return (
             <Tooltip title={text} key={item}>
-                <Button {...attrs} onClick={onClick}/>
+                {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                <Button key={attrs.key} {...attrs} onClick={onClick}/>
             </Tooltip>
         )
     } else {
         attrs.key = item;
         return (
-            <Button {...attrs} onClick={onClick}/>
+            // Warning: A props object containing a "key" prop is being spread into JSX:
+            <Button key={attrs.key} {...attrs} onClick={onClick}/>
         )
     }
 };

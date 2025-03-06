@@ -127,7 +127,8 @@ class Component extends React.PureComponent {
             }
             return (
                 <span>
-                    <Button {...rest} onClick={onClick(button)} {...attrs}>
+                    {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                    <Button key={rest.key} {...rest} onClick={onClick(button)} {...attrs}>
                         {text ? text : ""}
                     </Button>
                     {render(this)}

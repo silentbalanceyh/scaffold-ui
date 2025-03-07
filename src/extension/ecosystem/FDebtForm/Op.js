@@ -40,6 +40,19 @@ export default {
             const request = Ux.clone(params);
             return __verifyRequest(request, reference)
                 .then(nil => {
+                    // 标准结账（现结）
+                    const payment = request.payment;
+                    const $payment = [];
+                    payment.forEach(each => {
+                        const found = Ux.elementUniqueDatum(reference, "pay.type", "code", each.name);
+                        if (found) {
+                            const record = {};
+                            record.amount = each.amount;
+                            record.name = found.name;
+                            $payment.push(record);
+                        }
+                    })
+                    request.payment = $payment;
                     // type 计算
                     request.type = (request.amountActual > 0) ? "DEBT": "REFUND";
                     return Ux.ajaxPut("/api/trans-proc/debt", request)

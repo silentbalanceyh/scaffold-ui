@@ -33,10 +33,10 @@ export default {
             const { $selected = {}} = reference.state;
             /* settlments / items */
             const request = Ux.clone(params);
-
             request.settlements = $selected.settlements;
             request.items = $selected.items;
             request.amountActual = Ex.paySum($selected.items);
+            request.customerId = params.runId;
             const attachAmount = __valueAmount($selected.items, request.rounded);
             Object.assign(request, attachAmount);
             request.amountActual = params.amountActual

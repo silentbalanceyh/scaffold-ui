@@ -46,7 +46,22 @@ export default {
                 return Ux.ajaxError(reference, {data: error.empty});
             }
             return __verifyPayment(reference, request)
-                .then(nil => Ux.ajaxPut("/api/trans-proc/standard", request))
+                .then(nil => {
+                    // 标准结账（现结）
+                    const payment = request.payment;
+                    const $payment = [];
+                    payment.forEach(each => {
+                        const found = Ux.elementUniqueDatum(reference, "pay.type", "code", each.name);
+                        if (found) {
+                            const record = {};
+                            record.amount = each.amount;
+                            record.name = found.name;
+                            $payment.push(record);
+                        }
+                    })
+                    request.payment = $payment;
+                    return  Ux.ajaxPut("/api/trans-proc/standard", request)
+                })
                 .then(data => Ux.ajaxDialog(reference, {data, key: "saved"}))
                 .then(response => Ux.of(reference).close(response))
                 .catch(error => Ux.ajaxError(reference, error));

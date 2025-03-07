@@ -6,9 +6,7 @@ const __verifyPayment = (reference, params = {}) => {
     const finishType = params.finishType;
     if("STANDARD" === finishType){
         // 标准结账，标准结账验证 payment
-        const $params = Ux.clone(params);
-        $params.amountActual = params.amountActual;
-        return Ex.inPrePay(reference, $params, {}, true);
+        return Ex.inPrePay(reference, params, {}, true);
     }else{
         // 延迟（应收/退款）
         return Ux.promise(params);
@@ -33,35 +31,35 @@ export default {
             const { $selected = {}} = reference.state;
             /* settlments / items */
             const request = Ux.clone(params);
+
             request.settlements = $selected.settlements;
             request.items = $selected.items;
-            request.amountActual = Ex.paySum($selected.items);
             request.customerId = params.runId;
+            request.amountActual = Ex.paySum($selected.items);
             const attachAmount = __valueAmount($selected.items, request.rounded);
             Object.assign(request, attachAmount);
-            request.amountActual = params.amountActual
+            // FIX:https://e.gitee.com/wei-code/issues/table?issue=IBOW3P
+            if(request.payment.length!==0){
+                const payment = request.payment;
+                const $payment = [];
+                payment.forEach(each => {
+                    const found = Ux.elementUniqueDatum(reference, "pay.type", "code", each.name);
+                    if (found) {
+                        const record = {};
+                        record.amount = each.amount;
+                        record.name = found.name;
+                        $payment.push(record);
+                    }
+                })
+                request.payment = $payment;
+            }
             if(0 === request.settlements.length || 0 === request.items.length){
                 const modal = Ux.fromHoc(ref, "modal");
                 const {error = {}} = modal;
                 return Ux.ajaxError(reference, {data: error.empty});
             }
             return __verifyPayment(reference, request)
-                .then(nil => {
-                    // 标准结账（现结）
-                    const payment = request.payment;
-                    const $payment = [];
-                    payment.forEach(each => {
-                        const found = Ux.elementUniqueDatum(reference, "pay.type", "code", each.name);
-                        if (found) {
-                            const record = {};
-                            record.amount = each.amount;
-                            record.name = found.name;
-                            $payment.push(record);
-                        }
-                    })
-                    request.payment = $payment;
-                    return  Ux.ajaxPut("/api/trans-proc/standard", request)
-                })
+                .then(nil => Ux.ajaxPut("/api/trans-proc/standard", request))
                 .then(data => Ux.ajaxDialog(reference, {data, key: "saved"}))
                 .then(response => Ux.of(reference).close(response))
                 .catch(error => Ux.ajaxError(reference, error));

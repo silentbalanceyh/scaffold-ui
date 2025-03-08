@@ -23,7 +23,7 @@ const __verifyRequest = (params = {}, reference) => {
     const { error = {}} = modal;
     const amountLimit = Ux.valueFloat(params.amountTotal);
     const amount = Ux.valueFloat(params.amount);
-    if(amountLimit > amount){
+    if(amountLimit < amount){
         // 本次交易额不可以超过总额
         return Ux.ajaxError(reference, {data: error.exceed});
     }

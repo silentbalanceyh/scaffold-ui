@@ -14,11 +14,11 @@ export default (reference, jsx) => {
         const amount = Ux.formHit(reference, "amount");
         if (amount) {
             const values = {};
-            values.amountActual = (
-                Ux.valueFloat(amount, 0.0)
-                -
-                Ux.valueFloat(amountGap, 0.0)
-            ).toFixed(2);
+            const gapValue = Ux.valueFloat(amountGap, 0.0);
+            const amountValue = Ux.valueFloat(amount, 0.0);
+
+            values.amountActual = (amountValue + (Math.sign(gapValue) >= 0 ? gapValue : -Math.abs(gapValue))).toFixed(2);
+
             Ux.formHits(reference, values);
         }
     });

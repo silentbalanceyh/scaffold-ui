@@ -56,7 +56,12 @@ class Component extends React.PureComponent {
                             )
                         }else{
                             // 应收退款单
-                            const { debts = []} = $inited;
+                            const { debts = [], items = []} = $inited;
+                            //FIX:https://e.gitee.com/wei-code/issues/table?issue=IBT8QX
+                            if(items.length!==0){
+                                const a = items[0].code;
+                                debts[0].settlementCode = a.split('-')[0];
+                            }
                             return (
                                 <FDebts {...inherit} data={debts} isView/>
                             )

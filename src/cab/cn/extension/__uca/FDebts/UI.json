@@ -8,6 +8,7 @@
         },
         "columns": [
             "serial,单据号",
+            "settlementCode,结算单号",
             {
                 "metadata": "type,类型,MAPPING",
                 "$mapping": {

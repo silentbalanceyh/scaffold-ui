@@ -9,7 +9,7 @@ const rxBatchDelete = (reference) => (event) => {
         $selected.forEach(item=>{
             const selected = {"key":null}
             selected.key = item
-            array.push(selected)
+            NewSelected.push(selected)
         })
         const uri = options[__V.Opt.AJAX_BATCH_DELETE_URI];
         return Ux.ajaxDelete(uri, NewSelected);

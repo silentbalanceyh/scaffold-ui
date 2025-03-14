@@ -33,12 +33,13 @@ export default {
             const request = Ux.clone(params);
 
             request.settlements = $selected.settlements;
-            request.items = $selected.items;
+            //FIX:https://e.gitee.com/wei-code/issues/table?issue=IBT8QX
+            request.items = $selected.items.filter(item=>item.finishedId===undefined).filter(item=>item.debtId===undefined);
             request.customerId = params.runId;
             request.amountActual = Ex.paySum($selected.items);
             const attachAmount = __valueAmount($selected.items, request.rounded);
             Object.assign(request, attachAmount);
-            // FIX:https://e.gitee.com/wei-code/issues/table?issue=IBOW3P
+            // 标准结账（现结）
             if(request.payment.length!==0){
                 const payment = request.payment;
                 const $payment = [];

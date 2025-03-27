@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Tooltip} from 'antd';
+import {Button, Space, Tooltip} from 'antd';
 import __Zn from "../zero.uca.dependency.table.UNLOCK";
 import './Cab.norm.scss';
 
@@ -29,7 +29,8 @@ export default (reference) => {
         const {add = {}, remove = {}} = config;
         const {data = []} = reference.state;
         return (
-            <Button.Group>
+            // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+            <Space.Compact>
                 <Tooltip title={add.tooltip}>
                     <Button icon={__Zn.v4Icon(add.icon)}
                             disabled={disabled}
@@ -40,7 +41,7 @@ export default (reference) => {
                             disabled={disabled || 1 >= data.length}
                             onClick={removeFn(reference, record, index)}/>
                 </Tooltip>
-            </Button.Group>
+            </Space.Compact>
         );
     }
     return {...rest};

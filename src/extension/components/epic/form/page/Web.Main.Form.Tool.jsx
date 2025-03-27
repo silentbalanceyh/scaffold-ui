@@ -18,7 +18,8 @@ export default (reference, toolbar = {}) => {
                     Object.assign(attrs, rest);
                     const {text, ...restAttrs} = attrs;
                     return (
-                        <Button {...restAttrs}>
+                        // Warning: A props object containing a "key" prop is being spread into JSX:
+                        <Button key={restAttrs.key} {...restAttrs}>
                             {text}
                         </Button>
                     )

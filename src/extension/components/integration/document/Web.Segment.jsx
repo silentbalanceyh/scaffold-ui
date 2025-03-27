@@ -84,7 +84,8 @@ const renderKitList = (reference, $directory) => {
                         attrs.icon = Ux.v4Icon(attrs.icon);
                     }
                     return (
-                        <Button {...attrs}>{text}</Button>
+                        // Warning: A props object containing a "key" prop is being spread into JSX:
+                        <Button key={attrs.key} {...attrs}>{text}</Button>
                     )
                 })}
                 {renderKeyword(reference)}
@@ -117,7 +118,7 @@ const renderKitTrash = (reference) => {
                         }
                         attrs.disabled = true;
                         return (
-                            <Button {...attrs}>{text}</Button>
+                            <Button key={attrs.key} {...attrs}>{text}</Button>
                         )
                     } else {
                         const attrs = Ux.clone(rest);
@@ -129,7 +130,7 @@ const renderKitTrash = (reference) => {
                             attrs.onClick = toolbar[attrs.key]
                         }
                         return (
-                            <Button {...attrs}>{text}</Button>
+                            <Button key={attrs.key} {...attrs}>{text}</Button>
                         )
                     }
                 })}

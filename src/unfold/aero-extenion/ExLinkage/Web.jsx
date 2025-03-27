@@ -13,7 +13,8 @@ export default {
         const {text, ...rest} = add;
         rest.icon = Ux.v4Icon(rest.icon);
         return (
-            <Button {...rest} onClick={event => {
+            // Warning: A props object containing a "key" prop is being spread into JSX:
+            <Button key={rest.key} {...rest} onClick={event => {
                 Ux.prevent(event);
                 Ux.of(reference).open().done();
                 // reference.?etState({$visible: true})
@@ -26,7 +27,8 @@ export default {
         const {text, ...rest} = remove;
         rest.icon = Ux.v4Icon(rest.icon);
         return (
-            <Button {...rest} disabled={0 === $selected.length}
+            // Warning: A props object containing a "key" prop is being spread into JSX:
+            <Button key={rest.key} {...rest} disabled={0 === $selected.length}
                     onClick={Op.rxUnlink(reference)}>
                 {text}
             </Button>
@@ -42,7 +44,8 @@ export default {
             || !$keyChange
         rest.icon = Ux.v4Icon(rest.icon);
         return (
-            <Button {...rest} disabled={disabled}
+            // Warning: A props object containing a "key" prop is being spread into JSX:
+            <Button key={rest.key} {...rest} disabled={disabled}
                     onClick={Op.rxSave(reference)}>
                 {text}
             </Button>

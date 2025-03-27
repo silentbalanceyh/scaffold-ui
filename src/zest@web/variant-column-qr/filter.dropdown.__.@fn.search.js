@@ -84,11 +84,14 @@ const FilterTextBox = (props) => {
     }
     return (
         <div style={CSS_DROPDOWN}>
-            <Input {...attrInput}/>
-            <Button {...attrYes}>
+            {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+            <Input key={attrInput.key} {...attrInput}/>
+            {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+            <Button key={attrYes.key} {...attrYes}>
                 {button.search ? button.search : false}
             </Button>
-            <Button {...attrNo}>
+            {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+            <Button key={attrNo.key} {...attrNo}>
                 {button.reset ? button.reset : false}
             </Button>
             {__Zn.anchorColumn(column.dataIndex, Addon.siftClean(attrEvent))}

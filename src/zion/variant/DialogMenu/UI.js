@@ -1,6 +1,6 @@
 import React from 'react';
 import Op from './Op';
-import {Button} from "antd";
+import {Space} from "antd";
 import Rdr from './Web';
 import __Zn from '../zero.uca.dependency';
 
@@ -104,7 +104,8 @@ class Component extends React.PureComponent {
             const {$config = {}} = this.state;
             const {$disabled = []} = this.props;
             return (
-                <Button.Group>
+                // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+                <Space.Compact>
                     {$config.map(item => {
                         const $item = __Zn.clone(item);
                         if ($disabled.includes(item.key)) {
@@ -117,7 +118,7 @@ class Component extends React.PureComponent {
                         }
                     })}
                     {Rdr.renderWindow(this)}
-                </Button.Group>
+                </Space.Compact>
             );
         });
     }

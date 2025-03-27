@@ -1,7 +1,7 @@
 import __ZN from './zero.uca.func.dependency';
 import __ADD_ON from '../equip.fn.plugin.extension';
 
-import {Button} from 'antd';
+import {Button, Space} from 'antd';
 import React from 'react';
 
 const __Zn = {
@@ -15,9 +15,10 @@ const __jsxAction = (jsx = {}, fnRender) => {
     const {grouped = false} = jsx;
     if (grouped) {
         return (
-            <Button.Group>
+            // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+            <Space.Compact>
                 {__Zn.isFunction(fnRender) ? fnRender() : false}
-            </Button.Group>
+            </Space.Compact>
         )
     } else {
         return (
@@ -66,10 +67,12 @@ const aiAction = (reference, jsx = {}) => __jsxAction(jsx, (config = {}) => {
             rest.icon = __Zn.v4Icon(rest.icon);
         }
         return (
-            <Button {...rest} key={rest.key} style={config.style}>{text}</Button>
+            // Warning: A props object containing a "key" prop is being spread into JSX:
+            <Button key={rest.key} {...rest} style={config.style}>{text}</Button>
         );
     })
 });
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     aiAction,
 }

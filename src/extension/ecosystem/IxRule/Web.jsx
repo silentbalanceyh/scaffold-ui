@@ -1,9 +1,10 @@
 import Ux from "ux";
-import {Button, Checkbox, Col, Collapse, Row, Table, Tag} from "antd";
+import {Button, Checkbox, Col, Collapse, Row, Table, Tag, Space} from "antd";
 import Op from "./Op";
 import React from "react";
 import {LoadingAlert} from "web";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     renderColumn: (reference, columns = [], target = {}) => {
         const {config = {}} = reference.props;
@@ -15,7 +16,8 @@ export default {
             if ("key" === column.dataIndex) {
                 column.render = (text, record, index) => {
                     return (
-                        <Button.Group>
+                        // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+                        <Space.Compact>
                             <Button icon={Ux.v4Icon("plus")} type={"primary"}
                                     onClick={Ux.xtRowAdd(reference, record, index)}/>
                             <Button icon={Ux.v4Icon("delete")}
@@ -27,7 +29,7 @@ export default {
                                             }
                                         })
                                     }/>
-                        </Button.Group>
+                        </Space.Compact>
                     );
                 }
             }
@@ -71,14 +73,15 @@ export default {
                 column.render = (text, record, index) => {
                     const {data = []} = reference.state;
                     return (
-                        <Button.Group>
+                        // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+                        <Space.Compact>
                             <Button icon={Ux.v4Icon("arrow-up")} size={"small"}
                                     shape={"circle"} disabled={0 === index}
                                     onClick={Op.onSort(reference, index)}/>
                             <Button icon={Ux.v4Icon("arrow-down")} size={"small"}
                                     shape={"circle"} disabled={(data.length - 1) === index}
                                     onClick={Op.onSort(reference, index, false)}/>
-                        </Button.Group>
+                        </Space.Compact>
                     );
                 }
             }

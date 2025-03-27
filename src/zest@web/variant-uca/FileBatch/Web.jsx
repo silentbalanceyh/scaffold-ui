@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Col, Row, Tag, Tooltip, Upload} from 'antd';
+import {Button, Col, Row, Space, Tag, Tooltip, Upload} from 'antd';
 import Op from './Op';
 import __Zn from '../zero.uca.dependency';
 /*
@@ -107,17 +107,24 @@ const renderBar = (reference) => {
     return (
         <Row className={"op-bar"}>
             <Col>
-                <Button.Group className={"action"}>
+                {/* FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack */}
+                <Space.Compact className={"action"}>
                     <Tooltip title={info['vSave']}>
-                        <Button {...btnClean}/>
+                        {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                        {/* @ts-ignore */}
+                        <Button key={btnClean.key} {...btnClean}/>
                     </Tooltip>
                     <Tooltip title={info['vCard']}>
-                        <Button {...btnCard}/>
+                        {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                        {/* @ts-ignore */}
+                        <Button key={btnCard.key} {...btnCard}/>
                     </Tooltip>
                     <Tooltip title={info['vList']}>
-                        <Button {...btnList}/>
+                        {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                        {/* @ts-ignore */}
+                        <Button key={btnList.key} {...btnList}/>
                     </Tooltip>
-                </Button.Group>
+                </Space.Compact>
                 <Tag color={"magenta"}>
                     {info['iTip']}
                 </Tag>

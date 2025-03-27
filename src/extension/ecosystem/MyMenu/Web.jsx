@@ -1,5 +1,5 @@
 import Ux from "ux";
-import {Button, Empty, Modal, Tooltip} from "antd";
+import {Button, Empty, Modal, Space, Tooltip} from "antd";
 import React from "react";
 import Op from "./Op";
 import UITransfer from './UI.Transfer';
@@ -25,7 +25,8 @@ const renderButton = (reference, {data, first, last}) => {
         const link = Ux.fromHoc(reference, "link");
         const event = Op.toolkit(reference, data)
         return (
-            <Button.Group size={"small"}>
+            // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+            <Space.Compact size={"small"}>
                 {link.filter(item => {
                     if (first || last) {
                         if (first && !last) {
@@ -40,11 +41,12 @@ const renderButton = (reference, {data, first, last}) => {
                     const {tooltip, ...rest} = each;
                     return (
                         <Tooltip title={tooltip} key={each.key}>
-                            <Button {...rest} onClick={event[each.key]}/>
+                            {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                            <Button key={rest.key} {...rest} onClick={event[each.key]}/>
                         </Tooltip>
                     )
                 })}
-            </Button.Group>
+            </Space.Compact>
         )
     } else return false;
 }
@@ -108,6 +110,7 @@ const renderEmpty = (reference, $data = []) => {
         )
     } else return false;
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     renderExtra,
     renderButton,

@@ -1,9 +1,10 @@
-import {Button, Col, Popconfirm, Row, Switch, Tooltip} from "antd";
+import {Button, Col, Popconfirm, Row, Space, Switch, Tooltip} from "antd";
 import React from "react";
 import Ux from 'ux';
 import Op from './Op';
 import {Link} from "react-router-dom";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (reference) => {
     const {
         $combine = {},
@@ -15,7 +16,8 @@ export default (reference) => {
     return (
         <Row>
             <Col span={14}>
-                <Button.Group>
+                {/* FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack */}
+                <Space.Compact>
                     {(() => {
                         const {yes = {}} = toolbar;
                         const {text, ...rest} = yes;
@@ -41,13 +43,14 @@ export default (reference) => {
                         const {tooltip, ...rest} = plus;
                         return Op.isEdit(reference) ? (
                             <Tooltip title={tooltip}>
-                                <Button {...rest}
+                                {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                                <Button key={rest.key} {...rest}
                                         icon={Ux.v4Icon(rest.icon)}     // v4
                                         onClick={Op.rxOpen(reference, {}, Ux.Env.FORM_MODE.ADD)}/>
                             </Tooltip>
                         ) : false
                     })()}
-                </Button.Group>
+                </Space.Compact>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 {(() => {
                     const {batch = {}} = toolbar;
@@ -56,6 +59,7 @@ export default (reference) => {
                         <Popconfirm title={confirm}
                                     onConfirm={Op.rxDeleteBatch(reference, batch)}
                                     disabled={0 === $selectedKeys.length}>
+                            {/* @ts-ignore */}
                             <Link disabled={0 === $selectedKeys.length} to={""} onClick={event => Ux.prevent(event)}>
                                 {Ux.v4Icon(icon)}
                                 &nbsp;{text}

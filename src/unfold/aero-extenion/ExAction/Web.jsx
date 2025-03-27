@@ -1,6 +1,7 @@
 import React from 'react';
 import Ux from "ux";
-import {Button} from "antd";
+import {Space} from "antd";
+
 import ExButton from "../ExButton/UI";
 import ExDialog from "../ExDialog/UI";
 import __Zn from '../zero.aero.dependency';
@@ -34,10 +35,11 @@ export default {
     "BUTTON": (reference, config = [], attributes = {}) =>
         1 < config.length ?
             (
-                <Button.Group>
+                // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+                <Space.Compact>
                     {/* 多个按钮，使用 Button.Group */}
                     {config.map(each => renderItem(reference, each, Ux.clone(attributes)))}
-                </Button.Group>
+                </Space.Compact>
             ) :
             /* 单个按钮不使用 Button.Group */
             renderItem(reference, config[0], Ux.clone(attributes)),

@@ -156,7 +156,8 @@ class Component extends React.PureComponent {
                                           dataSource={$options}/>
                             </div>
                             <div className={"button"}>
-                                <Button {...button}/>
+                                {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                                <Button key={button.key} {...button}/>
                             </div>
                         </Col>
                     </Row>

@@ -1,6 +1,6 @@
 import Op from './UI.Op';
 import React from 'react';
-import {Button, Input, Tooltip} from 'antd';
+import {Button, Input, Space, Tooltip} from 'antd';
 import Ux from "ux";
 import "./Cab.norm.scss";
 import __Zn from '../zero.aero.dependency';
@@ -37,7 +37,8 @@ const _renderInput = (reference) => {
                       key='inputSearch'
                       disabled={disabled}
                       value={searchText}/>,
-        <Button {...attrKwClean} key={attrKwClean.key}/>
+        // Warning: A props object containing a "key" prop is being spread into JSX:
+        <Button key={attrKwClean.key} {...attrKwClean}/>
     ]
 };
 
@@ -118,12 +119,13 @@ export default (reference) =>
                     }}/>
             {_renderInput(reference)}
             &nbsp;&nbsp;
-            <Button.Group>
+            {/* FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack */}
+            <Space.Compact>
                 {_renderView(reference)}
                 {Op.isAdvanced(reference) ? _renderRedo(reference) : false}
                 {Op.isAdvanced(reference) ? _renderAdvanced(reference) : false}
                 {Op.isAdvanced(reference) ? Ux.anchorSearch(reference) : false}
-            </Button.Group>
+            </Space.Compact>
             {renderCriteria(reference)}
             {Op.isAdvanced(reference) ? renderDrawer(reference) : false}
         </span>

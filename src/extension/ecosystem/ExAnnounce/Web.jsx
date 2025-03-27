@@ -70,7 +70,8 @@ const renderExtra = (reference) => {
         }
     }
     return (
-        <Button {...attrs}>
+        // Warning: A props object containing a "key" prop is being spread into JSX:
+        <Button key={attrs.key} {...attrs}>
             {action.view}
         </Button>
     )

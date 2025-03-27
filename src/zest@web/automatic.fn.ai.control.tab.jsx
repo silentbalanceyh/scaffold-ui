@@ -1,4 +1,4 @@
-import {Button, Drawer, Tabs, Tooltip} from "antd";
+import {Button, Drawer, Space, Tabs, Tooltip} from "antd";
 import React from "react";
 import __Zn from './zero.module.dependency';
 import __V4 from './aureole.fn.ai.child.v4.patch';
@@ -125,9 +125,10 @@ const aiTabExtra = (reference, config = {}) => {
     } = config;
     if (1 < items.length) {
         return (
-            <Button.Group>
+            // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+            <Space.Compact>
                 {items.map(item => __aiTabExtraItem(reference, {...rest, item}))}
-            </Button.Group>
+            </Space.Compact>
         )
     } else {
         const item = items[0];
@@ -136,6 +137,7 @@ const aiTabExtra = (reference, config = {}) => {
         } else return false;
     }
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     aiTabPage,
     aiTabExtra,

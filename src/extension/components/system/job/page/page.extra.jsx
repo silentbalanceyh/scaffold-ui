@@ -1,4 +1,4 @@
-import {Button, Tooltip} from "antd";
+import {Button, Space, Tooltip} from "antd";
 import Ux from "ux";
 import React from "react";
 
@@ -6,12 +6,14 @@ export default (reference, $buttons = []) => {
     const {$submitting = false, $tabs = {}} = reference.state;
     const {items = []} = $tabs;
     return 2 === items.length ? (
-        <Button.Group>
+        // FIX: Warning: [antd: Button.Group] `Button.Group` is deprecated. Please use `Space.Compact` instead. Error Component Stack
+        <Space.Compact>
             {$buttons.map(each => {
                 const {text, onClick, ...rest} = each;
                 return (
                     <Tooltip title={text} key={rest['key']}>
-                        <Button {...rest} loading={$submitting} onClick={event => {
+                        {/* Warning: A props object containing a "key" prop is being spread into JSX: */}
+                        <Button key={rest.key} {...rest} loading={$submitting} onClick={event => {
                             Ux.prevent(event);
                             Ux.of(reference).submitting().handle(() => {
                                 if (Ux.isFunction(onClick)) {
@@ -26,6 +28,6 @@ export default (reference, $buttons = []) => {
                     </Tooltip>
                 )
             })}
-        </Button.Group>
+        </Space.Compact>
     ) : false
 }

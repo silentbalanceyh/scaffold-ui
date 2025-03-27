@@ -2,7 +2,7 @@ import Ux from 'ux';
 import __V from './pedestal.v.constant.option';
 import __TAB from './idyl.fn.rx.container.tab';
 
-const rxRowOpen = (reference, config = {}) => (id, record, metadata) => {
+const rxRowOpen = (reference, config = {},delay = 0) => (id, record, metadata) => {
     const {
         reference,
     } = metadata;
@@ -18,19 +18,21 @@ const rxRowOpen = (reference, config = {}) => (id, record, metadata) => {
             rxBefore(id, record, metadata);
         }
         // ?x(reference).view(id, record, metadata)
-        rxView(reference)(id, record, metadata).then(data => {
-            // rxAfter, 打开后函数
-            // 此处rxAfter一定要在 open 方法之前调用，否则会出现
-            // 状态不同步的问题
-            if (Ux.isFunction(rxAfter)) {
-                rxAfter(id, data, metadata);
-            }
-            /* 关闭 Loading 用*/
-            Ux.of(reference).load(false).handle(() => {
-                __TAB.rxTabOpen(reference)(id, data, record);
+        setTimeout(() => {
+            rxView(reference)(id, record, metadata).then(data => {
+                // rxAfter, 打开后函数
+                // 此处rxAfter一定要在 open 方法之前调用，否则会出现
+                // 状态不同步的问题
+                if (Ux.isFunction(rxAfter)) {
+                    rxAfter(id, data, metadata);
+                }
+                /* 关闭 Loading 用*/
+                Ux.of(reference).load(false).handle(() => {
+                    __TAB.rxTabOpen(reference)(id, data, record);
+                });
+                // __RS.r?Loading(reference, false)({});
             });
-            // __RS.r?Loading(reference, false)({});
-        });
+        }, delay);
     })
 }
 const rxSelected = (reference) => ($selected = [], $data = []) => {

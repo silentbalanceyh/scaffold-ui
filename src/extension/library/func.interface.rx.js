@@ -389,10 +389,11 @@ const rsOpened = (reference, opened = true) =>
  * @memberOf module:rx/utter
  * @param reference
  * @param config
+ * @param delay
  * @returns {*}
  */
-const rxRowOpen = (reference, config = {}) =>
-    __Zu.rxRowOpen(reference, config);
+const rxRowOpen = (reference, config = {},delay = 0) =>
+    __Zu.rxRowOpen(reference, config,delay);
 export default {
     rsOpened,
     // 新版本

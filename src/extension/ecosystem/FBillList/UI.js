@@ -18,23 +18,67 @@ const renderBill = (reference, data = []) => {
     const table = Ux.fromHoc(reference, "table");
     const tableConfig = table['bills'];
     tableConfig.columns = Ux.configColumn(reference, tableConfig.columns);
-    //
-    const dataSource = Ux.clone(data);
+
+    // 处理数据和子项
+    const dataSource = [];
     const treeMap = {};
-    dataSource.forEach(dataItem => {
-        if (dataItem.children) {
-            treeMap[dataItem.key] = Ux.clone(dataItem.children);
-            //下面删除会同时删除reference中data的children数据
-            //delete dataItem.children;
+    data.forEach(item => {
+        const clonedItem = Ux.clone(item);
+        if (clonedItem.children) {
+            treeMap[clonedItem.key] = Ux.clone(clonedItem.children);
+            const { children, ...rest } = clonedItem;
+            dataSource.push(rest);
+        } else {
+            dataSource.push(clonedItem);
         }
     });
+
+    // 设置固定的表格高度和滚动属性
+    tableConfig.scroll = {
+        x: true,
+        y: 300
+    };
+
+    // 确保子表格也有固定高度
+    const itemTableConfig = table['items'];
+    itemTableConfig.scroll = {
+        x: true,
+        y: 100
+    };
+
     Ux.configScroll(tableConfig, dataSource, reference);
+
     return (
-        <Table {...tableConfig} dataSource={dataSource}
-               expandable={{
-                   expandedRowRender: record => renderItem(reference, treeMap[record.key])
-               }}/>
-    )
+        <div className="bill-table-container">
+            <Table
+                {...tableConfig}
+                dataSource={dataSource}
+                rowKey={record => record.key}
+                expandable={{
+                    expandedRowRender: record => {
+                        const childConfig = {
+                            ...itemTableConfig,
+                            columns: Ux.configColumn(reference, itemTableConfig.columns)
+                        };
+                        const itemDataSource = treeMap[record.key] || [];
+
+                        return (
+                            <div className="expanded-table-container">
+                                <Table
+                                    {...childConfig}
+                                    dataSource={itemDataSource}
+                                    pagination={false}
+                                    rowKey={item => item.key}
+                                />
+                            </div>
+                        );
+                    },
+                    expandRowByClick: true,
+                    defaultExpandAllRows: false
+                }}
+            />
+        </div>
+    );
 }
 
 @Ux.zero(Ux.rxEtat(require("./Cab"))

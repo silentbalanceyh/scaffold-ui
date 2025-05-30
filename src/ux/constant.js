@@ -713,7 +713,7 @@ export default {
      *
      * 环境变量文件位于根目录之下，从 `.env.development.tpl` 文件拷贝而来，若您下载的是最新的脚手架，内部会包含环境变量模板文件，直接拷贝即可。
      *
-     * 1. `.env.development`：开发环境环境变量文件。
+     * 1. `.env.development.tpl`：开发环境环境变量文件。
      * 2. `.env.production`：生产环境环境变量文件。
      *
      * ### 核心点

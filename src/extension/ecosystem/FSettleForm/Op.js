@@ -33,10 +33,10 @@ export default {
             const request = Ux.clone(params);
 
             request.settlements = $selected.settlements;
-            //FIX:https://e.gitee.com/wei-code/issues/table?issue=IBT8QX
             request.items = $selected.items.filter(item=>item.finishedId===undefined).filter(item=>item.debtId===undefined);
             request.customerId = params.runId;
             request.amountActual = Ex.paySum($selected.items);
+            request.name = params.runName
             const attachAmount = __valueAmount($selected.items, request.rounded);
             Object.assign(request, attachAmount);
             // 标准结账（现结）
@@ -145,8 +145,7 @@ export default {
     rxFinishType: (reference) => (event) => {
         let formValues = {};
         const { $selected = {}} = reference.state;
-        const params = Ux.isMod('mHotel');
-        const rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
+        const rounded = "NONE";
         const amountAttach = __valueAmount($selected.items, rounded);
         Object.assign(formValues, amountAttach);
         Ux.formHits(reference, formValues);

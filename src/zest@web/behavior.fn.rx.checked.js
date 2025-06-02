@@ -66,6 +66,12 @@ const rxCheckedTree = (reference, input = [], callback) => (keys = [], item) => 
                     // 选择当前节点的父节点
                     const branch = __Zn.elementBranch(flatted, data.key);
                     branch.forEach(each => keySet.add(each.key));
+                    branch.forEach(each=>{
+                        keySet.add(each.key)
+                        if(each.level===2){
+                            keySet.add(each.parent)
+                        }
+                    })
                 } else {
                     // 当前节点被反选
                     const children = __Zn.elementChildren(flatted, data);
@@ -93,8 +99,13 @@ const rxCheckedTree = (reference, input = [], callback) => (keys = [], item) => 
                          */
                         const children = __Zn.elementChildren(flatted, parent);
                         const selected = children.filter(item => keySet.has(item.key));
-
                         if (0 === selected.length) {
+                            /*
+                           * 无子节点选中，则直接取消父节点,并且判断层级，来取消顶级节点
+                           */
+                            if(parent.level===2){
+                                keySet.delete(parent.parent)
+                            }
                             /*
                              * 无子节点选中，则直接取消父节点
                              */

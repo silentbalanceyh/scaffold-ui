@@ -273,6 +273,13 @@ module.exports = function (webpackEnv) {
         module: {
             strictExportPresence: true,
             rules: [
+                // 解决 @antv/x6 等库在 Webpack 5 下的 ESM 指向问题
+                {
+                    test: /\.m?js/,
+                    resolve: {
+                        fullySpecified: false,
+                    },
+                },
                 // Handle node_modules packages that contain sourcemaps
                 shouldUseSourceMap && {
                     enforce: 'pre',
@@ -297,10 +304,10 @@ module.exports = function (webpackEnv) {
                                 // 在 require('os').cpus() 是 undefined 时回退至 1
                                 // 一个 worker 进程中并行执行工作的数量
                                 // 默认为 20
-                                workerParallelJobs: 64,
+                                workerParallelJobs: 10,
 
                                 // 额外的 node.js 参数
-                                workerNodeArgs: ['--max-old-space-size=1024'],
+                                workerNodeArgs: ['--max-old-space-size=2048'],
                                 // 允许重新生成一个僵死的 work 池
                                 // 这个过程会降低整体编译速度
                                 // 并且开发环境应该设置为 false
@@ -314,7 +321,7 @@ module.exports = function (webpackEnv) {
                                 // 池分配给 worker 的工作数量
                                 // 默认为 200
                                 // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
-                                poolParallelJobs: 64,
+                                poolParallelJobs: 20,
 
                                 // 池的名称
                                 // 可以修改名称来创建其余选项都一样的池
@@ -363,10 +370,10 @@ module.exports = function (webpackEnv) {
                                         // 在 require('os').cpus() 是 undefined 时回退至 1
                                         // 一个 worker 进程中并行执行工作的数量
                                         // 默认为 20
-                                        workerParallelJobs: 64,
+                                        workerParallelJobs: 10,
 
                                         // 额外的 node.js 参数
-                                        workerNodeArgs: ['--max-old-space-size=1024'],
+                                        workerNodeArgs: ['--max-old-space-size=2048'],
                                         // 允许重新生成一个僵死的 work 池
                                         // 这个过程会降低整体编译速度
                                         // 并且开发环境应该设置为 false
@@ -380,7 +387,7 @@ module.exports = function (webpackEnv) {
                                         // 池分配给 worker 的工作数量
                                         // 默认为 200
                                         // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
-                                        poolParallelJobs: 64,
+                                        poolParallelJobs: 20,
 
                                         // 池的名称
                                         // 可以修改名称来创建其余选项都一样的池
@@ -423,10 +430,10 @@ module.exports = function (webpackEnv) {
                                         // 在 require('os').cpus() 是 undefined 时回退至 1
                                         // 一个 worker 进程中并行执行工作的数量
                                         // 默认为 20
-                                        workerParallelJobs: 64,
+                                        workerParallelJobs: 15,
 
                                         // 额外的 node.js 参数
-                                        workerNodeArgs: ['--max-old-space-size=1024'],
+                                        workerNodeArgs: ['--max-old-space-size=2048'],
                                         // 允许重新生成一个僵死的 work 池
                                         // 这个过程会降低整体编译速度
                                         // 并且开发环境应该设置为 false
@@ -440,7 +447,7 @@ module.exports = function (webpackEnv) {
                                         // 池分配给 worker 的工作数量
                                         // 默认为 200
                                         // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
-                                        poolParallelJobs: 64,
+                                        poolParallelJobs: 30,
 
                                         // 池的名称
                                         // 可以修改名称来创建其余选项都一样的池
@@ -512,10 +519,10 @@ module.exports = function (webpackEnv) {
                                         // 在 require('os').cpus() 是 undefined 时回退至 1
                                         // 一个 worker 进程中并行执行工作的数量
                                         // 默认为 20
-                                        workerParallelJobs: 64,
+                                        workerParallelJobs: 10,
 
                                         // 额外的 node.js 参数
-                                        workerNodeArgs: ['--max-old-space-size=1024'],
+                                        workerNodeArgs: ['--max-old-space-size=2048'],
                                         // 允许重新生成一个僵死的 work 池
                                         // 这个过程会降低整体编译速度
                                         // 并且开发环境应该设置为 false
@@ -529,7 +536,7 @@ module.exports = function (webpackEnv) {
                                         // 池分配给 worker 的工作数量
                                         // 默认为 200
                                         // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
-                                        poolParallelJobs: 64,
+                                        poolParallelJobs: 20,
 
                                         // 池的名称
                                         // 可以修改名称来创建其余选项都一样的池

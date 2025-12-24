@@ -871,6 +871,9 @@ module.exports = function (webpackEnv) {
                 baseConfig: {
                     parser: "@babel/eslint-parser",
                     extends: [require.resolve('eslint-config-react-app/base')],
+                    parserOptions: {
+                        warnOnUnsupportedTypeScriptVersion: false,
+                    },
                     rules: {
                         // jsx runtime
                         ...(!hasJsxRuntime && {

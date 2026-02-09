@@ -167,6 +167,13 @@ module.exports = function (webpackEnv) {
                 ),
             },
         },
+        experiments: {
+            // 启用懒编译优化开发模式启动速度
+            lazyCompilation: isEnvDevelopment ? {
+                imports: true,
+                entries: false,
+            } : false,
+        },
         infrastructureLogging: {
             level: 'none',
         },
@@ -297,39 +304,9 @@ module.exports = function (webpackEnv) {
                     exclude: /(@babel(?:\/|\\{1,2})runtime)|ant-design-pro|@antv|dagre-compound|mutationobserver-shim/,
                     test: /\.(js|mjs|jsx|ts|tsx|css)$/,
                     use: [
-                        isEnvDevelopment ? {
-                            loader: require.resolve("thread-loader"),
-                            options: {
-                                // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
-                                // 在 require('os').cpus() 是 undefined 时回退至 1
-                                // 一个 worker 进程中并行执行工作的数量
-                                // 默认为 20
-                                workerParallelJobs: 10,
-
-                                // 额外的 node.js 参数
-                                workerNodeArgs: ['--max-old-space-size=2048'],
-                                // 允许重新生成一个僵死的 work 池
-                                // 这个过程会降低整体编译速度
-                                // 并且开发环境应该设置为 false
-                                poolRespawn: false,
-
-                                // 闲置时定时删除 worker 进程
-                                // 默认为 500（ms）
-                                // 可以设置为无穷大，这样在监视模式(--watch)下可以保持 worker 持续存在
-                                poolTimeout: 2000,
-
-                                // 池分配给 worker 的工作数量
-                                // 默认为 200
-                                // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
-                                poolParallelJobs: 20,
-
-                                // 池的名称
-                                // 可以修改名称来创建其余选项都一样的池
-                                name: "zjs-pre-worker"
-                            }
-                        } : false,
+                        // 优化：source-map-loader 不需要 thread-loader，会增加额外开销
                         require.resolve('source-map-loader')
-                    ].filter(Boolean)
+                    ]
                 },
                 {
                     // "oneOf" will traverse all following loaders until one will
@@ -363,37 +340,6 @@ module.exports = function (webpackEnv) {
                         {
                             test: /\.svg$/,
                             use: [
-                                isEnvDevelopment ? {
-                                    loader: require.resolve("thread-loader"),
-                                    options: {
-                                        // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
-                                        // 在 require('os').cpus() 是 undefined 时回退至 1
-                                        // 一个 worker 进程中并行执行工作的数量
-                                        // 默认为 20
-                                        workerParallelJobs: 10,
-
-                                        // 额外的 node.js 参数
-                                        workerNodeArgs: ['--max-old-space-size=2048'],
-                                        // 允许重新生成一个僵死的 work 池
-                                        // 这个过程会降低整体编译速度
-                                        // 并且开发环境应该设置为 false
-                                        poolRespawn: false,
-
-                                        // 闲置时定时删除 worker 进程
-                                        // 默认为 500（ms）
-                                        // 可以设置为无穷大，这样在监视模式(--watch)下可以保持 worker 持续存在
-                                        poolTimeout: 2000,
-
-                                        // 池分配给 worker 的工作数量
-                                        // 默认为 200
-                                        // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
-                                        poolParallelJobs: 20,
-
-                                        // 池的名称
-                                        // 可以修改名称来创建其余选项都一样的池
-                                        name: "zjs-file-worker"
-                                    }
-                                } : false,
                                 {
                                     loader: require.resolve('@svgr/webpack'),
                                     options: {
@@ -412,7 +358,7 @@ module.exports = function (webpackEnv) {
                                         name: 'static/media/[name].[hash].[ext]',
                                     },
                                 },
-                            ].filter(Boolean),
+                            ],
                             issuer: {
                                 and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
                             },
@@ -426,32 +372,12 @@ module.exports = function (webpackEnv) {
                                 isEnvDevelopment ? {
                                     loader: require.resolve("thread-loader"),
                                     options: {
-                                        // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
-                                        // 在 require('os').cpus() 是 undefined 时回退至 1
-                                        // 一个 worker 进程中并行执行工作的数量
-                                        // 默认为 20
-                                        workerParallelJobs: 15,
-
-                                        // 额外的 node.js 参数
-                                        workerNodeArgs: ['--max-old-space-size=2048'],
-                                        // 允许重新生成一个僵死的 work 池
-                                        // 这个过程会降低整体编译速度
-                                        // 并且开发环境应该设置为 false
+                                        // 优化：减少 worker 数量以降低启动开销
+                                        workers: require('os').cpus().length - 1,
+                                        workerParallelJobs: 50,
+                                        poolTimeout: isEnvDevelopment ? Infinity : 500,
                                         poolRespawn: false,
-
-                                        // 闲置时定时删除 worker 进程
-                                        // 默认为 500（ms）
-                                        // 可以设置为无穷大，这样在监视模式(--watch)下可以保持 worker 持续存在
-                                        poolTimeout: 2000,
-
-                                        // 池分配给 worker 的工作数量
-                                        // 默认为 200
-                                        // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
-                                        poolParallelJobs: 30,
-
-                                        // 池的名称
-                                        // 可以修改名称来创建其余选项都一样的池
-                                        name: "zjs-source-loader"
+                                        name: "js-pool"
                                     }
                                 } : false,
                                 {
@@ -515,32 +441,11 @@ module.exports = function (webpackEnv) {
                                 isEnvDevelopment ? {
                                     loader: require.resolve("thread-loader"),
                                     options: {
-                                        // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
-                                        // 在 require('os').cpus() 是 undefined 时回退至 1
-                                        // 一个 worker 进程中并行执行工作的数量
-                                        // 默认为 20
-                                        workerParallelJobs: 10,
-
-                                        // 额外的 node.js 参数
-                                        workerNodeArgs: ['--max-old-space-size=2048'],
-                                        // 允许重新生成一个僵死的 work 池
-                                        // 这个过程会降低整体编译速度
-                                        // 并且开发环境应该设置为 false
+                                        workers: 2,
+                                        workerParallelJobs: 50,
+                                        poolTimeout: isEnvDevelopment ? Infinity : 500,
                                         poolRespawn: false,
-
-                                        // 闲置时定时删除 worker 进程
-                                        // 默认为 500（ms）
-                                        // 可以设置为无穷大，这样在监视模式(--watch)下可以保持 worker 持续存在
-                                        poolTimeout: 2000,
-
-                                        // 池分配给 worker 的工作数量
-                                        // 默认为 200
-                                        // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
-                                        poolParallelJobs: 20,
-
-                                        // 池的名称
-                                        // 可以修改名称来创建其余选项都一样的池
-                                        name: "zjs-runtime-worker"
+                                        name: "vendor-pool"
                                     }
                                 } : false,
                                 {
@@ -750,7 +655,7 @@ module.exports = function (webpackEnv) {
             // Watcher doesn't work well if you mistype casing in a path so we use
             // a plugin that prints an error when you attempt to do this.
             // See https://github.com/facebook/create-react-app/issues/240
-            isEnvDevelopment && new CaseSensitivePathsPlugin() & false,
+            isEnvDevelopment && new CaseSensitivePathsPlugin() && false,
             isEnvProduction &&
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
@@ -865,6 +770,8 @@ module.exports = function (webpackEnv) {
                     paths.appNodeModules,
                     '.cache/.eslintcache'
                 ),
+                // 优化：开发模式只检查修改的文件
+                lintDirtyModulesOnly: isEnvDevelopment,
                 // ESLint class options
                 cwd: paths.appPath,
                 resolvePluginsRelativeTo: __dirname,

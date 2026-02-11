@@ -18,9 +18,21 @@ load_env_file() {
             if [[ $line =~ ^([A-Za-z_][A-Za-z0-9_]*)=(.*)$ ]]; then
                 key="${BASH_REMATCH[1]}"
                 value="${BASH_REMATCH[2]}"
-                # 移除行尾注释（不破坏引号内的 #）
-                value=$(echo "$value" | sed 's/[[:space:]]*#.*$//' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-                export "$key=$value"
+                # 移除行尾注释（区分色彩变量与普通变量）：
+                # - 色彩类变量（如 Z_CSS_COLOR）值可能含 #36648b，仅当 # 前有空白才视为注释
+                # - 其他变量值不含 #，一旦出现 # 即视为注释并截断
+                if [[ $key =~ [Cc][Oo][Ll][Oo][Rr] ]]; then
+                    value=$(echo "$value" | sed 's/[[:space:]]+#.*$//')
+                else
+                    value=$(echo "$value" | sed 's/#.*$//')
+                fi
+                # 去掉首尾全部空白（含制表符、多空格）
+                value="${value#"${value%%[![:space:]]*}"}"
+                value="${value%"${value##*[![:space:]]}"}"
+                # 若值为 "#xxx" 形式，去掉首尾双引号，避免 export 时引号嵌套解析失败
+                [[ $value =~ ^\"([^\"]*)\"$ ]] && value="${BASH_REMATCH[1]}"
+                # 用 %q 安全引用后再 export，避免值中的 # 被 shell 当注释截断
+                eval "export $(printf '%s=%q' "$key" "$value")"
                 ENV_LOADED_KEYS+=( "$key" )
             fi
         done < "$1"

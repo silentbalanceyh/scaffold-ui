@@ -94,6 +94,61 @@ const __mockAjax = async (request = {}, params = {}, executor = {}) => {
     }
 }
 
+const __replyId = (data = null) => {
+    /*
+     * 处理 data 中的 META_ID 属性转换
+     * 1. 检查 Cv 中是否包含 META_ID 属性（后端主键字段名）
+     * 2. 将 data 中的 META_ID 字段值转换为统一的 "key" 字段
+     * 3. 等价于：xxx["key"] = xxx[META_ID]，保留原 META_ID 字段
+     * 4. 支持嵌套结构和递归（object/array 都处理）
+     * 5. array 中只转换其内部的 object 元素
+     */
+    const metaId = Cv['META_ID'];
+
+    // 如果未配置 META_ID 或数据为空，直接返回
+    if (!metaId || !data) {
+        return data;
+    }
+
+    const processData = (obj) => {
+        // 基础类型不处理
+        if (!obj || typeof obj !== 'object') {
+            return obj;
+        }
+
+        // 处理 Array 类型 - 只转换内部的 object 元素
+        if (Array.isArray(obj)) {
+            return obj.map(item => {
+                // 数组中只处理 object 类型，基础类型直接返回
+                if (item && typeof item === 'object' && !Array.isArray(item)) {
+                    return processData(item);
+                }
+                return item;
+            });
+        }
+
+        // 处理 Object 类型
+        const result = { ...obj };
+
+        // 如果对象中存在 META_ID 字段，则将其值复制到 "key" 字段
+        if (metaId in result && result[metaId] !== undefined) {
+            result['key'] = result[metaId];
+        }
+
+        // 递归处理所有嵌套的 object/array 属性
+        __Zn.itObject(result, (key, value) => {
+            if (value && typeof value === 'object') {
+                result[key] = processData(value);
+            }
+        });
+
+        return result;
+    };
+
+    // 直接递归调用 processData，支持 data 本身是 Array 或 Object 的情况
+    return processData(data);
+};
+
 const __replyAdapter = (body = {}) => {
     /*
      * body 中的数据结构用于处理直接 body 的内容
@@ -121,7 +176,10 @@ const __replyAdapter = (body = {}) => {
          * - extension：后端扩展节点
          * - plugin：前端插件扩展节点
          */
-        Object.assign(data, __Zn.valueValid({
+        // 处理 META_ID 属性转换
+        const processedData = __replyId(data);
+
+        Object.assign(processedData, __Zn.valueValid({
             __acl,
             __qr,
 
@@ -129,7 +187,7 @@ const __replyAdapter = (body = {}) => {
             __extension: extension,
             __plugin: plugin
         }))
-        return data;
+        return processedData;
     } else return body;
 };
 const __replyWrap = (request, params, body, response) => {

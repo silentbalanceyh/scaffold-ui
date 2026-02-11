@@ -131,18 +131,39 @@ checkBrowsers(paths.appPath, isInteractive)
             openBrowser(urls.localUrlForBrowser);
         });
 
+        // Ctrl+C 时优先快速退出：先尝试优雅关闭，超时则强制退出，避免长时间等待
+        const STOP_TIMEOUT_MS = 1500;
+        let exiting = false;
         ['SIGINT', 'SIGTERM'].forEach(function (sig) {
             process.on(sig, function () {
-                devServer.stop().then(() => process.exit());
-                // process.exit();
+                if (exiting) {
+                    process.exit(1);
+                    return;
+                }
+                exiting = true;
+                const t = setTimeout(() => process.exit(0), STOP_TIMEOUT_MS);
+                devServer.stop().then(() => {
+                    clearTimeout(t);
+                    process.exit(0);
+                }).catch(() => {
+                    clearTimeout(t);
+                    process.exit(0);
+                });
             });
         });
 
         if (process.env.CI !== 'true') {
-            // Gracefully exit when stdin ends
             process.stdin.on('end', function () {
-                devServer.stop().then(() => process.exit());
-                // process.exit();
+                if (exiting) return;
+                exiting = true;
+                const t = setTimeout(() => process.exit(0), STOP_TIMEOUT_MS);
+                devServer.stop().then(() => {
+                    clearTimeout(t);
+                    process.exit(0);
+                }).catch(() => {
+                    clearTimeout(t);
+                    process.exit(0);
+                });
             });
         }
     })

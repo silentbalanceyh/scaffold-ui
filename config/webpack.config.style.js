@@ -132,13 +132,22 @@ module.exports = (webpackEnv, cssOptions, preProcessor) => {
              * $uni_color   - 默认关键色
              * $uni_radius  - 默认圆角尺寸（2 / 4 / 6 / 8）
              * $uni_shadow  - 默认是否开启阴影（true / false）
+             * 注入前去掉值中可能被 dotenv 带进来的行尾注释（空格+#...）并 trim
              */
-            preOptions.additionalData = `
-                    $uni_font: ${process.env.Z_CSS_FONT}px;
-                    $uni_color: ${process.env.Z_CSS_COLOR};
-                    $uni_radius: ${process.env.Z_CSS_RADIUS}px;
-                    $uni_shadow: ${process.env.Z_CSS_SHADOW};
-                `
+            (() => {
+                const stripTrailingComment = (v) =>
+                    (v == null ? '' : String(v)).replace(/\s+#.*$/, '').trim();
+                const font = stripTrailingComment(process.env.Z_CSS_FONT) || '14';
+                const color = stripTrailingComment(process.env.Z_CSS_COLOR) || '#36648b';
+                const radius = stripTrailingComment(process.env.Z_CSS_RADIUS) || '4';
+                const shadow = stripTrailingComment(process.env.Z_CSS_SHADOW) || 'true';
+                preOptions.additionalData = `
+                    $uni_font: ${font}px;
+                    $uni_color: ${color};
+                    $uni_radius: ${radius}px;
+                    $uni_shadow: ${shadow};
+                `;
+            })();
         }
         // -------------------------------
         loaders.push(

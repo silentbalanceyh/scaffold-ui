@@ -78,21 +78,21 @@ if [ -f .env.development ]; then
     echo ""
 fi
 
-# 菜单
+# 菜单（数字右对齐）
 echo "请选择操作:"
 echo ""
-echo "01) 💨 急速启动 (禁用 Source Map，跳过类型检查) - 最快"
-echo "02) 🧩 快速开发 (Fast Refresh + 关闭依赖/分析 + 无 Source Map)"
-echo "03) 🚀 正常启动 (推荐 - 最快速度)"
-echo "04) 🔍 启动并检查循环依赖"
-echo "05) 📦 启动并分析包大小"
-echo "06) ⏱️ 启动并显示性能统计"
-echo "07) 🔬 完整分析模式 (最慢)"
-echo "08) 🧹 清理所有缓存"
-echo "09) 🧹 清理缓存并启动"
-echo "10) 📚 显示优化文档"
-echo "11) 🔧 环境变量检查（打印全部已加载环境变量）"
-echo "0) 👋 退出"
+printf " %2d) 💨 急速启动 (禁用 Source Map，跳过类型检查) - 最快\n" 1
+printf " %2d) 🧩 快速开发 (Fast Refresh + 关闭依赖/分析 + 无 Source Map)\n" 2
+printf " %2d) 🚀 正常启动 (推荐 - 最快速度)\n" 3
+printf " %2d) 🔍 启动并检查循环依赖\n" 4
+printf " %2d) 📦 启动并分析包大小\n" 5
+printf " %2d) ⏱️  启动并显示性能统计\n" 6
+printf " %2d) 🔬 完整分析模式 (最慢)\n" 7
+printf " %2d) 🧹 清理所有缓存\n" 8
+printf " %2d) 🧹 清理缓存并启动\n" 9
+printf " %2d) 📚 显示优化文档\n" 10
+printf " %2d) 🔧 环境变量检查（打印全部已加载环境变量）\n" 11
+printf " %2d) 👋 退出\n" 0
 echo ""
 
 read -p "请输入选项 [0-11]: " choice

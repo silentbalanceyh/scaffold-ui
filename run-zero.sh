@@ -4,6 +4,58 @@
 # Scaffold UI 启动脚本（优化版）
 # ========================================
 
+# 记录从 .env.* 加载的变量名（用于环境变量检查菜单）
+ENV_LOADED_KEYS=()
+
+# 辅助函数：安全加载环境变量（支持行内注释，KEY=value 格式不变）
+load_env_file() {
+    if [ -f "$1" ]; then
+        while IFS= read -r line; do
+            # 跳过注释行和空行
+            [[ $line =~ ^[[:space:]]*# ]] && continue
+            [[ $line =~ ^[[:space:]]*$ ]] && continue
+            # 仅处理 KEY=value 形式（支持含 = 的值）
+            if [[ $line =~ ^([A-Za-z_][A-Za-z0-9_]*)=(.*)$ ]]; then
+                key="${BASH_REMATCH[1]}"
+                value="${BASH_REMATCH[2]}"
+                # 移除行尾注释（不破坏引号内的 #）
+                value=$(echo "$value" | sed 's/[[:space:]]*#.*$//' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+                export "$key=$value"
+                ENV_LOADED_KEYS+=( "$key" )
+            fi
+        done < "$1"
+    fi
+}
+
+# 打印当前已加载的环境变量（对应 .env.* 中的全部变量）
+show_loaded_env() {
+    echo ""
+    echo "🔧 环境变量检查（来自 .env / .env.local / .env.development）"
+    echo "================================================================"
+    if [ ${#ENV_LOADED_KEYS[@]} -eq 0 ]; then
+        echo "  (未加载任何 .env 文件)"
+        echo ""
+        return
+    fi
+    # 去重、排序后逐行打印 KEY=当前值
+    for key in $(printf '%s\n' "${ENV_LOADED_KEYS[@]}" | sort -u); do
+        printf "  %s=%s\n" "$key" "${!key}"
+    done
+    echo "================================================================"
+    echo ""
+}
+
+# 启动前加载环境变量（保持 .env.* 格式不变，确保对子进程生效）
+if [ -f .env ]; then
+    load_env_file .env
+fi
+if [ -f .env.local ]; then
+    load_env_file .env.local
+fi
+if [ -f .env.development ]; then
+    load_env_file .env.development
+fi
+
 # 显示标题
 echo "🚀 Scaffold UI 启动工具"
 if [ -n "$Z_INSTANCE" ]; then
@@ -18,11 +70,11 @@ echo ""
 
 if [ -f .env.development ]; then
     echo "环境变量配置 (.env.development):"
-    echo "  循环依赖检测: $(grep Z_DEV_PLUGIN_LOOP .env.development | cut -d'=' -f2)"
-    echo "  包大小分析: $(grep Z_DEV_PLUGIN_SIZE .env.development | cut -d'=' -f2)"
-    echo "  Loader统计: $(grep Z_DEV_PLUGIN_SMP .env.development | cut -d'=' -f2)"
-    echo "  Source Map: $(grep GENERATE_SOURCEMAP .env.development | cut -d'=' -f2)"
-    echo "  类型检查: $(grep TSC_COMPILE_ON_ERROR .env.development | cut -d'=' -f2)"
+    echo "  循环依赖检测: $(grep Z_DEV_PLUGIN_LOOP .env.development | cut -d'=' -f2 | cut -d'#' -f1 | xargs)"
+    echo "  包大小分析: $(grep Z_DEV_PLUGIN_SIZE .env.development | cut -d'=' -f2 | cut -d'#' -f1 | xargs)"
+    echo "  Loader统计: $(grep Z_DEV_PLUGIN_SMP .env.development | cut -d'=' -f2 | cut -d'#' -f1 | xargs)"
+    echo "  Source Map: $(grep GENERATE_SOURCEMAP .env.development | cut -d'=' -f2 | cut -d'#' -f1 | xargs)"
+    echo "  类型检查: $(grep TSC_COMPILE_ON_ERROR .env.development | cut -d'=' -f2 | cut -d'#' -f1 | xargs)"
     echo ""
 fi
 
@@ -39,10 +91,11 @@ echo "7) 🔬 完整分析模式 (最慢)"
 echo "8) 🧹 清理所有缓存"
 echo "9) 🧹 清理缓存并启动"
 echo "10) 📚 显示优化文档"
+echo "11) 🔧 环境变量检查（打印全部已加载环境变量）"
 echo "0) 👋 退出"
 echo ""
 
-read -p "请输入选项 [0-10]: " choice
+read -p "请输入选项 [0-11]: " choice
 
 case $choice in
     1)
@@ -113,11 +166,12 @@ case $choice in
             less OPTIMIZATION_README.md
         elif [ -f document/OPTIMIZATION.md ]; then
             less document/OPTIMIZATION.md
-        elif [ -f OPTIMIZATION.md ]; then
-            less OPTIMIZATION.md
         else
             echo "❌ 未找到优化文档"
         fi
+        ;;
+    11)
+        show_loaded_env
         ;;
     0)
         echo ""

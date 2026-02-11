@@ -94,6 +94,58 @@ const __mockAjax = async (request = {}, params = {}, executor = {}) => {
     }
 }
 
+const __replyId = (data = null) => {
+    /*
+     * 处理 data 中的 META_ID 属性转换
+     * 1. 检查 Cv 中是否包含 META_ID 属性
+     * 2. 将 data 中的 object 和 array 对应的 META_ID 属性转换成 "key"
+     * 3. data[META_ID] = value, 且 data.xxx 也等于该值（保留原 key）
+     * 4. 递归处理 object 和 array 结构
+     */
+    const metaId = Cv['META_ID'];
+
+    // 如果未配置 META_ID 或数据为空，直接返回
+    if (!metaId || !data) {
+        return data;
+    }
+
+    const processData = (obj) => {
+        if (!obj || typeof obj !== 'object') {
+            return obj;
+        }
+
+        // 处理 Array 类型
+        if (Array.isArray(obj)) {
+            return obj.map(item => processData(item));
+        }
+
+        // 处理 Object 类型
+        const result = {};
+        __Zn.itObject(obj, (key, value) => {
+            // 递归处理嵌套的 object/array
+            const processedValue = value && typeof value === 'object'
+                ? processData(value)
+                : value;
+
+            result[key] = processedValue;
+
+            // 如果当前 key 是 META_ID 属性，则保留该值
+            // 同时如果有配置的 metaId，则将值也赋予 metaId 属性
+            if (key === metaId) {
+                // metaId 已在上面的赋值中处理
+            } else if (value && typeof value === 'string') {
+                // 检查是否需要将当前值作为 id 存储到 metaId 属性
+                // 这里保持原 key 的同时，也在 metaId 属性上保存该值
+                result[metaId] = value;
+            }
+        });
+
+        return result;
+    };
+
+    return processData(data);
+};
+
 const __replyAdapter = (body = {}) => {
     /*
      * body 中的数据结构用于处理直接 body 的内容
@@ -121,7 +173,10 @@ const __replyAdapter = (body = {}) => {
          * - extension：后端扩展节点
          * - plugin：前端插件扩展节点
          */
-        Object.assign(data, __Zn.valueValid({
+        // 处理 META_ID 属性转换
+        const processedData = __replyId(data);
+
+        Object.assign(processedData, __Zn.valueValid({
             __acl,
             __qr,
 
@@ -129,7 +184,7 @@ const __replyAdapter = (body = {}) => {
             __extension: extension,
             __plugin: plugin
         }))
-        return data;
+        return processedData;
     } else return body;
 };
 const __replyWrap = (request, params, body, response) => {

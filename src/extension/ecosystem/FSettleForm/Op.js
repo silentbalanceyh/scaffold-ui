@@ -33,11 +33,27 @@ export default {
             const request = Ux.clone(params);
 
             request.settlements = $selected.settlements;
-            request.items = $selected.items;
+            request.items = $selected.items.filter(item=>item.finishedId===undefined).filter(item=>item.debtId===undefined);
+            request.customerId = params.runId;
             request.amountActual = Ex.paySum($selected.items);
+            request.name = params.runName
             const attachAmount = __valueAmount($selected.items, request.rounded);
             Object.assign(request, attachAmount);
-
+            // 标准结账（现结）
+            if(request.payment.length!==0){
+                const payment = request.payment;
+                const $payment = [];
+                payment.forEach(each => {
+                    const found = Ux.elementUniqueDatum(reference, "pay.type", "code", each.name);
+                    if (found) {
+                        const record = {};
+                        record.amount = each.amount;
+                        record.name = found.name;
+                        $payment.push(record);
+                    }
+                })
+                request.payment = $payment;
+            }
             if(0 === request.settlements.length || 0 === request.items.length){
                 const modal = Ux.fromHoc(ref, "modal");
                 const {error = {}} = modal;
@@ -129,8 +145,7 @@ export default {
     rxFinishType: (reference) => (event) => {
         let formValues = {};
         const { $selected = {}} = reference.state;
-        const params = Ux.isMod('mHotel');
-        const rounded = params['pRemainder'] ? params['pRemainder'] : "HALF";
+        const rounded = "NONE";
         const amountAttach = __valueAmount($selected.items, rounded);
         Object.assign(formValues, amountAttach);
         Ux.formHits(reference, formValues);

@@ -25,6 +25,18 @@ const iMenus = () => {
             return Ux.promise(menuStored);
         } else {
             return __IP.askRapid(__API.api_get_menus).then(response => {
+                if (Ux.isArray(response)) {
+                    response.forEach(item => {
+                        // 1. 确保 key 和 id 都存在且一致
+                        if (item.id && !item.key) item.key = item.id;
+                        if (item.key && !item.id) item.id = item.key;
+                        // 2. 防御性检查：防止数据自循环 (A -> A)
+                        if (item.key && item.key === item.parentId) {
+                            console.error("检测到菜单项存在自循环引用，已自动修复：", item);
+                            item.parentId = null;
+                        }
+                    });
+                }
                 Ux.Session.put(Ux.Env.PAGE_MENU, response);
                 return Ux.promise(response);
             });

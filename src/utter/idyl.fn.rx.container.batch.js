@@ -5,13 +5,15 @@ const rxBatchDelete = (reference) => (event) => {
     Ux.prevent(event);
     const {options = {}} = reference.state;
     return Ux.sexBatch(reference, ($selected = []) => {
-        let uri = options[__V.Opt.AJAX_BATCH_DELETE_URI];
-        const module = options[__V.Opt.AJAX_MODULE];
-        if (module) {
-            uri = Ux.toUrl(uri, "module", options[__V.Opt.IDENTIFIER])
-        }
-        return Ux.ajaxDelete(uri, $selected);
-    }, {name: "rxBatchDelete", message: options[__V.Opt.MESSAGE_BATCH_DELETE]});
+        const NewSelected = [];
+        $selected.forEach(item=>{
+            const selected = {"key":null}
+            selected.key = item
+            NewSelected.push(selected)
+        })
+        const uri = options[__V.Opt.AJAX_BATCH_DELETE_URI];
+        return Ux.ajaxDelete(uri, NewSelected);
+    }).catch((error) => Ux.ajaxError(reference, error));
 };
 const rxBatchEdit = (reference) => (params = [], config = {}) => {
     const {options = {}} = reference.state;

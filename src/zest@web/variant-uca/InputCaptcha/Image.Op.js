@@ -1,27 +1,37 @@
 import __Zn from '../zero.uca.dependency';
 
 const asyncImage = (config = {}, $session) => {
-    const {uri = ""} = config.ajax ? config.ajax : {};
-    const headers = {};
-    if ($session) {
-        headers[__Zn.Env.X_HEADER.X_SESSION] = $session;
+    const { uri = "", method = "GET" } = config.ajax ? config.ajax : {};
+    if ("GET" === method) {
+        const headers = {};
+        if ($session) {
+            headers[__Zn.Env.X_HEADER.X_SESSION] = $session;
+        }
+        return __Zn.ajaxGet(uri, {}, { headers }).then(response => {
+            return response;
+        })
+    } else {
+        console.error("暂不支持")
     }
-    return __Zn.ajaxFetch(uri, {}, {headers}).then(response => new Promise(resolve => {
-        const reader = new FileReader();
-        console.log(response);
-        reader.onload = (event) => resolve(event.target.result);
-        const blob = new Blob([response], {type: "image/png"});
-        reader.readAsDataURL(blob);
-    }))
 }
 const rxRefresh = (reference) => {
-    const {config = {}, $session} = reference.props;
+    const { config = {}, $session } = reference.props;
     return __Zn.of(reference).in({
         $imageLoading: true
     }).future(() => asyncImage(config, $session).then($image => {
         const state = {};
         state.$imageLoading = false;
-        state.$image = $image;
+        state.$image = $image.image;
+        state.$captchaId = $image.captchaId;
+
+        // 将 captchaId 同步到父组件表单
+        const { reference: parentRef } = reference.props;
+        if (parentRef && parentRef.formRef && parentRef.formRef.current) {
+            parentRef.formRef.current.setFieldsValue({
+                captchaId: $image.captchaId
+            });
+        }
+
         __Zn.of(reference).in(state).done();
         // reference.?etState(state);
     }))

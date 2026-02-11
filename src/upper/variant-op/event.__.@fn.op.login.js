@@ -12,32 +12,12 @@ export default (reference) => {
             headers[Ux.Env.X_HEADER.X_SESSION] = $session;
         }
         return _I.login(params, {headers})
-            .then((data = {}) => {
-                // 交换授权码专用请求
-                const request = {};
-                request.client_id = data['key'];
-                request.client_secret = data['clientSecret'];
-                request.scope = data['scope'];
-                if (data.hasOwnProperty('password')) {
-                    // 是否初始登录修改密码
-                    pwdChange = !data['password'];
-                }
-                // 授权码处理
-                return _I.authorize(request);
-            })
-            .then((data = {}) => {
-                // 交换令牌专用请求
-                const token = {};
-                token.code = data['code'];
-                token.client_id = data['client_id'];
-                return _I.token(token);
-            })
             .then((response = {}) => {
                 // 读取Token信息
                 const user = {};
-                user.token = response['access_token'];
-                user.refreshToken = response['refresh_token'];
-                user.key = response.key;
+                user.token = response['token'];
+                user.refreshToken = response['refreshToken'];
+                user.key = response.userId;
                 user.username = params.username;
                 return Ux.promise(user);
             })

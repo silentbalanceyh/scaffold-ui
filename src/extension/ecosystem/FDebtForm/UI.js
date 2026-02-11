@@ -31,6 +31,7 @@ class Component extends React.PureComponent {
                             // 关闭之后处理选择信息
                             rxClose={(data = {}, addOn = {}) => {
                                 const ref = Ux.onReference(this, 1);
+                                data.key = ref.state.$key
                                 Ux.of(ref).in({$selected:[]}).handle(() => {
                                     // 调用外层函数
                                     if(Ux.isFunction(rxClose)){

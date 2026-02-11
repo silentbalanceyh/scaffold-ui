@@ -6,7 +6,7 @@
         "columns": [
             {
                 "metadata": "name,付款码,DATUM",
-                "$datum": "source=pay.type,value=code,display=name"
+                "$datum": "source=pay.type,value=name,display=name"
             },
             "amount,支付金额,CURRENCY"
         ]

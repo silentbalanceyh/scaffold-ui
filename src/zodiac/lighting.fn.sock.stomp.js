@@ -12,26 +12,34 @@ const __buildClient = () => {
     // 连接SockJs对应的 EndPoint
     let endpoint = Cv['ENDPOINT'];
     if (endpoint.startsWith("http:")) {
-        // Stomp URI Modify
         endpoint = endpoint.replace("http:", "ws:");
+    } else if (endpoint.startsWith("https:")) {
+        endpoint = endpoint.replace("https:", "wss:");
     }
-    // 地址计算
+
+    // 去掉 endpoint 末尾的 `/`
     if (endpoint.endsWith("/")) {
         endpoint = endpoint.substring(0, endpoint.length - 1);
     }
+
+    // 确保 sockEndpoint 以 `/` 开头
     if (!sockEndpoint.startsWith("/")) {
-        sockEndpoint = `/${sockEndpoint}`
+        sockEndpoint = `/${sockEndpoint}`;
     }
+
     /*
      * 最终计算结果
      * - endpoint 不带最后的 /
      * - sockEndpoint 以 / 开头
      */
     const sockAddr = `${endpoint}${sockEndpoint}`;
-    // 获取STOMP自协议的客户端对象
+
+    // 获取 STOMP 协议的客户端对象
     const stompClient = Stomp.client(sockAddr);
-    // 关闭日志：
+
+    // 关闭 STOMP 调试日志
     stompClient.debug = null;
+
     return stompClient;
 }
 

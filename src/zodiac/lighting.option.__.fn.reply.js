@@ -97,10 +97,11 @@ const __mockAjax = async (request = {}, params = {}, executor = {}) => {
 const __replyId = (data = null) => {
     /*
      * 处理 data 中的 META_ID 属性转换
-     * 1. 检查 Cv 中是否包含 META_ID 属性
-     * 2. 将 data 中的 object 和 array 对应的 META_ID 属性转换成 "key"
-     * 3. data[META_ID] = value, 且 data.xxx 也等于该值（保留原 key）
-     * 4. 递归处理 object 和 array 结构
+     * 1. 检查 Cv 中是否包含 META_ID 属性（后端主键字段名）
+     * 2. 将 data 中的 META_ID 字段值转换为统一的 "key" 字段
+     * 3. 等价于：xxx["key"] = xxx[META_ID]，保留原 META_ID 字段
+     * 4. 支持嵌套结构和递归（object/array 都处理）
+     * 5. array 中只转换其内部的 object 元素
      */
     const metaId = Cv['META_ID'];
 
@@ -110,39 +111,41 @@ const __replyId = (data = null) => {
     }
 
     const processData = (obj) => {
+        // 基础类型不处理
         if (!obj || typeof obj !== 'object') {
             return obj;
         }
 
-        // 处理 Array 类型
+        // 处理 Array 类型 - 只转换内部的 object 元素
         if (Array.isArray(obj)) {
-            return obj.map(item => processData(item));
+            return obj.map(item => {
+                // 数组中只处理 object 类型，基础类型直接返回
+                if (item && typeof item === 'object' && !Array.isArray(item)) {
+                    return processData(item);
+                }
+                return item;
+            });
         }
 
         // 处理 Object 类型
-        const result = {};
-        __Zn.itObject(obj, (key, value) => {
-            // 递归处理嵌套的 object/array
-            const processedValue = value && typeof value === 'object'
-                ? processData(value)
-                : value;
+        const result = { ...obj };
 
-            result[key] = processedValue;
+        // 如果对象中存在 META_ID 字段，则将其值复制到 "key" 字段
+        if (metaId in result && result[metaId] !== undefined) {
+            result['key'] = result[metaId];
+        }
 
-            // 如果当前 key 是 META_ID 属性，则保留该值
-            // 同时如果有配置的 metaId，则将值也赋予 metaId 属性
-            if (key === metaId) {
-                // metaId 已在上面的赋值中处理
-            } else if (value && typeof value === 'string') {
-                // 检查是否需要将当前值作为 id 存储到 metaId 属性
-                // 这里保持原 key 的同时，也在 metaId 属性上保存该值
-                result[metaId] = value;
+        // 递归处理所有嵌套的 object/array 属性
+        __Zn.itObject(result, (key, value) => {
+            if (value && typeof value === 'object') {
+                result[key] = processData(value);
             }
         });
 
         return result;
     };
 
+    // 直接递归调用 processData，支持 data 本身是 Array 或 Object 的情况
     return processData(data);
 };
 

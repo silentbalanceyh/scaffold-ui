@@ -53,7 +53,7 @@ const aiAction = (reference, jsx = {}) => __jsxAction(jsx, (config = {}) => {
     }
     return $actions.map(item => {
         item = __Zn.clone(item);
-        const {text, ...rest} = item;
+        const {text, key, ...rest} = item;
         rest.loading = loading;
         /*
          * 禁用处理
@@ -67,8 +67,7 @@ const aiAction = (reference, jsx = {}) => __jsxAction(jsx, (config = {}) => {
             rest.icon = __Zn.v4Icon(rest.icon);
         }
         return (
-            // Warning: A props object containing a "key" prop is being spread into JSX:
-            <Button key={rest.key} {...rest} style={config.style}>{text}</Button>
+            <Button key={key} {...rest} style={config.style}>{text}</Button>
         );
     })
 });

@@ -75,8 +75,8 @@
                         "config": {
                             "type": "image",
                             "ajax": {
-                                "uri": "/captcha/image",
-                                "method": "POST"
+                                "uri": "/auth/captcha",
+                                "method": "GET"
                             },
                             "error": {
                                 "501": "对不起，您的服务端不支持验证码功能！"

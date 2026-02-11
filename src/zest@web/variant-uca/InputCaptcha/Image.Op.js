@@ -1,21 +1,18 @@
 import __Zn from '../zero.uca.dependency';
 
 const asyncImage = (config = {}, $session) => {
-    const {uri = "", method = "POST"} = config.ajax ? config.ajax : {};
-    if ("POST" === method) {
-        const headers = {};
-        if ($session) {
-            headers[__Zn.Env.X_HEADER.X_SESSION] = $session;
-        }
-        return __Zn.ajaxPull(uri, {}, {headers}).then(response => new Promise(resolve => {
-            const reader = new FileReader();
-            reader.onload = (event) => resolve(event.target.result);
-            const blob = new Blob([response], {type: "image/png"});
-            reader.readAsDataURL(blob);
-        }))
-    } else {
-        console.error("暂不支持")
+    const {uri = ""} = config.ajax ? config.ajax : {};
+    const headers = {};
+    if ($session) {
+        headers[__Zn.Env.X_HEADER.X_SESSION] = $session;
     }
+    return __Zn.ajaxFetch(uri, {}, {headers}).then(response => new Promise(resolve => {
+        const reader = new FileReader();
+        console.log(response);
+        reader.onload = (event) => resolve(event.target.result);
+        const blob = new Blob([response], {type: "image/png"});
+        reader.readAsDataURL(blob);
+    }))
 }
 const rxRefresh = (reference) => {
     const {config = {}, $session} = reference.props;

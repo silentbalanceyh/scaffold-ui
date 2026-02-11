@@ -29,53 +29,62 @@ fi
 # 菜单
 echo "请选择操作:"
 echo ""
-echo "1) ⚡ 极速启动 (禁用 Source Map，跳过类型检查) - 最快"
-echo "2) 🚀 正常启动 (推荐 - 最快速度)"
-echo "3) 🔍 启动并检查循环依赖"
-echo "4) 📦 启动并分析包大小"
-echo "5) ⏱️  启动并显示性能统计"
-echo "6) 🔬 完整分析模式 (最慢)"
-echo "7) 🧹 清理所有缓存"
-echo "8) 🧹 清理缓存并启动"
-echo "9) 📚 显示优化文档"
+echo "1) 💨 急速启动 (禁用 Source Map，跳过类型检查) - 最快"
+echo "2) 🧩 快速开发 (Fast Refresh + 关闭依赖/分析 + 无 Source Map)"
+echo "3) 🚀 正常启动 (推荐 - 最快速度)"
+echo "4) 🔍 启动并检查循环依赖"
+echo "5) 📦 启动并分析包大小"
+echo "6) ⏱️  启动并显示性能统计"
+echo "7) 🔬 完整分析模式 (最慢)"
+echo "8) 🧹 清理所有缓存"
+echo "9) 🧹 清理缓存并启动"
+echo "10) 📚 显示优化文档"
 echo "0) 👋 退出"
 echo ""
 
-read -p "请输入选项 [0-9]: " choice
+read -p "请输入选项 [0-10]: " choice
 
 case $choice in
     1)
         echo ""
-        echo "⚡ 极速启动模式..."
+        echo "💨 急速启动模式..."
         echo "   (禁用 Source Map 和类型检查以获得最快启动速度)"
         GENERATE_SOURCEMAP=false TSC_COMPILE_ON_ERROR=true yarn start
         ;;
     2)
         echo ""
-        echo "🚀 正常启动模式..."
+        echo "🧩 快速开发模式..."
+        echo "   (开启 Fast Refresh，关闭依赖/分析插件与 Source Map)"
+        FAST_REFRESH=true GENERATE_SOURCEMAP=false TSC_COMPILE_ON_ERROR=true \
+        Z_DEV_PLUGIN_LOOP=false Z_DEV_PLUGIN_SIZE=false Z_DEV_PLUGIN_SMP=false \
         yarn start
         ;;
     3)
         echo ""
+        echo "🚀 正常启动模式..."
+        yarn start
+        ;;
+    4)
+        echo ""
         echo "🔍 启动并检查循环依赖..."
         Z_DEV_PLUGIN_LOOP=true yarn start
         ;;
-    4)
+    5)
         echo ""
         echo "📦 启动并分析包大小..."
         Z_DEV_PLUGIN_SIZE=true yarn start
         ;;
-    5)
+    6)
         echo ""
         echo "⏱️  启动并显示性能统计..."
         Z_DEV_PLUGIN_SMP=true yarn start
         ;;
-    6)
+    7)
         echo ""
         echo "🔬 完整分析模式..."
         Z_DEV_PLUGIN_LOOP=true Z_DEV_PLUGIN_SIZE=true Z_DEV_PLUGIN_SMP=true yarn start
         ;;
-    7)
+    8)
         echo ""
         echo "🧹 清理所有缓存..."
         rm -rf node_modules/.cache
@@ -87,7 +96,7 @@ case $choice in
         echo ""
         echo "✅ 缓存清理完成！(已释放约 1.4GB 空间)"
         ;;
-    8)
+    9)
         echo ""
         echo "🧹 清理缓存..."
         rm -rf node_modules/.cache
@@ -96,7 +105,7 @@ case $choice in
         echo "🚀 启动开发服务器..."
         yarn start
         ;;
-    9)
+    10)
         echo ""
         if [ -f document/OPTIMIZATION_README.md ]; then
             less document/OPTIMIZATION_README.md
@@ -121,5 +130,4 @@ case $choice in
         exit 1
         ;;
 esac
-
 

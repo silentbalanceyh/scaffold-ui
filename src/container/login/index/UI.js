@@ -40,6 +40,7 @@ class Component extends React.PureComponent {
     }
 
     render() {
+
         const {component: Child} = this.props;
         const {$app} = this.state;
         const ready = isReady(this);
@@ -53,7 +54,7 @@ class Component extends React.PureComponent {
                         <Col xl={10} xxl={10}>
                             <header>
                                 <img src={imgLogo} alt={title}/>
-                                <h2>{$app._("title")}</h2>
+                                <h2>{title}</h2>
                             </header>
                         </Col>
                         <Col span={8} xl={10} xxl={11}/>

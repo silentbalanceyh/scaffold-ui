@@ -26,7 +26,7 @@ const __buildCard = (cardData = [], rootData) => {
     const cardGroup = [];
     const app = Ux.isInit();
     const {bags = []} = app;
-    const bagMap = Ux.elementMap(bags, 'entryId');
+    const bagMap = Ux.elementMap(bags, 'entry');
     cardData.forEach(item => {
         const bag = bagMap[item.name];
         if (bag) {

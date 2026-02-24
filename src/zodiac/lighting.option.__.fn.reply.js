@@ -6,6 +6,28 @@ import __Zn from './zero.module.dependency';
 
 const Cv = __Zn.Env;
 
+/** 发请求前仅把 body 里的 key 换成 Cv['META_ID']，路径不改；无 body 或非 JSON 则返回原 request */
+const __bodyKeyToMetaId = async (request) => {
+    const metaId = Cv['META_ID'];
+    if (!metaId || !request.body) return request;
+    const ct = (request.headers.get('Content-Type') || '').toLowerCase();
+    if (ct.indexOf('application/json') < 0) return request;
+    let obj;
+    try {
+        obj = await request.json();
+    } catch (_) {
+        throw _;
+    }
+    const next = (obj && typeof obj === 'object' && 'key' in obj)
+        ? (() => { const n = __Zn.clone(obj); n[metaId] = n['key']; delete n['key']; return n; })()
+        : (obj || {});
+    return new Request(request.url, {
+        method: request.method,
+        headers: new Headers(request.headers),
+        body: JSON.stringify(next),
+    });
+};
+
 const __mockKey = (request, params) => {
     let api = request.url;
     // 去掉 FormData 类型的数据
@@ -202,7 +224,8 @@ const __replyWrap = (request, params, body, response) => {
     }
 };
 const replyData = async (request, params) => __mockAjax(request, params, async () => {
-    const response = await fetch(request);
+    const req = await __bodyKeyToMetaId(request);
+    const response = await fetch(req);
     let body;
     if (response.ok) {
         if (200 === response.status) {
@@ -235,7 +258,8 @@ const replyData = async (request, params) => __mockAjax(request, params, async (
     return __replyWrap(request, params, body, response);
 })
 const replyBlob = async (request, params = {}) => __mockAjax(request, params, async () => {
-    const response = await fetch(request);
+    const req = await __bodyKeyToMetaId(request);
+    const response = await fetch(req);
     let body = new Blob(["No Content"]);
     // 任何时候都需要调用适配器，包括errors
     if (response.ok) {

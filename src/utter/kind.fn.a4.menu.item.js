@@ -43,7 +43,7 @@ const __normBagMap = () => {
     const app = Ux.isInit();
     const {bags = []} = app;       // BAG-MENU ( 特殊类型 )
     // 按菜单类型分类 menuId = bags
-    return Ux.elementMap(bags, 'entryId');
+    return Ux.elementMap(bags, 'entry');
 }
 /**
  * ## 「标准」`Ux.a4MenuData`

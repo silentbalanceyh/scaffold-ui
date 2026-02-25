@@ -49,22 +49,10 @@ const formOut = (reference, request = {}) => {
             }
         })
     }
-    // FIX-BUG: 此处才会第一次出现 Invalid Date 的值（时间日期格式不合法的地方）
-    Object.keys(formData).forEach(field => {
-        const formValue = formData[field];
-        if ("Invalid Date" === formValue) {
-            // 时间格式解析失败
-            formData[field] = null;
-        }
-    })
     return formData;
 }
 const formEnd = (reference) =>
     __Zn.of(reference).load().done();
-// reference.?etState({
-//     $submitting: false,
-//     $loading: false
-// });
 
 const formRead = (reference, data = {}) => {
     const {$record} = reference.props;

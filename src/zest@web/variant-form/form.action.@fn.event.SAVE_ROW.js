@@ -1,6 +1,7 @@
 import __Zn from './zero.form.dependency';
 import __Ft from './form.__.fn.run.common';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (reference, config = {}, redux = false) => (event) => {
     __Zn.prevent(event);
 

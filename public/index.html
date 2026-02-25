@@ -9,6 +9,27 @@
       name="description"
       content="Web site created using create-react-app"
     />
+      <script>
+          // 抢在 Webpack Dev Server 之前拦截未处理的 Promise
+          window.addEventListener('unhandledrejection', function(event) {
+              // 检查是不是那个抛出对象的 [object Object] 报错
+              if (event.reason && typeof event.reason === 'object') {
+                  // 【核心】：彻底截杀事件，不让它传给 Webpack 的监听器！
+                  event.stopImmediatePropagation();
+
+                  // 我们依然在控制台打印出来，方便你调试，但页面上不会再有红屏了
+                  console.error("【已拦截红屏】API 抛出了一个对象:", event.reason);
+              }
+          }, true); // true 表示在捕获阶段执行，拥有绝对的最高优先级
+
+          // 如果还有普通的同步 JS 错误导致红屏，也可以用同样的方式拦截
+          window.addEventListener('error', function(event) {
+              if (event.message === '[object Object]') {
+                  event.stopImmediatePropagation();
+                  console.error("【已拦截红屏】同步代码抛出了一个对象:", event.error);
+              }
+          }, true);
+      </script>
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -24,7 +45,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>%TITLE%</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

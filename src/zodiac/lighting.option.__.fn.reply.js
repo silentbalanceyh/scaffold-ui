@@ -34,7 +34,9 @@ const __mockAjax = async (request = {}, params = {}, executor = {}) => {
     const api = request.url;
     const method = request.method;
     const fnExecute = async () => {
+        // @ts-ignore
         Logger.request(request, params, __SEC.digitToken());
+        // @ts-ignore
         return await executor();
     };
     if (Cv.MOCK && Cv.DEBUG) {
@@ -47,6 +49,7 @@ const __mockAjax = async (request = {}, params = {}, executor = {}) => {
             const mockData = Mock[mockKey];
             if (mockData.mock) {
                 /* Mock日志 */
+                // @ts-ignore
                 Logger.mock(params, mockData.data, method + " " + api);
                 let response = {};
                 if (__Zn.isFunction(mockData.processor)) {
@@ -65,12 +68,14 @@ const __mockAjax = async (request = {}, params = {}, executor = {}) => {
                             called = ok;
                         }
                     }
+                    // @ts-ignore
                     await Logger.response(called, params, request, true);
                     response = await __Zn.promise(called);
                 } else {
                     /*
                      * 不带 processor 的 mock 流程
                      */
+                    // @ts-ignore
                     await Logger.response(mockData.data, params, request, true);
                     response = await __Zn.promise(mockData.data);
                 }
@@ -195,7 +200,7 @@ const __replyWrap = (request, params, body, response) => {
     Logger.response(body, params, request);
     // 最终的返回处理
     if (response.ok) {
-        return Promise.resolve(body, "config");
+        return Promise.resolve(body);
     } else {
         __Zn.dgAjax(body, "Remote Error:");
         return Promise.reject({data:body});
@@ -242,6 +247,7 @@ const replyBlob = async (request, params = {}) => __mockAjax(request, params, as
         body = await response.blob();
     } else {
         body = {
+            // @ts-ignore
             stream: body,
             status: response.status,
             statusText: response.statusText

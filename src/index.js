@@ -178,6 +178,7 @@ console.error = function(message) {
 }
 const container = document.getElementById("root");
 const root = createRoot(container);
+
 root.render(
     <ConfigProvider {...Sk.skinDefaultProvider()}>
         <App>

@@ -46,7 +46,14 @@ const yiContainer = (reference) => __yiContainer(reference).then(state => {
     if ($secure) {
         const {$menus} = reference.state;
         // 登陆控制（框架专用）
-        Ux.isAuthorized(reference);
+        const isLogged = Ux.isAuthorized(reference);
+        if(!isLogged){
+            // 关键：未登录时必须在此处直接返回，避免继续初始化导致 UI 组件依赖缺失而触发红屏；
+            // 同时阻断后续 401 响应引发的路由流程中断，防止页面卡住不跳转。
+            // 若要改动此逻辑，请先确保所有后续 API 在未授权状态下都有安全兜底与显式跳转处理。
+            // 若未登录，直接拦截掉，而不是目前这种模式
+            return
+        }
         // 在登录控制时，只有菜单不存在的时候才执行 fnApp 初始化菜单
         if (!$menus || !$menus.is()) {
             // 在登录控制的时候执行 $router 的跳转

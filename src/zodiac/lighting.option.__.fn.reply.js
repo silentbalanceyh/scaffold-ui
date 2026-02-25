@@ -198,7 +198,7 @@ const __replyWrap = (request, params, body, response) => {
         return Promise.resolve(body, "config");
     } else {
         __Zn.dgAjax(body, "Remote Error:");
-        return Promise.reject({data: body});
+        return Promise.reject({data:body});
     }
 };
 const replyData = async (request, params) => __mockAjax(request, params, async () => {

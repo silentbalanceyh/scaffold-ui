@@ -20,9 +20,11 @@ const isLoaded = (props, prevProps) => !isRoute(props, prevProps);
 const isAuthorized = (reference) => {
     if (0 === Object.keys(__Zn.isLogged()).length) {
         __LCT.toUnauthorized(reference);
+        return false;
     }
     return true;
 };
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     isLoaded,
     isRoute,

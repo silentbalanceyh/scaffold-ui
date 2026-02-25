@@ -32,13 +32,14 @@ const _renderInput = (reference) => {
     const {$qrVLock = []} = reference.props;
     const disabled = !!Ux.elementInAll(fields, $qrVLock);
 
+    const { key, ...attrKwCleanRest} = attrKwClean;
     return [
         <Input.Search {...$search}
                       key='inputSearch'
                       disabled={disabled}
                       value={searchText}/>,
         // Warning: A props object containing a "key" prop is being spread into JSX:
-        <Button key={attrKwClean.key} {...attrKwClean}/>
+        <Button key={key} {...attrKwCleanRest}/>
     ]
 };
 

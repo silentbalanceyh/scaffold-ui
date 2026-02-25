@@ -10,6 +10,7 @@ const _wayO2S = (value, inError = true) => {
         }
     }
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     // JObject -> String
     wayJ2S: (value, inError = true) => __Is.isObject(value) ? _wayO2S(value, inError) : undefined,

@@ -25,7 +25,7 @@ export default {
     initialize: (reference, config) => {
         const state = {};
         const { $session } = reference.props;
-        // Initialized Session When Enable Captcha
+        // @ts-ignore Initialized Session When Enable Captcha
         Op.asyncImage(config, $session, reference).then(response => {
             state.$image = response.image;
             state.$captchaId = response.captchaId;

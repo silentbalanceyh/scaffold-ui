@@ -83,30 +83,46 @@ const handleParam = (params = {}, options = {}) => {
         const formData = new FormData();
         Object.keys(params).forEach(key => {
             if (__Zn.isObject(params[key]) || __Zn.isArray(params[key])) {
-                formData.append(key, __Zn.wayO2S(params[key]));
+                formData.append(key, __handleBody(params[key]));
             } else {
                 formData.append(key, params[key]);
             }
         });
         return formData;
     } else {
-
         let requestBody;
         if (params.hasOwnProperty(Cv.K_NAME.BODY)) {
             if (!__Zn.isArray(params.$body)) {
                 __parseLang(params.$body);
             }
-            requestBody = __Zn.wayO2S(params.$body);
+            requestBody = __handleBody(params.$body);
         } else {
             // 拷贝 language = cn 的问题
             if (!params.hasOwnProperty('criteria')) {
                 __parseLang(params);
             }
-            requestBody = __Zn.wayO2S(params);
+            requestBody = __handleBody(params);
         }
         return requestBody;
     }
 };
+/**
+ * FIX-BUG: （主键修复）特殊标准化方法
+ * - 如果 Cv 中配置了 META_ID 属性，则将 body 中的 key 字段转换为 META_ID 字段
+ * @param body 请求参数体
+ * @private
+ */
+const __handleBody = (body = {}) => {
+    const metaId = Cv['META_ID'];
+    __Zn.itAmb(body, record => {
+        // 1. META_ID 定义转换
+        if (!!metaId && body.hasOwnProperty('key')) {
+            record[metaId] = record.key;
+        }
+    });
+    return __Zn.wayO2S(body);
+}
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     handleUri,
     handleParam,

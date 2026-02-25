@@ -118,63 +118,62 @@ const aclSubmit = (params = {}, reference) => {
     const data = __Zn.clone(params);
     const {$edition = {}} = reference.props;
     const {__aclRaw = {}} = $edition;
-    Object.keys(data)
-        .filter(key => {
-            /*
-             * 移除 $button
-             */
-            if (key.startsWith("$")) {
-                return true;
-            }
+    Object.keys(data).filter(key => {
+        /*
+         * 移除 $button
+         */
+        if (key.startsWith("$")) {
+            return true;
+        }
 
-            /*
-             * 字符串类型 $button
-             */
-            if (__Zn.Env.FORBIDDEN === data[key]) {
-                // 移除
-                return true;
-            }
+        /*
+         * 字符串类型 $button
+         */
+        if (__Zn.Env.FORBIDDEN === data[key]) {
+            // 移除
+            return true;
+        }
 
-            /*
-             * 时间格式移除
-             */
-            if (__Zn.isMoment(data[key])) {
-                const year = data[key].year();
-                return 9999 === year;
-            }
+        /*
+         * 时间格式移除
+         */
+        if (__Zn.isMoment(data[key])) {
+            const year = data[key].year();
+            return 9999 === year;
+        }
 
+        /*
+         * undefined 需要执行计算
+         */
+        if (!__Zn.isEmpty(__aclRaw)) {
             /*
-             * undefined 需要执行计算
+             * 开启了权限控制
              */
-            if (!__Zn.isEmpty(__aclRaw)) {
-                /*
-                 * 开启了权限控制
-                 */
-                const {access = []} = __aclRaw;
-                if (0 < access.length) {
-                    const accessSet = new Set(access);
-                    if (accessSet.has(key)) {
-                        /*
-                         * 如果出现在访问列表中，这种情况的 undefined
-                         * 设置为 null
-                         */
-                        if (undefined === data[key]) {
-                            data[key] = null;
-                        }
-                        return false;
-                    } else {
-                        /*
-                         * 没出现在访问列表中
-                         * 删除该字段
-                         */
-                        return true;
+            const {access = []} = __aclRaw;
+            if (0 < access.length) {
+                const accessSet = new Set(access);
+                if (accessSet.has(key)) {
+                    /*
+                     * 如果出现在访问列表中，这种情况的 undefined
+                     * 设置为 null
+                     */
+                    if (undefined === data[key]) {
+                        data[key] = null;
                     }
-                } else return false;
+                    return false;
+                } else {
+                    /*
+                     * 没出现在访问列表中
+                     * 删除该字段
+                     */
+                    return true;
+                }
             } else return false;
-        })
-        .forEach(key => delete data[key]);
+        } else return false;
+    }).forEach(key => delete data[key]);
     return data;
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     aclOp,
     aclData,

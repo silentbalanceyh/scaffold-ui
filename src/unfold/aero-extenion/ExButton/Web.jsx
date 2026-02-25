@@ -83,14 +83,15 @@ const _renderButton = (reference, config = {}) => {
         $rest.type = "primary";
         $rest.danger = true;
     }
+    const { key, ...$restAttr} = $rest;
     if (text) {
         /* 标准按钮 */
         // Warning: A props object containing a "key" prop is being spread into JSX:
-        return (<Button key={$rest.key} {...$rest} >{text}</Button>);
+        return (<Button key={key} {...$restAttr} >{text}</Button>);
     } else {
         /* 非标准按钮 */
         // Warning: A props object containing a "key" prop is being spread into JSX:
-        return (<Button key={$rest.key} {...$rest} />);
+        return (<Button key={key} {...$restAttr} />);
     }
 };
 

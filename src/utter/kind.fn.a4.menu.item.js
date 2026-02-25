@@ -38,13 +38,6 @@ const __normBag = (item, bagMap = {}) => {
     }
     return item;
 }
-// Replaced old API: aiMenuTop
-const __normBagMap = () => {
-    const app = Ux.isInit();
-    const {bags = []} = app;       // BAG-MENU ( 特殊类型 )
-    // 按菜单类型分类 menuId = bags
-    return Ux.elementMap(bags, 'entry');
-}
 /**
  * ## 「标准」`Ux.a4MenuData`
  * menuData:
@@ -74,13 +67,15 @@ const __normBagMap = () => {
  */
 const a4MenuData = (menuData = [], config = {}) => {
     /* 菜单处理 */
-    const bagMap = __normBagMap();
+    const app = Ux.isInit();
+    const {apps = []} = app;       // BAG-MENU ( 特殊类型 )
+    const appMap = Ux.elementMap(apps, 'entry');
     /* 菜单初始化 */
     return menuData
         /* 执行metadata 标准化，将 metadata 转换成 JSON */
         .map(item => __MP.mapMeta(item))
         /* bag 挂载（应用挂载专用）*/
-        .map(item => __normBag(item, bagMap));
+        .map(item => __normBag(item, appMap));
 }
 /**
  * ## 「标准」`Ux.a4MenuPick`

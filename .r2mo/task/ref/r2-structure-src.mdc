@@ -1,0 +1,121 @@
+```yaml
+---
+description: Project structure guide for extracting source-of-truth layout, tech stack, and risks from this repository.
+globs: r2-structure-src.mdc, STRUCTURE.md, Cargo.toml, src/**, src-tauri/**, Trunk.toml, tailwind.config.js, README*.md
+alwaysApply: true
+---
+
+# r2mo-ui Source Structure (Summary)
+
+## Purpose
+
+- Provide a fast, accurate structure map for AI in rules/agents/mdc.
+- Prefer facts from repo files; avoid inference beyond current content.
+
+## Scope Rules
+
+- Paths are shown from the repo root with a leading `/`.
+- `.r2mo/` is out of scope: if present, it is only listed and not analyzed.
+- `/src` and `/src-tauri` are described at the first level only.
+- Second-level directories under `/src` and `/src-tauri` only list their main file.
+- `/src/components` and `/src/utils` provide a component/tool list only, no deep analysis.
+- `/src/pages` skeleton pages are briefly described.
+- Build outputs (`/dist/`, `/target/`) are listed but not analyzed.
+
+## Tech Stack (strict)
+
+- Rust 2024 edition (see `/Cargo.toml`, `/src-tauri/Cargo.toml`).
+- Leptos `0.8.15` (CSR), Leptos Router `0.8.11` for SPA routing.
+- WebAssembly toolchain: `wasm-bindgen`, `wasm-bindgen-futures`, `js-sys`, `web-sys`.
+- Trunk for web build/serve (see `/Trunk.toml`, target `/index.html`).
+- Tauri `2.9.5` desktop wrapper, `tauri-build 2.5.3`, `tauri-plugin-opener 2.5.3`.
+- Tailwind CSS (README references v4.1.18), config in `/tailwind.config.js`.
+
+## Key Usage Points
+
+- Web entry: `/src/main.rs` mounts `/src/app.rs` (Leptos CSR).
+- Routing: `/src/pages/mod.rs` aggregates page views.
+- Tauri entry: `/src-tauri/src/main.rs` with shared lib in `/src-tauri/src/lib.rs`.
+- Trunk serves `/index.html` at port 6100 (see `/Trunk.toml`).
+- Styling: `/styles.css` + `/styles/input.css` + Tailwind config.
+
+## Risks and Watchouts
+
+- `/src/api/` and `/src/service/` are placeholders; API/service layers may be incomplete.
+- `/src/components/r2mo_login/` and `/src/components/r2mo_starry_background/` are empty.
+- Tailwind `content` includes `./src-webel/src/**/*.rs`, which may be stale or missing.
+- Build outputs (`/dist/`, `/target/`) should not be treated as source of truth.
+
+## Root Context (non-exhaustive)
+
+- `/Cargo.toml`, `/Cargo.lock`: Rust workspace manifest and lockfile.
+- `/Trunk.toml`, `/index.html`: Trunk build and entry.
+- `/public/`, `/styles/`, `/styles.css`, `/tailwind.config.js`: web assets and styling.
+- `/docs/`, `/examples/`, `/scripts/`: documentation, samples, and helper scripts.
+- `/dist/`, `/target/`: build outputs.
+
+## `/src` (first-level)
+
+- `/src/app.rs`: app root component.
+- `/src/main.rs`: web entry point.
+- `/src/tauri.js`: Tauri JS bridge.
+- `/src/api/`: API layer (contains `.placeholder`).
+- `/src/components/`: UI components (main files: `/src/components/mod.rs`, `/src/components/lib.rs`).
+- `/src/context/`: context/state (main file: `/src/context/mod.rs`).
+- `/src/models/`: data models (main file: `/src/models/mod.rs`).
+- `/src/pages/`: page-level views (main file: `/src/pages/mod.rs`).
+- `/src/service/`: services (contains `.placeholder`).
+- `/src/utils/`: shared utilities (main file: `/src/utils/mod.rs`).
+
+## `/src/components` (component list)
+
+- `/src/components/css_loader.rs`
+- `/src/components/layout.rs`
+- `/src/components/lib.rs`
+- `/src/components/mod.rs`
+- `/src/components/r2mo_login/` (empty directory)
+- `/src/components/r2mo_starry_background/` (empty directory)
+
+## `/src/utils` (tool list)
+
+- `/src/utils/.placeholder`
+- `/src/utils/README.md`
+- `/src/utils/mod.rs`
+- `/src/utils/storage.rs`
+
+## `/src/pages` (skeleton pages and module spec)
+
+- `/src/pages/home.rs`: Home page skeleton.
+- `/src/pages/login.rs`: Login page skeleton.
+- `/src/pages/mod.rs`: Page module entry.
+- Module directories follow `/src/pages/<module>/` (e.g., `/src/pages/xxx/`, `/src/pages/yyy/`).
+- Each module root includes:
+  - `metadata.yaml`: module metadata; annotations include `@REQ` (requirements), `@PAGE` (page set), `@API` (API set), `@DESIGN` (design spec), `@MODEL` (entity set).
+  - `api.yaml`: extracted API set needed by the module (optional).
+  - `schemas.yaml`: extracted entity set needed by the module (optional).
+  - `requirement.module.md`: **OUTPUT location** for module requirement analysis.
+- Module directories contain page subdirectories, one per page, e.g., `/src/pages/xxx/page1-xxx/`.
+- Each page directory includes:
+  - `page.yaml`: page metadata; annotations include `@METADATA` (base definition), `@DICT` (required dictionaries), `@LAYOUT` (layout config), `@LIFECYCLE` (lifecycle list: init, action, validate, event, etc.).
+  - `requirement.page.md`: **OUTPUT location** for page requirement analysis.
+
+## Requirement Output Locations (CRITICAL)
+
+- **Module requirements**: Output to `src/pages/{module}/requirement.module.md`
+- **Page requirements**: Output to `src/pages/{module}/{page}/requirement.page.md`
+- **DO NOT** write to `/.r2mo/requirements/` during analysis unless explicitly instructed
+- `/.r2mo/requirements/` contains original/raw requirements — reference for templates only
+
+## Special Notes
+
+- If `.r2mo/` exists, list it only; do not analyze contents.
+- Prefer adding new domain UI under `/src/components/` and pages under `/src/pages/<module>/`.
+
+## `/src-tauri` (first-level)
+
+- `/src-tauri/Cargo.toml`, `/src-tauri/Cargo.lock`: Tauri manifest and lockfile.
+- `/src-tauri/build.rs`: build script.
+- `/src-tauri/tauri.conf.json`: Tauri config.
+- `/src-tauri/capabilities/`: capability definitions.
+- `/src-tauri/icons/`: application icons.
+- `/src-tauri/src/`: Tauri Rust sources (main files: `/src-tauri/src/main.rs`, `/src-tauri/src/lib.rs`).

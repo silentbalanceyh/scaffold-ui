@@ -1,0 +1,135 @@
+---
+description: Core development guide for Rust frontend tasks (code/run/build/debug) with .r2mo as source-of-truth.
+globs: src/**/*, src-tauri/src/**/*.rs, styles/**/*
+alwaysApply: true
+---
+
+# Rust Frontend Development Guide — Core Tasks
+
+This rule keeps Rust frontend work **implementation-focused** and aligned with `.r2mo` specifications.
+**Core Constraint**: UI code MUST follow `.r2mo` requirements, API, domain, and design inputs. Structure reference: `r2-structure-r2mo.mdc`, `r2-structure-src.mdc`.
+
+**Tech Stack**: Leptos (CSR) + Tauri + Tailwind + Trunk.
+
+---
+
+## 1. Source-of-Truth Inputs (Read First)
+
+- **Module requirements**: `src/pages/{module}/requirement.module.md`
+- **Page requirements**: `src/pages/{module}/{page}/requirement.page.md`
+- **Module config**: `src/pages/{module}/metadata.yaml`
+- **Page config**: `src/pages/{module}/{page}/page.yaml`
+- **API/Domain**: `/.r2mo/api/**`, `/.r2mo/domain/**`
+- **Design**: `/.r2mo/design/spec.md`, `/.r2mo/design/spec-page.md`
+
+**Rule**: If spec data is missing, mark it as `TBD` and ask. Do not invent endpoints, models, or UI rules.
+
+---
+
+## 2. Core Workflow (Spec → Code)
+
+1. **Read requirements** (module + page) and config annotations (`@REQ`, `@API`, `@MODEL`, `@DICT`, `@LIFECYCLE`).
+2. **Model types** in `src/models/` from `.r2mo/domain/*.proto` or `.r2mo/api/components/schemas/`.
+3. **API client** in `src/api/` (Tauri `invoke!` or HTTP). Return `Result<T, AppError>`.
+4. **Page view** in `src/pages/{module}/{page}/view.rs` with lifecycle hooks and state.
+5. **Reusable components** in `src/components/` when a pattern repeats.
+6. **Styling** with Tailwind per `.r2mo/design` tokens and page spec.
+
+---
+
+## 3. Project Structure Essentials
+
+**Page Module Layout** (from `r2-structure-src.mdc`):
+```
+src/pages/{module}/
+├── mod.rs
+├── view.rs
+├── types.rs                 # optional
+├── metadata.yaml
+├── menu.yaml
+├── requirement.module.md
+└── {page-name}/
+    ├── view.rs
+    ├── page.yaml
+    └── requirement.page.md
+```
+
+**Routing**: `src/app.rs` defines routes; `src/pages/mod.rs` aggregates page modules.
+
+---
+
+## 4. Run / Build / Debug
+
+**Web (Trunk)**:
+```bash
+trunk serve --port 6100
+```
+```bash
+trunk build --release
+```
+
+**Desktop (Tauri)**:
+```bash
+cargo tauri dev
+```
+```bash
+cargo tauri build
+```
+
+**Checks**:
+```bash
+cargo check
+cargo test
+cargo clippy --all-targets --all-features
+cargo fmt --all
+```
+
+**Debug Helpers**:
+```bash
+cargo clean
+trunk clean
+cargo build --verbose
+trunk build --verbose
+```
+
+---
+
+## 5. Minimal Coding Rules (Strict)
+
+- **No panic in UI paths**: avoid `unwrap()`, `expect()`, `panic!()`.
+- **Error flow**: return `Result<T, AppError>`, surface user-friendly messages.
+- **State**: use signals for local state, `create_resource` for async fetch.
+- **UI states**: always handle loading, error, empty cases.
+- **Tailwind**: keep class ordering consistent (layout → size → spacing → type → color → state).
+
+---
+
+## 6. Common Tasks (Short Form)
+
+**Add a page**
+1. `src/pages/{module}/{page}/view.rs`
+2. `src/pages/{module}/{page}/page.yaml`
+3. `src/pages/{module}/{page}/requirement.page.md`
+4. Export in `src/pages/{module}/mod.rs`
+5. Update `menu.yaml` and routes if needed
+
+**Add an API call**
+1. Read `/.r2mo/api/operations/{endpoint}/`
+2. Implement in `src/api/{module}.rs`
+3. Add request/response types in `src/models/`
+4. Use in page lifecycle hooks
+
+**Add a component**
+1. `src/components/{component}.rs`
+2. Export in `src/components/mod.rs`
+3. Keep props-driven and reusable
+
+---
+
+## 7. Spec Compliance Checklist
+
+- [ ] Requirements match module/page specs
+- [ ] API + models match `.r2mo` definitions
+- [ ] `metadata.yaml` and `page.yaml` annotations honored
+- [ ] Loading/error/empty states covered
+- [ ] `cargo check` and `cargo clippy` clean

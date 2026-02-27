@@ -235,6 +235,7 @@ const raftFormConfig = (reference, config, containerFn, ucaFn) => {
         return __Zn.promise(raft);
     });
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     configForm,
     raftFormSelf,

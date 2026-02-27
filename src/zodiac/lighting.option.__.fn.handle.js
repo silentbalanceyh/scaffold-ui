@@ -113,10 +113,13 @@ const handleParam = (params = {}, options = {}) => {
  * @private
  */
 const __handleBody = (body = {}) => {
+    if (!__Zn.isObject(body) && !__Zn.isArray(body)) {
+        return body;
+    }
     const metaId = Cv['META_ID'];
     __Zn.itAmb(body, record => {
         // 1. META_ID 定义转换
-        if (!!metaId && body.hasOwnProperty('key')) {
+        if (!!metaId && record.hasOwnProperty('key')) {
             record[metaId] = record.key;
         }
     });

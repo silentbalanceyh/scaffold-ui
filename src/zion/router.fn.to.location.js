@@ -83,22 +83,22 @@ const toLogout = (cleanApp = true) => {
             Cv.X_APP_ID,        // <NAME>/ID
             Cv.X_SIGMA,         // <NAME>/SIGMA
         ]);
-        const app = _Session.get(Cv.KEY_APP);
+        const app = _Storage.get(Cv.KEY_APP);
         if (app) {
             const $app = {};
             Object.keys(app).forEach(field => {
                 const value = app[field];
-                if (!__Zn.isObject(value)) {
+                /*
+                 * apps -- Array
+                 * mXxx -- Object
+                 */
+                if (!(__Zn.isObject(value) || __Zn.isArray(value))) {
                     $app[field] = value;
                 }
             });
-            
-            /**
-             * bags / 删除模块信息
-             * appKey / 删除应用加密信息
-             */
+            /** 删除应用敏感数据 */
             if ($app['appKey']) delete $app['appKey'];
-            if ($app.bags) delete $app.bags;
+            if ($app['appSecret']) delete $app['appSecret'];
             _Storage.put(Cv.KEY_APP, $app);
         }
     }

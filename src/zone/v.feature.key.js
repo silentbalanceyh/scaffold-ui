@@ -20,8 +20,10 @@ export default {
     // For App
     X_LANG: `${KEY_APP}/LANG`,
     X_APP_ID: `${KEY_APP}/ID`,
-    X_APP_KEY: `${KEY_APP}/KEY`,
     X_SIGMA: `${KEY_APP}/SIGMA`,
+    X_TENANT: `${KEY_APP}/TENANT`,
+
+    X_APP_KEY: `${KEY_APP}/KEY`,
     X_SESSION: `${KEY_APP}/SESSION_ID`,
     // For Development
     KEY_MDATA: `${process.env.K_SESSION}MONITOR/DATA/`,

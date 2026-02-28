@@ -26,19 +26,22 @@ const __headerSecure = (headers = {}, secure = false) => {
 // RESTful / Sock Shared
 const __headerApp = (headers = {}, secure = false) => {
     __headerSecure(headers, secure);
-    /* X_APP_KEY */
-    const appKey = _Storage.getDirect(Cv.X_APP_KEY);
-    if (appKey) headers.append(Cv.X_HEADER.X_APP_KEY, appKey);
-    /* X_APP_ID */
-    const appId = _Storage.getDirect(Cv.X_APP_ID);
-    if (appId) headers.append(Cv.X_HEADER.X_APP_ID, appId);
-    /* X_SIGMA */
-    const sigma = _Storage.getDirect(Cv.X_SIGMA);
-    if (sigma) headers.append(Cv.X_HEADER.X_SIGMA, sigma);
+    const appJ = _Storage.get(Cv.KEY_APP);
+    if (!!appJ) {
+        const {appKey, id, sigma, tenant} = appJ;
+        if (appKey) headers.append(Cv.X_HEADER.X_APP_KEY, appKey);
+        if (id) headers.append(Cv.X_HEADER.X_APP_ID, id);
+        if (sigma) headers.append(Cv.X_HEADER.X_SIGMA, sigma);
+        if (tenant) headers.append(Cv.X_HEADER.X_TENANT, tenant);
+    }
+
+
     /* X_LANG */
     const language = Cv.LANGUAGE ? Cv.LANGUAGE : Cv.K_VALUE.LANGUAGE;
     if (language) headers.append(Cv.X_HEADER.X_LANG, language);
 
+
+    // 覆盖 X-Tenant-Id
     const user = _Store.isLogged();
     if (__Zn.isNotEmpty(user)) {
         const tenantId = user['tenantId'];
@@ -98,6 +101,7 @@ const headerCors = (headerRef, method, inputOpts = {}) => {
     }
     return options;
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     // 1. 入口 Json -> Header
     headerMimeJ,    // ajaxHeaderJ      application/json

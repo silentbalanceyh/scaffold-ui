@@ -49,7 +49,7 @@ const __seekApp = (uri, menuData = [], reference) => {
 }
 const __seekFirst = (key, menuData = []) => {
     const menuSource = __Sk.seekSource(menuData);
-    let children = Ux.elementFind(menuSource, {parentId: key});
+    let children = Ux.elementFind(menuSource, {parentId: key, type: Ux.Env.MENU_TYPE.SIDE});
     if (0 === children.length) {
         throw Error(`站点配置出现问题，无法捕捉子页面！出错页：${key}`)
     }

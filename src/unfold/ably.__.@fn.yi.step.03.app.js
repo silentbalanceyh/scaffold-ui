@@ -30,7 +30,6 @@ export default async (reference, menuData = [], config = {}) => {
         // data process for ExLogged;
         const appData = __Zn.a4MenuPick(menuData, Ux.Env.MENU_TYPE.BAG)
             .filter(item => item.hasOwnProperty('bag'));
-        console.info(appData);
         const appList = [];
         appData.forEach(item => {
             const app = {};

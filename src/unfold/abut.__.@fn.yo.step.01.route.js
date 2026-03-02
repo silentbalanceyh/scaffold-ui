@@ -1,6 +1,7 @@
 import {_Locator} from "./allocation.__.c.locator.navigation";
 import Ux from 'ux';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (reference) => {
     const setting = {};
     const route = {};

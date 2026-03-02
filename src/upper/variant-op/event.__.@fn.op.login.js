@@ -1,6 +1,7 @@
 import Ux from "ux";
 import {_I} from 'zet';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (reference) => {
     let pwdChange = false;
     return (params) => {

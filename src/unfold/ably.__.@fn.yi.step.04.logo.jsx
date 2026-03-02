@@ -18,6 +18,7 @@ const __rxNavApp = (reference) => (event) => {
         // Ux.toRoute(reference, Ux.Env.ENTRY_ADMIN);
     }
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (reference) => {
     return (logo, title, _) => {
         const locator = _Locator.create(reference);

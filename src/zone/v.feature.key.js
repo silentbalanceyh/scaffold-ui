@@ -24,7 +24,6 @@ export default {
     X_TENANT: `${KEY_APP}/TENANT`,
 
     X_APP_KEY: `${KEY_APP}/KEY`,
-    X_APP_AT: `${KEY_APP}/AT`,
     X_SESSION: `${KEY_APP}/SESSION_ID`,
     // For Development
     KEY_MDATA: `${process.env.K_SESSION}MONITOR/DATA/`,

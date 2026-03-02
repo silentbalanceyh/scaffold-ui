@@ -1,9 +1,39 @@
 import Ux from 'ux';
 import __Rv from './allocation.__.fn.resolve.navigation';
-
+import __Zk from "./allocation.__.fn.seek.uri";
 /*
  * 状态管理器，用于管理核心页面位置专用
  */
+
+const yiOpenState = (menuData: any, reference: any) => {
+    const {$router} = reference.props;
+    const state: any = {};
+    state.$keyOpen = __Rv.resolveOpen($router.path(), menuData, reference);
+    const side = __Rv.resolveSide($router.path(), menuData, reference);
+    if (side) {
+        state.$keyActive = side.key;
+    }
+    return state;
+}
+
+const goPageAfter = (item: any = {}, reference: any) => {
+    const {$menuData = []} = reference.state ? reference.state : {};
+    const menuTop = $menuData
+        .filter(each => each.parentId === item.key)
+        .filter(each => Ux.Env.MENU_TYPE.SIDE === each.type)
+        .sort(Ux.sorterAscTFn("order"));
+    if (0 < menuTop.length) {
+        const menuActive = menuTop[0];
+        return menuActive.key;
+    }
+}
+
+const goPagePre = (item: any = {}) => {
+    Ux.Session.putDirect(Ux.Env.PAGE_AT, item.key);
+
+    Ux.Session.putDirect(Ux.Env.PAGE_APP, item.appId);
+}
+
 export class _Locator {
     private readonly _reference: any;
     private readonly _refState: any;
@@ -26,14 +56,7 @@ export class _Locator {
          * 1）非内页，$keyOpen 只包含顶部菜单（刷新会消失）
          * 2）内页，$keyOpen 包含顶部和左侧打开菜单
          */
-        const {$router} = this._refProp;
-        const state: any = {};
-        state.$keyOpen = __Rv.resolveOpen($router.path(), menuData, this._reference);
-        const side = __Rv.resolveSide($router.path(), menuData, this._reference);
-        if (side) {
-            state.$keyActive = side.key;
-        }
-        return state;
+        return yiOpenState(menuData, this._reference);
     }
 
     // ----------------- 路由执行 ------------------
@@ -53,15 +76,16 @@ export class _Locator {
     public goPage(data: any = {}, state: any = {}) {
         // Ux.Session.putDirect(Ux.Env.LOCATE_PAGE, data.key);
         if (Ux.Env.VALUE.MENU_EXPAND !== data.uri) {
+            goPagePre(data);
             // 设置路由对应页信息
             const {$keyOpen = []} = this._reference.state ? this._reference.state : {};
             state._opens = $keyOpen;
+            // 此处根据 data.uri 执行计算
             Ux.toRoute(this._reference, data.uri, state);
         }
     }
 
     public goApp(item: any = {}) {
-        Ux.toRoute(this._reference, item.uri);
         /*
          * 选择应用防止二义性方法发生，在执行时做后期保证，
          * resolveSide 的最终结果会检索查询到的 APP 方法是否匹配
@@ -69,13 +93,31 @@ export class _Locator {
          * 1）点击 App 生成 App Key
          * 2）然后点击 Item 时检查 App Key是否符合，如果不符合则重新检索
          */
-        Ux.Session.putDirect(Ux.Env.PAGE_APP, item.key);
+        goPagePre(item);
+
+        Ux.toRoute(this._reference, item.uri);
+
+        const $keyActive = goPageAfter(item, this._reference);
+
+        Ux.of(this._reference).in({$keyActive}).done();
     }
 
     public goHome() {
-        Ux.toRoute(this._reference, Ux.Env.ENTRY_ADMIN);
-        Ux.Session.remove(Ux.Env.PAGE_APP);
-        // return state;
+        const {$menuData} = this._refState;
+
+        const page = __Zk.seekUri(Ux.Env.ENTRY_ADMIN, $menuData, this._reference);
+
+        if (page) {
+            goPagePre(page);
+
+            Ux.toRoute(this._reference, Ux.Env.ENTRY_ADMIN);
+
+            const $keyActive = goPageAfter(page, this._reference);
+
+            Ux.of(this._reference).in({$keyActive}).done();
+        } else {
+            console.error(`[TS-VI] 不满足跳转主页的条件`);
+        }
     }
 
     // ----------------- 渲染用 ------------------
@@ -101,9 +143,12 @@ export class _Locator {
         const menus = this.yoRoutes();
         const {$menuData} = this._refState;
         const {$router} = this._refProp;
+
         const menuSide = __Rv.resolveSide($router.path(), $menuData, this._reference);
+
         // 提取子菜单（menus为主菜单）
         const menuSider: any = Ux.elementUnique(menus, 'key', menuSide.key);
+
         return menuSider && menuSider.children ? menuSider.children : [];
     }
 

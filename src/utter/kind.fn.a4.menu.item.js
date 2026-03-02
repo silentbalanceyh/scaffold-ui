@@ -22,7 +22,6 @@ const __normBag = (item, bagMap = {}) => {
      * -- zero.resource
      */
     if (bagMap.hasOwnProperty(item.name)) {
-        console.log(bagMap, item.name);
         const bag = bagMap[item.name];
         item.desc = bag['nameFull'];
         // uiIcon processing

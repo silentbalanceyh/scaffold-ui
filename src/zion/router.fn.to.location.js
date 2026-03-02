@@ -10,11 +10,7 @@ const toRoute = (reference = {}, uri = "", params = {}) => {
         || !reference.props.hasOwnProperty(Cv.K_NAME.ROUTER),
         10004, reference);
 
-    const appAt = _Session.getDirect(Cv.X_APP_AT);
-    if (!appAt) {
-        console.error("中断跳转！！！appAt 无值");
-        return;
-    }
+    const appAt = _Session.getDirect(Cv.PAGE_APP);
     const $parameters = {};
     /*
      * 1. uri 核心判断
@@ -87,7 +83,7 @@ const toLogout = (cleanApp = true) => {
         /* 删除菜单和关联应用 */
         _Session.remove([
             Cv.PAGE_MENU,       // <NAME>/DATA
-            Cv.PAGE_APP,        // <NAME>/APP
+            Cv.PAGE_AT,         // <NAME>/AT
             Cv.X_APP_ID,        // <NAME>/ID
             Cv.X_SIGMA,         // <NAME>/SIGMA
         ]);
@@ -171,6 +167,7 @@ const toLink = (data, $app) => {
         }
     }
 };
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     toRoute,
     toLink,

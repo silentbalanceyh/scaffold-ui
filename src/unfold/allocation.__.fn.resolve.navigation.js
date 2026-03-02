@@ -56,13 +56,8 @@ const __seekFirst = (key, menuData = []) => {
     children = children.sort(Ux.sorterAscTFn("order"));   // 查找最小的
     return children[0];
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    /*
-     * 去掉 NAV-MENU, DEV-MENU, SC-MENU 三种
-     */
-    resolveData: (menuData = []) => {
-
-    },
     /*
      * 顶部页面只可能有两种：
      * 1. 首页、模块主页（带uri）
@@ -85,12 +80,17 @@ export default {
      */
     resolveApp: __seekApp,
     /*
-     * 左导航
+     * 左导航（核心计算逻辑）
      */
     resolveSide: (uri, menuData = [], reference = {}) => {
+        // 密码修改页执行检查
         if (__Sk.seekPassword(reference)) {
             return {}
         }
+
+
+        // ------------------ seekPassword = false
+        let page = __Sk.seekUri(uri, menuData, reference);
         /*
          * 此处交汇配合处理
          * 1）没有选中页则查看是否有激活页：         $keyActive
@@ -101,7 +101,6 @@ export default {
             // 点击头部事件
             return Ux.elementUnique(menuData, 'key', $keyActive);
         }
-        const page = __Sk.seekUri(uri, menuData, reference);
         const pageApp = __seekApp(uri, menuData, reference);
         if (page.key === pageApp.key) {
             // 导航首页

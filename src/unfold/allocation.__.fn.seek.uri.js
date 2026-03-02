@@ -9,11 +9,14 @@ const __seekPath = (path, reference) => {
     const {$router} = reference.props;
     // 1. 基本的 Normalize 处理
     let pageUri;
-    const appAt = Ux.Session.getDirect(Ux.Env.X_APP_AT);
-    if (path.startsWith(`/${appAt}`)) {
-        pageUri = path.replace(`/${appAt}`, "");
-    } else {
-        pageUri = path;
+    {
+        // 会话中 pageAt 处理
+        let appAt = Ux.Session.getDirect(Ux.Env.PAGE_AT);
+        pageUri = path.startsWith(`/${appAt}`) ? path.replace(`/${appAt}`, "") : path;
+
+        // 路由中 pageAt 处理
+        appAt = $router?._("app");
+        pageUri = path.startsWith(`/${appAt}`) ? path.replace(`/${appAt}`, "") : path;
     }
     if (0 >= pageUri.indexOf("?")) {
         // 匹配关键字
@@ -47,7 +50,7 @@ const __seekDeeply = (path, menuData, reference) => {
  * 根据当前页面检查是否密码修改页，密码修改页是账号第一次登录系统的页面
  * 该页面配置在环境变量：Z_ENTRY_FIRST 中，并且不带前缀，从路由中提取的
  * 是带前缀的页：
- * Z_ROUTE + / + Z_ENTRY_FIRST
+ * Z_ENTRY_FIRST
  * 密码修改页存在一定特殊性，会限制任意账号登录系统之后触发其他页面，所以
  * 密码修改页存在拦截功能
  */
@@ -99,7 +102,7 @@ const seekUri = (path, menuData = [], reference) => {
         // 同一个 active 之下会包含多个
         analyzed = seekActive(menuData, analyzed, reference);
         // 多路, 应用检索
-        const bagKey = Ux.Session.getDirect(Ux.Env.PAGE_APP);
+        const bagKey = Ux.Session.getDirect(Ux.Env.PAGE_AT);
         if (!bagKey) {
             // 无应用绑定，空降
             return analyzed[0];
@@ -140,6 +143,7 @@ const seekUri = (path, menuData = [], reference) => {
         // return new Error("菜单配置不符合规范，无法解析路由，请检查！！");
     }
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     seekPassword,
     seekSource,

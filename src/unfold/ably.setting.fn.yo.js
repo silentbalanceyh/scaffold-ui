@@ -43,7 +43,7 @@ const yoProLayout = (reference) => {
      */
     const settingModule = __yoModule(reference, settings);
     Object.assign(settings, settingRoute, settingModule);
-    Ux.dgDebug(settings, "路由设置信息");
+    // Ux.dgDebug(settings, "路由设置信息");
     settings.token = Sk.skinDefaultToken(settings);
     return settings;
 }

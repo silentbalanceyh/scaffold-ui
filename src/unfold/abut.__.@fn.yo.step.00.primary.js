@@ -1,6 +1,7 @@
 import Ux from "ux";
-import {_Locator} from "zei/allocation.__.c.locator.navigation";
+import {_Locator} from "./allocation.__.c.locator.navigation";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (reference) => {
     const {
         $setting = {},

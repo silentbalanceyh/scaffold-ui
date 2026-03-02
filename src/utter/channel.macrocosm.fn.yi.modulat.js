@@ -10,7 +10,14 @@ const yiModule = (reference, state = {}, standard = true) => {
     /*
      * 读取路径
      */
-    const path = $router.path();
+    let path = $router.path();
+    /*
+     * 提取 app_at 做路径替换
+     */
+    const appAt = Ux.Session.getDirect(Ux.Env.PAGE_APP);
+    if (appAt) {
+        path = path.replace(`/${appAt}`, "");
+    }
     return I.module(path).then(module => {
 
         if (module && !Ux.isEmpty(module.metadata)) {

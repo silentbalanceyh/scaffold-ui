@@ -9,8 +9,9 @@ const __seekPath = (path, reference) => {
     const {$router} = reference.props;
     // 1. 基本的 Normalize 处理
     let pageUri;
-    if (path.startsWith(`/${Ux.Env.ROUTE}`)) {
-        pageUri = path.replace(`/${Ux.Env.ROUTE}`, "");
+    const appAt = Ux.Session.getDirect(Ux.Env.X_APP_AT);
+    if (path.startsWith(`/${appAt}`)) {
+        pageUri = path.replace(`/${appAt}`, "");
     } else {
         pageUri = path;
     }

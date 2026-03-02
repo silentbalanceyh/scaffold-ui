@@ -9,6 +9,12 @@ const toRoute = (reference = {}, uri = "", params = {}) => {
     __Zn.fxTerminal(!reference.hasOwnProperty(Cv.K_NAME._PROPS)
         || !reference.props.hasOwnProperty(Cv.K_NAME.ROUTER),
         10004, reference);
+
+    const appAt = _Session.getDirect(Cv.X_APP_AT);
+    if (!appAt) {
+        console.error("中断跳转！！！appAt 无值");
+        return;
+    }
     const $parameters = {};
     /*
      * 1. uri 核心判断
@@ -52,13 +58,15 @@ const toRoute = (reference = {}, uri = "", params = {}) => {
         }
     });
     /*
-     * 4. 计算 basePart
+     * 4. 计算 basePart，新版 basePart 基于 appId 做出调整，主要路径为
+     * -  /:appId/xxxx
+     * -  所以此处之前的 Cv.ROUTE 更改成 `/${appId}/route`，如果 basePart 已经包含 appId 则不做处理，否则追加 appId 前缀
      */
     let normalizedUri;
-    if (basePart.startsWith(`/${Cv['ROUTE']}`)) {
+    if (basePart.startsWith(`/${appAt}`)) {
         normalizedUri = basePart;
     } else {
-        normalizedUri = `/${Cv['ROUTE']}${basePart}`;
+        normalizedUri = `/${appAt}${basePart}`;
     }
     /*
      * 5. 构造最终的路由地址，并执行跳转

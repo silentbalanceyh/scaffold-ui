@@ -80,9 +80,18 @@ export default {
      */
     resolveApp: __seekApp,
     /*
-     * 左导航（核心计算逻辑）
+     * FIX-BUD
+     * 1. seekPassword 的主要目的是为了保证首次登录密码修改页的左侧没有任何东西
+     * 2. isActive
+     *    isActive = true：默认场景，主要是为了点击 Top 按钮时，保持原来导航不变化，而只是计算左侧菜单（如果有的话）
+     *    isActive = false：App切换场景过程中，保证跨 App 直接穿透到目标页，由于跨越了 App，所以只能根据导航中的
+     *                      新路径执行纯计算，这种场景下如果不跨 App 计算的 found.key 和 $keyActive 是一致的
+     *                      但是跨 App 计算的 found.key 和 $keyActive 是不一致的，所以需要 isActive = false
+     *                      来保证穿透到目标页，而不是停留在原来页上
+     * 3. 正常流程下，如果解析的页面和 HOME 相等则直接返回首页，返回首时直接根据 App 中的页面提取第一个菜单激活。
+     * 4. 其他流程下，解析 TOP 页。
      */
-    resolveSide: (uri, menuData = [], reference = {}) => {
+    resolveSide: (uri, menuData = [], reference = {}, isActive = true) => {
         // 密码修改页执行检查
         if (__Sk.seekPassword(reference)) {
             return {}
@@ -96,10 +105,12 @@ export default {
          * 1）没有选中页则查看是否有激活页：         $keyActive
          * 2）没有激活页根据当前路由地址计算
          */
-        const {$keyActive} = reference.state ? reference.state : {};
-        if ($keyActive) {
-            // 点击头部事件
-            return Ux.elementUnique(menuData, 'key', $keyActive);
+        if (isActive) {
+            const {$keyActive} = reference.state ? reference.state : {};
+            if ($keyActive) {
+                // 点击头部事件
+                return Ux.elementUnique(menuData, 'key', $keyActive);
+            }
         }
         const pageApp = __seekApp(uri, menuData, reference);
         if (page.key === pageApp.key) {

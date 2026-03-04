@@ -28,11 +28,11 @@ const __headerApp = (headers = {}, secure = false) => {
     __headerSecure(headers, secure);
     const appJ = _Storage.get(Cv.KEY_APP);
     if (!!appJ) {
-        const {appKey, id, sigma, tenant} = appJ;
+        const {appKey, id, sigma, tenantId} = appJ;
         if (appKey) headers.append(Cv.X_HEADER.X_APP_KEY, appKey);
         if (id) headers.append(Cv.X_HEADER.X_APP_ID, id);
         if (sigma) headers.append(Cv.X_HEADER.X_SIGMA, sigma);
-        if (tenant) headers.append(Cv.X_HEADER.X_TENANT, tenant);
+        if (tenantId) headers.append(Cv.X_HEADER.X_TENANT_ID, tenantId);
     }
 
 

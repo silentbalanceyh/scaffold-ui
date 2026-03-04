@@ -13,6 +13,7 @@ const asyncValidate = (config = {}, params = {}, reference) => {
     })
     if (__Zn.isNotEmpty(descriptor)) {
         // async-validator验证
+        // @ts-ignore
         const validator = new Schema(descriptor);
         return new Promise((resolve, reject) => {
             validator.validate(params)
@@ -97,7 +98,9 @@ const __seekData = (state, key, data = [], clientSort) => {
         /*
          * 另外一种返回 {rows/total} --ops的格式，list/count格式前处理
          */
+        // @ts-ignore
         if (__Zn.isArray(data.rows)) {
+            // @ts-ignore
             dataResult = data.rows;
         }
         /*

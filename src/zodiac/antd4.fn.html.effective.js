@@ -3,12 +3,14 @@ import V4 from './antd4.fn.v4.patch';
 const htmlReadOnly = (id) => {
     const ele = document.getElementById(id);
     if (ele) {
+        // @ts-ignore
         return ele.readOnly;
     }
 };
 const htmlDisabled = (id) => {
     const ele = document.getElementById(id);
     if (ele) {
+        // @ts-ignore
         return ele.disabled;
     }
 };

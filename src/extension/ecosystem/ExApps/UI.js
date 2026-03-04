@@ -85,6 +85,7 @@ class Component extends React.PureComponent {
                             }>
                                 <List.Item.Meta className={"app"} key={item.key}
                                                 title={item.text}
+                                    // @ts-ignore
                                                 onClick={Op.rxClickApp(this, item)}
                                                 avatar={<img src={item.icon} alt={item.name}/>}/>
                             </Tooltip>

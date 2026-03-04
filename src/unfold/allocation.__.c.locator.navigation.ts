@@ -96,10 +96,6 @@ export class _Locator {
         goPagePre(item);
 
         Ux.toRoute(this._reference, item.uri);
-
-        const $keyActive = goPageAfter(item, this._reference);
-
-        Ux.of(this._reference).in({$keyActive}).done();
     }
 
     public goHome() {
@@ -144,10 +140,10 @@ export class _Locator {
         const {$menuData} = this._refState;
         const {$router} = this._refProp;
 
-        const menuSide = __Rv.resolveSide($router.path(), $menuData, this._reference);
+        const menuTop = __Rv.resolveSide($router.path(), $menuData, this._reference);
 
         // 提取子菜单（menus为主菜单）
-        const menuSider: any = Ux.elementUnique(menus, 'key', menuSide.key);
+        const menuSider: any = Ux.elementUnique(menus, 'key', menuTop.key);
 
         return menuSider && menuSider.children ? menuSider.children : [];
     }
@@ -160,6 +156,16 @@ export class _Locator {
 
     public yoBag(): any {
         const {$keyActive, $menuData} = this._refState;
+        const {$router} = this._refProp;
+        // 1. 先检查 menuSide
+        const menuTop = __Rv.resolveSide($router.path(), $menuData, this._reference);
+        if (!!menuTop) {
+            let found = Ux.elementUnique($menuData, 'key', menuTop.parentId);
+            if (!!found) {
+                return found;
+            }
+        }
+        // 2. 原流程
         // 未选中区域
         if (!$keyActive) {
             return null;

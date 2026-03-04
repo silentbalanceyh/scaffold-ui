@@ -67,6 +67,7 @@ class Component extends React.PureComponent {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (Ux.isRoute(this.props, prevProps)) {
+            Ex.yoProActive(this, {state: prevState})
             Ux.DevTool(this).clean();
         }
     }
@@ -103,7 +104,7 @@ class Component extends React.PureComponent {
                             ) : false}
                             {attrDrawer ? (<SettingDrawer {...attrDrawer}/>) : false}
                         </ProLayout>
-                         {/* 开发工具专用，DEV_MONITOR 开启时使用 */}
+                        {/* 开发工具专用，DEV_MONITOR 开启时使用 */}
                         {Ux.DevTool(this).render(ExDevTool)}
                     </ProConfigProvider>
                 </div>

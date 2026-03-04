@@ -25,7 +25,7 @@ export default async (reference) => {
         const menuBag = locator.yoBag();
         // Title formatted
         let logoJsx;
-        if (menuBag && menuBag.icon) {
+        if (menuBag && menuBag.icon && menuBag.hasOwnProperty("bag")) {
             logoJsx = (<img src={menuBag.icon} alt={menuBag.text}/>);
         } else {
             logoJsx = logo;

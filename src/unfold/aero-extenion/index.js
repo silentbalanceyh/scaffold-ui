@@ -13,9 +13,3 @@ export {default as QxCriteria} from './QxCriteria/UI';
 // Tx
 export {default as TxPhase} from './TxPhase/UI';
 export {default as TxHistory} from './TxHistory/UI';
-// Hx
-export {default as HxFlow} from './HxFlow/UI';
-export {default as HxQueue} from './HxQueue/UI';
-export {default as HxAction} from './HxAction/UI';
-export {default as HxMenu} from './HxMenu/UI';
-export {default as HxSite} from './HxSite/UI';

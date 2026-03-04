@@ -2,11 +2,17 @@
   &_ExAuthority {
 
     .role-header {
-      line-height: $uni_font * 3;
+      line-height: $uni_font * 1.8;
+      padding: $uni_font;
+      background: rgba($uni_color, 0.85);
+      margin-bottom: $uni_font;
+      font-size: $uni_font * 1.2;
+      color: rgba(255, 255, 255, 0.95);
 
       .role-title {
         font-weight: bold;
         text-align: right;
+        color: rgba(255, 255, 255, 0.75);
       }
     }
 
@@ -18,24 +24,45 @@
       .ant-tabs {
 
         .ant-tabs-nav {
-          margin-bottom: $uni_font * 0.3;
+          margin-bottom: $uni_font * 0.5;
+          background: #f5f5f5;
+          padding: $uni_font * 0.5;
+          border-radius: $uni_font * 0.4;
+        }
+
+        .ant-tabs-tab {
+          border-radius: $uni_font * 0.25;
+          margin: 0 $uni_font * 0.25;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: #e6f7ff;
+          }
+
+          &.ant-tabs-tab-active {
+            background: #1890ff;
+
+            .ant-tabs-tab-btn {
+              color: #fff;
+            }
+          }
         }
 
         .ant-tabs-left-content {
-          padding-left: 4px;
+          padding-left: $uni_font * 0.25;
         }
 
         .ant-tabs-right-content {
-          padding-right: 4px;
+          padding-right: $uni_font * 0.25;
         }
 
         .ant-tabs-bar {
-          margin-bottom: 2px;
-          padding-bottom: 2px;
+          margin-bottom: $uni_font * 0.125;
+          padding-bottom: $uni_font * 0.125;
 
           .ant-tabs-extra-content {
             button {
-              margin-left: 6px;
+              margin-left: $uni_font * 0.375;
             }
           }
         }

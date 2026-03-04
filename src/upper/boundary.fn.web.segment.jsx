@@ -43,10 +43,12 @@ export default {
                         Ux.prevent(event);
                         Ux.connectId(connectId);
                     };
+                    // @ts-ignore
                     attrs.icon = Ux.v4Icon(rest.icon);
+                    const {key, ...attrRest} = attrs;
                     return (
                         // Warning: A props object containing a "key" prop is being spread into JSX:
-                        <Button key={attrs.key} {...attrs}>
+                        <Button key={key} {...attrRest}>
                             {text}
                         </Button>
                     )
@@ -107,6 +109,7 @@ export default {
             value,
             display,
         } = config;
+        console.log($gData);
         const values = $gData.map(item => item[field])
             .reduce((pre, cur) => pre.includes(cur) ? pre : pre.concat(cur), []);
         const sData = Ux.onDatum(reference, source)

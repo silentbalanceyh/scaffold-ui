@@ -1,14 +1,12 @@
 import Ux from "ux";
 import Ex from 'ex';
 import {Col, Row, Spin, Tabs} from 'antd';
+import {SafetyOutlined, TagOutlined, UserOutlined} from '@ant-design/icons';
 import React from 'react';
 
 import Op from './Op';
-import {HxAction, HxFlow, HxMenu, HxQueue, HxSite} from 'zei';
 
-const HI = {
-    HxFlow, HxAction, HxQueue, HxMenu, HxSite,
-}
+const HI = {}
 
 const renderHeader = (reference) => {
     const title = Ux.fromHoc(reference, "title");
@@ -17,19 +15,19 @@ const renderHeader = (reference) => {
     return (
         <Row className={"role-header"}>
             <Col span={3} className={"role-title"}>
-                {title.name}
+                <UserOutlined style={{marginRight: 6}}/> {title.name}
             </Col>
             <Col span={3}>
                 {data.name}
             </Col>
             <Col span={3} className={"role-title"}>
-                {title.code}
+                <TagOutlined style={{marginRight: 6}}/> {title.code}
             </Col>
             <Col span={3}>
                 {data.code}
             </Col>
             <Col span={3} className={"role-title"}>
-                {title['admit']}
+                <SafetyOutlined style={{marginRight: 6}}/> {title['admit']}
             </Col>
             <Col span={3}>
                 {Ux.aiYN(data['power'])}
@@ -75,28 +73,10 @@ const renderPage = (reference) => {
                 }
             }
         }, reference);
-        /*
-                        {$regions.map(region => {
-                            // Branch for different component for Performance
-                            const {ui = {}} = region;
-                            const Component = HI[ui];
-                            // 属性处理
-                            const regionData = $regionData[region.key];
-                            const inherit = Ex.yoAmbient(reference);
-                            Object.assign(inherit, Ex.aclRegion(reference, regionData));
-                            inherit.rxSwitch = Op.rxWindow(reference);
-                            return (
-                                <Tabs.?abPane tab={region.label} key={region.key}>
-                                    {Component ? (
-                                        <Component {...inherit}/>
-                                    ) : <span>{ui} 找不到！</span>}
-                                </Tabs.?abPane>
-                            )
-                        })}
-         */
         return (
             <div className={"role-content"}>
                 <Spin spinning={$paging}>
+                    {/* @ts-ignore */}
                     <Tabs {...tabAttrs} items={items}/>
                 </Spin>
             </div>
@@ -104,6 +84,7 @@ const renderPage = (reference) => {
     } else return false;
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     renderHeader,
     renderPage,

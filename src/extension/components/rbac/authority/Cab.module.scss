@@ -6,6 +6,38 @@
           padding: $uni_font * 0.2 0;
         }
       }
+
+      .ant-tabs-nav {
+        margin: $uni_font * 0.65 0;
+        padding: $uni_font * 0.45 $uni_font * 0.65;
+        background: rgba($uni_color, 0.08);
+        border-radius: $uni_font * 0.35;
+        transition: background 0.25s ease;
+      }
+
+      .ant-tabs-tab {
+        margin: $uni_font * 0.35 0;
+        padding: $uni_font * 0.5 $uni_font;
+        border-radius: $uni_font * 0.25;
+        transition: all 0.3s ease;
+
+        .ant-tabs-tab-btn {
+          color: rgba($uni_color, 0.65);
+        }
+
+        &:hover {
+          background: rgba($uni_color, 0.12);
+        }
+
+        &.ant-tabs-tab-active {
+          background: $uni_color;
+          border-color: $uni_color;
+
+          .ant-tabs-tab-btn {
+            color: #fff;
+          }
+        }
+      }
     }
   }
 }

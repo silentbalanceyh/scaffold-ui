@@ -1,0 +1,79 @@
+.ux_authority_role {
+  .role-list {
+    padding: $uni_font;
+
+    .role-item {
+      margin-top: $uni_font * 0.75;
+      margin-bottom: $uni_font * 0.75;
+      cursor: pointer;
+      border: 1px solid #d9d9d9;
+      border-radius: $uni_font * 0.25;
+      transition: all 0.3s ease;
+
+      &:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      &.selected {
+        border-color: $uni_color;
+        background-color: rgba($uni_color, 0.05);
+        box-shadow: 0 2px 12px rgba($uni_color, 0.2);
+      }
+
+      .ant-card-body {
+        padding: $uni_font * 0.75 $uni_font;
+      }
+
+      .ant-card-meta {
+        align-items: center;
+
+        .ant-card-meta-avatar {
+          padding-right: $uni_font * 0.75;
+        }
+
+        .ant-card-meta-detail {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+
+        .ant-card-meta-title {
+          margin-bottom: $uni_font * 0.25;
+          line-height: 1.5;
+        }
+
+        .ant-card-meta-description {
+          line-height: 1.5;
+        }
+      }
+
+      .role-avatar {
+        width: $uni_font * 2.5;
+        height: $uni_font * 2.5;
+        font-size: $uni_font * 1.25;
+        background-color: #f0f0f0;
+        color: #8c8c8c;
+
+        &.selected {
+          background-color: $uni_color;
+          color: #ffffff;
+        }
+      }
+
+      .role-name {
+        color: #262626;
+        font-weight: 400;
+
+        &.selected {
+          color: $uni_color;
+          font-weight: 600;
+        }
+      }
+
+      .role-code {
+        font-size: $uni_font * 0.75;
+        color: #8c8c8c;
+      }
+    }
+  }
+}

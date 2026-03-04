@@ -1,3 +1,4 @@
+import React from "react";
 import __MP from './pedestal.fn.map.pipeline';
 import __TO from "./pedestal.fn.to.web.control";
 import Ux from "ux";
@@ -124,7 +125,9 @@ const a4MenuWeb = (menuData = [], type) => a4MenuPick(menuData, type).map(item =
 const a4MenuDash = (menuData = [], reference, type) => {
     const {$router} = reference.props;
     let source;
+    // @ts-ignore
     if (Ux.isFunction(menuData.is)) {
+        // @ts-ignore
         source = menuData.to(); // a4MenuPick(menuData.to(), type)
     } else {
         source = menuData; // a4MenuPick(menuData, type);

@@ -1,6 +1,7 @@
 import Ux from "ux";
 import __Zn from './zero.module.dependency';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (reference, menuData = []) => {
     // name
     const normalized = __Zn.a4MenuPick(menuData, Ux.Env.MENUS.MODULE);

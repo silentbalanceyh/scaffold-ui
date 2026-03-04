@@ -69,6 +69,7 @@ const yiProSetting = async (reference, addOn = {}) => {
      * Step 04
      * -- 头部链接点击
      */
+    // @ts-ignore
     $setting.headerTitleRender = await __yiLogo(reference, menuData, configuration);
 
     /*

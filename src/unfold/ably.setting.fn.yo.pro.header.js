@@ -79,13 +79,14 @@ const yoProPageHeader = (reference) => {
                 .filter(item => !Ux.Env.ENTRY_ADMIN.endsWith(item.uri))
                 .forEach(each => items.push(__buildPage(reference, each)))
             // 针对面包屑导航的右对齐处理
-            const { fnNavExtra = () => false } = reference.props;
+            const {fnNavExtra = () => false} = reference.props;
             return (
                 <Row>
                     <Col span={16}>
+                        {/* @ts-ignore */}
                         <Breadcrumb items={items.filter(item => !!item)}/>
                     </Col>
-                    <Col span={8} style={{textAlign:"right"}}>
+                    <Col span={8} style={{textAlign: "right"}}>
                         {fnNavExtra(reference)}
                     </Col>
                 </Row>

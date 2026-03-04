@@ -9,6 +9,8 @@ const toRoute = (reference = {}, uri = "", params = {}) => {
     __Zn.fxTerminal(!reference.hasOwnProperty(Cv.K_NAME._PROPS)
         || !reference.props.hasOwnProperty(Cv.K_NAME.ROUTER),
         10004, reference);
+
+    const appAt = _Session.getDirect(Cv.PAGE_APP);
     const $parameters = {};
     /*
      * 1. uri 核心判断
@@ -52,13 +54,15 @@ const toRoute = (reference = {}, uri = "", params = {}) => {
         }
     });
     /*
-     * 4. 计算 basePart
+     * 4. 计算 basePart，新版 basePart 基于 appId 做出调整，主要路径为
+     * -  /:appId/xxxx
+     * -  所以此处之前的 Cv.ROUTE 更改成 `/${appId}/route`，如果 basePart 已经包含 appId 则不做处理，否则追加 appId 前缀
      */
     let normalizedUri;
-    if (basePart.startsWith(`/${Cv['ROUTE']}`)) {
+    if (basePart.startsWith(`/${appAt}`)) {
         normalizedUri = basePart;
     } else {
-        normalizedUri = `/${Cv['ROUTE']}${basePart}`;
+        normalizedUri = `/${appAt}${basePart}`;
     }
     /*
      * 5. 构造最终的路由地址，并执行跳转
@@ -79,26 +83,26 @@ const toLogout = (cleanApp = true) => {
         /* 删除菜单和关联应用 */
         _Session.remove([
             Cv.PAGE_MENU,       // <NAME>/DATA
-            Cv.PAGE_APP,        // <NAME>/APP
+            Cv.PAGE_AT,         // <NAME>/AT
             Cv.X_APP_ID,        // <NAME>/ID
             Cv.X_SIGMA,         // <NAME>/SIGMA
         ]);
-        const app = _Session.get(Cv.KEY_APP);
+        const app = _Storage.get(Cv.KEY_APP);
         if (app) {
             const $app = {};
             Object.keys(app).forEach(field => {
                 const value = app[field];
-                if (!__Zn.isObject(value)) {
+                /*
+                 * apps -- Array
+                 * mXxx -- Object
+                 */
+                if (!(__Zn.isObject(value) || __Zn.isArray(value))) {
                     $app[field] = value;
                 }
             });
-            
-            /**
-             * bags / 删除模块信息
-             * appKey / 删除应用加密信息
-             */
+            /** 删除应用敏感数据 */
             if ($app['appKey']) delete $app['appKey'];
-            if ($app.bags) delete $app.bags;
+            if ($app['appSecret']) delete $app['appSecret'];
             _Storage.put(Cv.KEY_APP, $app);
         }
     }
@@ -163,6 +167,7 @@ const toLink = (data, $app) => {
         }
     }
 };
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     toRoute,
     toLink,

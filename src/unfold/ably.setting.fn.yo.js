@@ -15,6 +15,7 @@ import __yoSetting from './abut.__.@fn.yo.step.00.primary';
 import __yoRoute from './abut.__.@fn.yo.step.01.route';
 
 import __yoModule from './abut.__.@fn.yo.step.02.module';
+import __Sk from "./allocation.__.fn.resolve.navigation";
 
 /**
  * ## 「通道」`Ex.yoProLayout`
@@ -43,7 +44,7 @@ const yoProLayout = (reference) => {
      */
     const settingModule = __yoModule(reference, settings);
     Object.assign(settings, settingRoute, settingModule);
-    Ux.dgDebug(settings, "路由设置信息");
+    // Ux.dgDebug(settings, "路由设置信息");
     settings.token = Sk.skinDefaultToken(settings);
     return settings;
 }
@@ -106,7 +107,19 @@ const yoProWater = () => {
     attrWater.content = [`${user['realname']} ${mobile.slice(7)}`, `（${user.username}）`];
     return attrWater;
 }
+const yoProActive = (reference, previous) => {
+    const {$keyActive, $menuData} = previous.state;
+    const {$router} = reference.props;
+
+    const found = __Sk.resolveSide($router.path(), $menuData, reference, false);
+
+    if ($keyActive !== found.key) {
+        Ux.of(reference).in({$keyActive: found.key}).done();
+    }
+}
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
+    yoProActive,
     yoProLayout,
     yoProSettingDrawer,
     yoProChildren,

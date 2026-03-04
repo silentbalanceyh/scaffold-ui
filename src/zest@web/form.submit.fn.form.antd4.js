@@ -29,36 +29,30 @@ const formOut = (reference, request = {}) => {
         const {form} = config;
         // Fix: https://e.gitee.com/wei-code/issues/table?issue=I6VP1J
         const hidden = form?.hidden ?? []; //  form.hidden: [];
-        Object.keys($inited)
-            .filter(field => fieldProc.includes(field))
-            .forEach(field => {
-                const formValue = formData[field];
-                if (undefined === formValue) {
-                    /*
-                     * 清空值的计算方法
-                     * 1）表单模式是 EDIT
-                     * 2）初始化数据中有值而 formData 提交中是 undefined，没有出现于表单的不会在 formData 中
-                     * 3）文本类型的清空会直接设置成 ""，不用考虑
-                     * 4）非文本类型不可以重置为 null（后端序列化会 ignore）
-                     *
-                     * 将 formData 中包含的原来有值而新值为 undefined 的直接设置为 ""
-                     */
-                    if (hidden.includes(field)) {
-                        formData[field] = null;
-                    } else {
-                        formData[field] = "";
-                    }
+        Object.keys($inited).filter(field => fieldProc.includes(field)).forEach(field => {
+            const formValue = formData[field];
+            if (undefined === formValue) {
+                /*
+                 * 清空值的计算方法
+                 * 1）表单模式是 EDIT
+                 * 2）初始化数据中有值而 formData 提交中是 undefined，没有出现于表单的不会在 formData 中
+                 * 3）文本类型的清空会直接设置成 ""，不用考虑
+                 * 4）非文本类型不可以重置为 null（后端序列化会 ignore）
+                 *
+                 * 将 formData 中包含的原来有值而新值为 undefined 的直接设置为 ""
+                 */
+                if (hidden.includes(field)) {
+                    formData[field] = null;
+                } else {
+                    formData[field] = "";
                 }
-            })
+            }
+        })
     }
     return formData;
 }
 const formEnd = (reference) =>
     __Zn.of(reference).load().done();
-// reference.?etState({
-//     $submitting: false,
-//     $loading: false
-// });
 
 const formRead = (reference, data = {}) => {
     const {$record} = reference.props;
@@ -103,6 +97,7 @@ const formLinker = (data, config = {}, linkerField) => {
         }
     }
 };
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     formEnd,
     formOut,

@@ -14,7 +14,7 @@ const componentInit = (reference) => {
         Ux.Session.remove([
             Ux.Env.KEY_USER,
             Ux.Env.PAGE_MENU,
-            Ux.Env.PAGE_APP,
+            Ux.Env.PAGE_AT,
         ])
     }
 }

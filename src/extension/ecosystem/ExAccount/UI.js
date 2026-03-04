@@ -2,6 +2,7 @@ import React from 'react';
 import Ux from "ux";
 import Ex from 'ex';
 
+// @ts-ignore
 import ImgPhoto from "./image/user.png";
 
 const UCA_NAME = "ExAccount";
@@ -59,6 +60,7 @@ const componentInit = (reference) => {
     // state.$ready = true;
 };
 
+// @ts-ignore
 @Ux.zero(Ux.rxEtat(require("./Cab"))
     .cab("UI")
     .to()

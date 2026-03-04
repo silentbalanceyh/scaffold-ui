@@ -136,10 +136,10 @@ const renderButton = (reference, topBar, key = "left", disabled = {}) => {
                 } else {
                     $item.disabled = false;
                 }
-                const {text, ...rest} = $item;
+                const {text, key, ...rest} = $item;
                 return (
                     // Warning: A props object containing a "key" prop is being spread into JSX:
-                    <Button key={rest.key} {...rest}>{text}</Button>
+                    <Button key={key} {...rest}>{text}</Button>
                 )
             })}
         </Space.Compact>
@@ -148,8 +148,7 @@ const renderButton = (reference, topBar, key = "left", disabled = {}) => {
 const renderBack = (ref, topBar) => {
     const reference = Ux.onReference(ref, 1);
     return (
-        <Button icon={Ux.v4Icon("close")} shape="circle"
-                type={"ghost"}
+        <Button icon={Ux.v4Icon("close")} shape="circle" ghost
                 className={"extra"}
                 onClick={Op.onClickBack(reference, topBar)}/>
     );

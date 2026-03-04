@@ -50,7 +50,6 @@ const runEventFn = (reference, config = {}) => {
     const performer = $op[config.key];
     if (__Zn.isFunction(performer)) {
         return performer(reference, config);
-        // return __Zn.promise(performer(reference, config));
     } else {
         /* 空函数，防止 then 之后无法调用 */
         if (Cv.TYPE_EVENT.RESET !== config.event) {
@@ -110,6 +109,7 @@ const runCallback = (reference, config, response) => {
         return __Zn.promise(response);
     }
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     runSubmit,
     runEventFn,

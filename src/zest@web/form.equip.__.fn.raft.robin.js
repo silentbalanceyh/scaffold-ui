@@ -1,3 +1,4 @@
+// @ts-nocheck
 import __Zn from './zero.module.dependency';
 import __STEP_01 from './form.equip.__.fn.raft.01.entry';
 import __STEP_02 from './form.equip.__.fn.raft.02.row';
@@ -234,6 +235,7 @@ const raftFormConfig = (reference, config, containerFn, ucaFn) => {
         return __Zn.promise(raft);
     });
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     configForm,
     raftFormSelf,

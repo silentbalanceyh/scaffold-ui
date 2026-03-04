@@ -6,8 +6,18 @@ const Cv = __Zn.Env;
 
 const storeApp = (data, isKey = false) => {
     if (data) {
-        const fnPut = _Storage.put;
-        const fnPutDirect = _Storage.putDirect;
+        const storeAppFn = (/** @type {any} */ appData) => {
+            const fnPut = _Storage.put;
+            {
+                const fnRemove = _Storage.remove;
+                fnRemove(Cv.X_APP_KEY);
+                fnRemove(Cv.X_APP_ID);
+                fnRemove(Cv.X_TENANT);
+                fnRemove(Cv.X_SIGMA);
+            }
+            // 写数据
+            fnPut(Cv.KEY_APP, appData);
+        }
         // 合并逻辑
         let appData = _Storage.get(Cv.KEY_APP);
         appData = __Zn.clone(appData ? appData : {})
@@ -17,23 +27,15 @@ const storeApp = (data, isKey = false) => {
         /*
          * 统一处理
          */
-        if (isKey) {
-            // 内置页
-            if (appData.appKey) fnPutDirect(Cv.X_APP_KEY, data.appKey);
-            fnPut(Cv.KEY_APP, appData);
-            fnPutDirect(Cv.X_APP_ID, appData.key);
-            fnPutDirect(Cv.X_SIGMA, appData.sigma);
-        } else {
+        if (!isKey) {
             // 外置页（登录界面，移除appKey）
             if (appData.appKey) {
-                const fnRemove = _Storage.remove;
-                fnRemove(Cv.X_APP_KEY);
+                // const fnRemove = _Storage.remove;
+                // fnRemove(Cv.X_APP_KEY);
                 delete appData.appKey;
             }
-            fnPut(Cv.KEY_APP, appData);
-            fnPutDirect(Cv.X_APP_ID, appData.key);
-            fnPutDirect(Cv.X_SIGMA, appData.sigma);
         }
+        storeAppFn(appData);
         __Zn.dgDebug(data, "更新应用程序配置数据！", "#008B8B");
     }
     return data;

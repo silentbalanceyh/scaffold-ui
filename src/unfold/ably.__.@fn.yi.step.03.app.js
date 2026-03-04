@@ -22,6 +22,7 @@ const __rxAppClick = (reference) => (props = {}) => {
         // .then(item => Ux.toRoute(reference, item.uri));
     }
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (reference, menuData = [], config = {}) => {
     if (__Rv.resolvePwd(reference)) {
         return {}

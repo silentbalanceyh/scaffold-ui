@@ -87,9 +87,11 @@ class Logger {
      * @param {Object} params 请求数据内容
      * @param {Request} request 请求对象本身
      * @param {boolean} isMock 是否启用模拟数据的打印
-     * @return {Promise<T>} 返回最终的 Promise
+     * @return {Promise} 返回最终的 Promise
      */
-    static response(data, params, request = {}, isMock = false) {
+    static response(data, params,
+                    // @ts-ignore
+                    request = {}, isMock = false) {
         if (__Zn.Env.DEBUG_DEV) {
             const {
                 method,
@@ -100,13 +102,13 @@ class Logger {
             const theme = isMock ? "color: white; background-color:#52c41a; font-weight:900" : "color:#548B54;font-weight:900";
             console.groupCollapsed(message, theme);
 
-            console.groupCollapsed("%c 「Zero」 Headers -> ", 'color:#c93;font-weight:900')
+            const headersObj = {};
             if (headers) {
                 for (const [key, value] of headers) {
-                    console.log(`%c 「Zero」 Header -> ${key} = ${value}`, 'color:#7A8B8B;font-weight:900')
+                    headersObj[key] = value;
                 }
             }
-            console.groupEnd();
+            console.log("%c 「Zero」 Headers -> ", 'color:#c93;font-weight:900', headersObj);
 
             console.log(`%c 「Zero」 Request -> `, 'color:#006699;font-weight:900', params);
             console.log(`%c 「Zero」 Response -> `, 'color:#039;font-weight:900', data);
@@ -134,14 +136,15 @@ class Logger {
             console.groupCollapsed(message, `color:${color};font-weight:900`);
             console.log(`%c 「Zero」 Request -> `, 'color:#7A8B8B;font-weight:900', request);
             // headers 单独打印调试
-            console.groupCollapsed("%c 「Zero」 Headers -> ", 'color:#c93;font-weight:900')
             const {headers} = request;
+            const headersObj = {};
             if (headers) {
                 for (const [key, value] of headers) {
-                    console.log(`%c 「Zero」 Header -> ${key} = ${value}`, 'color:#7A8B8B;font-weight:900')
+                    headersObj[key] = value;
+                    // console.log(`%c 「Zero」 Header -> ${key} = ${value}`, 'color:#7A8B8B;font-weight:900')
                 }
             }
-            console.groupEnd();
+            console.log("%c 「Zero」 Headers -> ", 'color:#c93;font-weight:900', headersObj);
             if (parameters.criteria) {
                 console.log(`%c 「Zero」 Criteria -> `, 'color:#DB7093;font-weight:900', parameters.criteria);
             }
@@ -192,7 +195,7 @@ class Logger {
      *
      * > 打印过滤条件专用日志记录器！
      *
-     * @param {React.Component} reference React组件引用。
+     * @param reference React组件引用。
      * @param {Object} config 基本查询配置。
      */
     static filters(reference = {}, {
@@ -256,19 +259,18 @@ class Logger {
             }
             // Step 2：属性布局部分处理
             if (4 === phase) {
-                let message = `%c「FORM」单元格 / 布局`;
                 const {layoutType} = item;
-                console.groupCollapsed(message, "color:#7c8577;font-weight:900");
                 console.log(`%c 「Zero」基本配置: `, "color:#006c54", `Label = ${item.label}, Key = ${item.key}`);
-                console.log(`%c 「Zero」布局类型详情:`, "color:#769149", layoutType);
-                console.log(`%c 「Zero」是否采用默认值? Default = `, key.dft ? "color:red" : "color:#d96c3", key.dft);
-                console.groupEnd();
+                console.log(`%c 「Zero」布局类型详情:`, "color:#769149", {
+                    layout: layoutType,
+                    defaultValue: key.dft
+                });
                 return;
             }
             if (5 === phase) {
                 // Step3: 开始打印
                 const message = `%c「FORM」表单行独立配置：RowConfig --> ${key}`;
-                console.log(message, "color:#39f;font-weight:900",
+                console.log(message, "color:#39f;",
                     `Key = ${item.key}, ClassName = ${item.className}`);
                 return;
             }
@@ -276,11 +278,12 @@ class Logger {
                 // 打印字段
                 if (item.optionItem) {
                     const mode = key ? `"Jsx"` : `"Hoc"`;
-                    const message = `%c「FORM」单元格 / 内容：(渲染模式：${mode}) name="${item.field}", label="${item.optionItem.label}"`;
-                    console.groupCollapsed(message, `color:#006c54;font-weight:900`);
-                    console.log(`%c 「FORM」字段配置 optionItem: `, "color:#06c", item.optionItem);
-                    console.log(`%c 「FORM」字段配置 optionJsx：`, "color:#660", item.optionJsx);
-                    console.groupEnd();
+                    const message = `%c name="${item.field}", label="${item.optionItem.label}" / (渲染模式：${mode}) `;
+                    console.log(message, `color:#006c54;font-weight:900`);
+                    console.log(`%c 「FORM」字段配置 optionItem / optionJsx`, "color:#06c", {
+                        optionItem: item.optionItem,
+                        optionJsx: item.optionJsx
+                    });
                 }
             }
             // 最终结果
@@ -306,9 +309,10 @@ class Logger {
      *
      * @param {Object} layoutType 布局类型。
      * @param {Number} window Form中的 window 专用参数。
-     * @param {Number} dft Form中的 window 的默认值打印。
+     * @param dft Form中的 window 的默认值打印。
      */
-    static layout(layoutType = {}, window, dft = true) {
+    static layout(layoutType = {}, window,
+                  dft = true) {
         return _layout(layoutType, window, dft);
     }
 }

@@ -1,6 +1,6 @@
 import Ux from 'ux';
 import __ACTIONS from "./aero-meta-action";
-import {_Locator} from "zei/allocation.__.c.locator.navigation";
+import {_Locator} from "zei";
 /*
  * Menu click for executing
  * 1. When the uri exist here, the system navigate us to target uri.

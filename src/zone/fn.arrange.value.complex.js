@@ -23,6 +23,10 @@ const valueValid = (data = {}, wild = false) => {
                         delete data[key];
                     }
                 }
+                // 特殊值处理
+                if ("Invalid Date" === value) {
+                    delete data[key];
+                }
             }
         }
     }

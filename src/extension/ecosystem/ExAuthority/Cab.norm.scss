@@ -5,7 +5,7 @@
       line-height: $uni_font * 1.8;
       padding: $uni_font;
       background: rgba($uni_color, 0.85);
-      margin-bottom: $uni_font;
+      margin-bottom: 8px;
       font-size: $uni_font * 1.2;
       color: rgba(255, 255, 255, 0.95);
 
@@ -14,6 +14,17 @@
         text-align: right;
         color: rgba(255, 255, 255, 0.75);
       }
+    }
+
+    .authority-panel {
+      padding: 0;
+    }
+
+    .authority-content {
+      padding: 0;
+      background: #fff;
+      border-radius: $uni_font * 0.5;
+      min-height: 400px;
     }
 
     .role-content {

@@ -10,13 +10,6 @@ const runActive = (reference, $activeKey) => {
         state.$regionData = $regionData;
         rxActive(state, $activeKey).then(Ux.pipe(reference))
     }, 128)
-    // reference.?etState({$paging: true});
-    // const state = {};
-    // state.$activeKey = $activeKey;
-    // state.$refresh = false;
-    // const {$regionData = {}} = reference.state;
-    // state.$regionData = $regionData;
-    // Ux.toLoading(() => rxActive(state, $activeKey).then(Ux.pipe(reference)), 128)
 }
 const rxTabClick = (reference) => ($activeKey) => {
     const {$refresh = false} = reference.state;
@@ -51,8 +44,12 @@ const rxWindow = (reference) => (callbackFn) => {
         md.confirm(config);
     }
 }
+const rxMenuClick = (reference) => (menuKey) => {
+    reference.setState({$activeMenu: menuKey});
+}
 export default {
     rxTabClick,
     rxActive,
     rxWindow,
+    rxMenuClick,
 }

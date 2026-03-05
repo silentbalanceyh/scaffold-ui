@@ -20,18 +20,20 @@ const v4Icon = (type, attrs = {}) => {
             if ($rest.type) delete $rest.type;
 
             // onClick 注入
-            if(attrs.onClick){
+            if (attrs.onClick) {
+                // @ts-ignore
                 $rest.onClick = attrs.onClick;
-            };
+            }
+            ;
             return (<UiV4Icon {...$rest}/>)
         } else return false;
     } else {
-        if(type && type.$$typeof){
+        if (type && type.$$typeof) {
 
             // onClick 注入
-            if(type.props && attrs.onClick){
+            if (type.props && attrs.onClick) {
                 return React.cloneElement(type, {onClick: attrs.onClick});
-            }else{
+            } else {
                 return type;
             }
         }

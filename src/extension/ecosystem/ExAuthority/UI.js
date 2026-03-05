@@ -25,6 +25,15 @@ class Component extends React.PureComponent {
         componentInit(this);
     }
 
+    componentDidUpdate(prevProps) {
+        const {$inited: prevInited} = prevProps;
+        const {$inited: currentInited} = this.props;
+        // 当 $inited 发生变化时，返回主界面
+        if (prevInited !== currentInited) {
+            this.setState({$activeMenu: null});
+        }
+    }
+
     render() {
         return Ex.yoRender(this, () => {
             const attrPage = Sk.mixEx(UCA_NAME);

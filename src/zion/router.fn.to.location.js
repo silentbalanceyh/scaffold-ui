@@ -3,14 +3,14 @@ import {_Session, _Storage} from 'zo';
 import __QM from './router.__.fn.query.norm';
 
 const Cv = __Zn.Env;
-
+const REGEX = /^\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(\/|$)/;
 const toRoute = (reference = {}, uri = "", params = {}) => {
     __Zn.fxTerminal(!uri, 10072, uri);
     __Zn.fxTerminal(!reference.hasOwnProperty(Cv.K_NAME._PROPS)
         || !reference.props.hasOwnProperty(Cv.K_NAME.ROUTER),
         10004, reference);
 
-    const appAt = _Session.getDirect(Cv.PAGE_APP);
+    let appAt = _Session.getDirect(Cv.PAGE_APP);
     const $parameters = {};
     /*
      * 1. uri 核心判断
@@ -41,6 +41,13 @@ const toRoute = (reference = {}, uri = "", params = {}) => {
     if ($parameters.target) {
         $parameters.target = __Zn.encryptBase64($parameters.target);
     }
+
+    // 此处 appAt 要重算
+    if ($parameters.app !== appAt && !!$parameters.app) {
+        appAt = $parameters.app;
+    }
+
+
     /*
      * 内部参数处理
      */
@@ -59,7 +66,7 @@ const toRoute = (reference = {}, uri = "", params = {}) => {
      * -  所以此处之前的 Cv.ROUTE 更改成 `/${appId}/route`，如果 basePart 已经包含 appId 则不做处理，否则追加 appId 前缀
      */
     let normalizedUri;
-    if (basePart.startsWith(`/${appAt}`)) {
+    if (REGEX.test(basePart)) {
         normalizedUri = basePart;
     } else {
         normalizedUri = `/${appAt}${basePart}`;
@@ -130,7 +137,12 @@ const toOriginal = (reference = {}, switched, exclude = []) => {
     if (original) {
         const {$router} = reference.props;
         const params = __Zn.clone($router.params());
-        const $removed = [Cv.K_ARG.KEY, Cv.K_ARG.ID, Cv.K_ARG.TARGET].concat(exclude);
+        const $removed = [
+            Cv.K_ARG.KEY,
+            Cv.K_ARG.ID,
+            Cv.K_ARG.TARGET,
+            "app", "module", "page"
+        ].concat(exclude);
         $removed.forEach(field => {
             if (params[field]) {
                 delete params[field];

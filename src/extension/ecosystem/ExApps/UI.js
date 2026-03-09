@@ -57,6 +57,7 @@ const componentInit = (reference) => {
     })
 };
 
+// @ts-ignore
 @Ux.zero(Ux.rxEtat(require("./Cab"))
     .cab("UI")
     .to()

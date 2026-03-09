@@ -17,6 +17,7 @@ const onClickBack = (reference, topBar) => (event) => {
     // 导航处理
     Ux.toRoute(reference, previous);
 };
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     onClickBack,
 }

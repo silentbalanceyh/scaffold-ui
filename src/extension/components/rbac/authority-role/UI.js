@@ -16,8 +16,6 @@ const componentInit = (reference) => {
             state.$selected = $selected;
         }
         Ux.of(reference).in(state).ready().done();
-        // reference.?etState(state);
-        // state.$ready = true;
     })
 }
 
@@ -33,7 +31,7 @@ class Component extends React.PureComponent {
     render() {
         return Ex.ylCard(this, () => {
             return (
-                <Row>
+                <Row gutter={6}>
                     <Col span={4}>
                         {Jsx.renderMenu(this)}
                     </Col>

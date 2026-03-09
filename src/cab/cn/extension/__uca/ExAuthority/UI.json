@@ -7,6 +7,26 @@
         "code": "角色代码：",
         "admit": "拥有超级权限："
     },
+    "_menu": [
+        {
+            "key": "menu",
+            "title": "菜单权限",
+            "icon": "menu",
+            "description": "管理系统菜单访问权限"
+        },
+        {
+            "key": "workflow",
+            "title": "流程权限",
+            "icon": "apartment",
+            "description": "管理业务流程操作权限"
+        },
+        {
+            "key": "resource",
+            "title": "资源权限",
+            "icon": "database",
+            "description": "管理数据资源访问权限"
+        }
+    ],
     "_window": {
         "title": "未保存警告",
         "content": "您当前权限配置页的数据尚未保存，若不保存，所作更改将会丢失，若想要保存，请取消后点击`保存`按钮！若放弃保存，则点击`确定`！",
@@ -15,5 +35,8 @@
     "_modal": {
         "title": "处理完成",
         "content": "恭喜，\":owner\"的\":region\"权限设置数据已成功保存，该角色下次登录会自动刷新。"
+    },
+    "_button": {
+        "back": "返回"
     }
 }

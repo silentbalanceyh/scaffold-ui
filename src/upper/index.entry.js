@@ -20,7 +20,6 @@ import config_variant_op from './variant-op';
 import config_variant_input from './variant-input';
 
 import func_rbac_acl_action from './rbac.fn.acl.action';
-import func_rbac_admit_region from './rbac.fn.acl.admit.region';
 import func_rbac_child_execute from './rbac.fn.acl.child.execute';
 
 import func_rbac_auth_remote_future from './rbac.fn.auth.remote.future';
@@ -110,7 +109,6 @@ export default {
      * @module secure/upper
      */
     ...func_rbac_acl_action,// $DOC
-    ...func_rbac_admit_region,// $DOC
     ...func_rbac_child_execute,// $DOC
 
     // RBAC

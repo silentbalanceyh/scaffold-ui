@@ -1,6 +1,6 @@
 import Ux from "ux";
-import {Button, Col, Row} from 'antd';
-import {ArrowLeftOutlined, SafetyOutlined, TagOutlined, UserOutlined} from '@ant-design/icons';
+import {Col, Row} from 'antd';
+import {SafetyOutlined, TagOutlined, UserOutlined} from '@ant-design/icons';
 import React from 'react';
 
 import Op from './Op';
@@ -44,7 +44,6 @@ const renderHeader = (reference) => {
 
 const renderPage = (reference) => {
     const menu = Ux.fromHoc(reference, "menu") || [];
-    const button = Ux.fromHoc(reference, "button") || {};
     const {$activeMenu} = reference.state;
     const primaryColor = Ux.Env.CSS_COLOR || '#1890ff';
 
@@ -54,20 +53,30 @@ const renderPage = (reference) => {
         const activeItem = menu.find(item => item.key === $activeMenu);
         return (
             <div className={"authority-content"}>
-                <div style={{marginBottom: 16}}>
-                    <Button
-                        icon={<ArrowLeftOutlined/>}
-                        onClick={() => Op.rxMenuClick(reference)(null)}
-                    >
-                        {button.back}
-                    </Button>
+                <div style={{
+                    marginBottom: 16,
+                    borderBottom: '1px solid #e8e8e8',
+                    paddingBottom: 16
+                }}>
                     {activeItem && (
-                        <span style={{marginLeft: 16, fontSize: 16, fontWeight: 500}}>
+                        <span style={{fontSize: 18, fontWeight: 600, marginLeft: 12}}>
                             {activeItem.title}
                         </span>
                     )}
                 </div>
-                <Component reference={reference}/>
+                <div style={{padding: '0 0'}}>
+                    {/* 传递具体状态值触发重新渲染 */}
+                    <Component
+                        key={$activeMenu}
+                        reference={reference}
+                        $ready={reference.state.$ready}
+                        $loading={reference.state.$loading}
+                        $menuTrees={reference.state.$menuTrees}
+                        $selectedNames={reference.state.$selectedNames}
+                        $expandedKeys={reference.state.$expandedKeys}
+                        $onBack={() => Op.rxMenuClick(reference)(null)}
+                    />
+                </div>
             </div>
         );
     }

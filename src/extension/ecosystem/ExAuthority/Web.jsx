@@ -5,12 +5,10 @@ import React from 'react';
 
 import Op from './Op';
 import WebMenu from './Web.Menu';
-import WebWorkflow from './Web.Workflow';
 import WebResource from './Web.Resource';
 
 const COMPONENT_MAP = {
     menu: WebMenu,
-    workflow: WebWorkflow,
     resource: WebResource,
 };
 
@@ -59,7 +57,7 @@ const renderPage = (reference) => {
                     paddingBottom: 16
                 }}>
                     {activeItem && (
-                        <span style={{fontSize: 18, fontWeight: 600, marginLeft: 12}}>
+                        <span style={{fontSize: 18, fontWeight: 600, marginLeft: 12, color: '#333'}}>
                             {activeItem.title}
                         </span>
                     )}
@@ -73,6 +71,8 @@ const renderPage = (reference) => {
                         $loading={reference.state.$loading}
                         $menuTrees={reference.state.$menuTrees}
                         $selectedNames={reference.state.$selectedNames}
+                        $permTrees={reference.state.$permTrees}
+                        $selectedIds={reference.state.$selectedIds}
                         $expandedKeys={reference.state.$expandedKeys}
                         $onBack={() => Op.rxMenuClick(reference)(null)}
                     />
@@ -84,10 +84,11 @@ const renderPage = (reference) => {
     // 否则渲染控制面板图标菜单
     return (
         <div className={"authority-panel"}>
-            <Row gutter={[12, 12]}>
+            <Row gutter={[24, 24]}>
                 {menu.map((item) => {
+                    const itemColor = item.color || primaryColor;
                     const icon = Ux.v4Icon(item.icon, {
-                        style: {fontSize: 32}
+                        style: {fontSize: 36}
                     });
                     return (
                         <Col key={item.key}>
@@ -99,31 +100,34 @@ const renderPage = (reference) => {
                                     flexDirection: 'column',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    width: 100,
-                                    height: 100,
+                                    width: 140,
+                                    height: 140,
                                     cursor: 'pointer',
-                                    borderRadius: 8,
+                                    borderRadius: 12,
                                     transition: 'all 0.2s ease',
                                     backgroundColor: 'transparent',
-                                    border: '1px solid #e8e8e8',
+                                    border: `2px solid ${itemColor}20`,
                                 }}
                                 onMouseEnter={(e) => {
-                                    e.currentTarget.style.backgroundColor = '#f5f5f5';
-                                    e.currentTarget.style.borderColor = primaryColor;
+                                    e.currentTarget.style.backgroundColor = `${itemColor}10`;
+                                    e.currentTarget.style.borderColor = itemColor;
+                                    e.currentTarget.style.boxShadow = `0 4px 12px ${itemColor}30`;
                                 }}
                                 onMouseLeave={(e) => {
                                     e.currentTarget.style.backgroundColor = 'transparent';
-                                    e.currentTarget.style.borderColor = '#e8e8e8';
+                                    e.currentTarget.style.borderColor = `${itemColor}20`;
+                                    e.currentTarget.style.boxShadow = 'none';
                                 }}
                             >
                                 <div style={{
-                                    marginBottom: 8,
-                                    color: primaryColor
+                                    marginBottom: 12,
+                                    color: itemColor
                                 }}>
                                     {icon}
                                 </div>
                                 <div style={{
-                                    fontSize: 14,
+                                    fontSize: 16,
+                                    fontWeight: 500,
                                     color: '#262626',
                                     textAlign: 'center',
                                     lineHeight: '1.3'

@@ -12,19 +12,15 @@
             "key": "menu",
             "title": "菜单权限",
             "icon": "menu",
-            "description": "管理系统菜单访问权限"
-        },
-        {
-            "key": "workflow",
-            "title": "流程权限",
-            "icon": "apartment",
-            "description": "管理业务流程操作权限"
+            "description": "管理系统菜单访问权限",
+            "color": "#1890ff"
         },
         {
             "key": "resource",
             "title": "资源权限",
             "icon": "database",
-            "description": "管理数据资源访问权限"
+            "description": "管理数据资源访问权限",
+            "color": "#52c41a"
         }
     ],
     "_window": {
@@ -53,6 +49,31 @@
         "icon": "图标",
         "path": "路径",
         "saveSuccess": "菜单权限保存成功",
-        "viewTitle": "菜单权限树型结构"
+        "viewTitle": "菜单权限树型结构",
+        "noSelected": "暂无已选中的菜单权限",
+        "shortcut": "快捷方式"
+    },
+    "_resourcePerm": {
+        "loading": "加载中...",
+        "noData": "暂无资源数据",
+        "selected": "已选择",
+        "perms": "个权限",
+        "type": "类型",
+        "directory": "目录",
+        "name": "名称",
+        "code": "代码",
+        "comment": "备注",
+        "saveSuccess": "资源权限保存成功",
+        "viewTitle": "资源权限树型结构",
+        "action": "操作",
+        "view": "查看",
+        "noSelected": "暂无已选中的资源权限",
+        "actionTitle": "操作列表",
+        "permissionLabel": "权限：",
+        "noActionData": "暂无操作数据",
+        "actionName": "操作名称",
+        "actionCode": "操作编码",
+        "httpMethod": "HTTP方法",
+        "uri": "请求路径"
     }
 }

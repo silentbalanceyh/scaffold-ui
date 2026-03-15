@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Checkbox, Col, Modal, Row, Space, Tooltip} from 'antd';
+import {Button, Checkbox, Col, Modal, Row, Space, Spin, Tooltip} from 'antd';
 import {ArrowLeftOutlined, DownOutlined, EyeOutlined, RightOutlined} from '@ant-design/icons';
 import Ux from 'ux';
 import Op from './Op.Menu';
@@ -123,11 +123,11 @@ const renderViewItem = (menu, level = 0, expandedKeys = new Set(), onToggle, pri
  * 渲染查看模态窗中的树（只读模式，支持展开收缩，只显示已选中的菜单）
  * 默认全部展开
  */
-const renderViewTree = (menuTrees, selectedNames, expandedKeys, onToggle, primaryColor) => {
+const renderViewTree = (menuTrees, selectedNames, expandedKeys, onToggle, primaryColor, i18n) => {
     if (!menuTrees || menuTrees.length === 0 || !selectedNames || selectedNames.size === 0) {
         return (
             <div style={{padding: 24, textAlign: 'center', color: '#999'}}>
-                暂无已选中的菜单权限
+                {i18n.noSelected || '暂无已选中的菜单权限'}
             </div>
         );
     }
@@ -140,7 +140,7 @@ const renderViewTree = (menuTrees, selectedNames, expandedKeys, onToggle, primar
     if (filteredTrees.length === 0) {
         return (
             <div style={{padding: 24, textAlign: 'center', color: '#999'}}>
-                暂无已选中的菜单权限
+                {i18n.noSelected || '暂无已选中的菜单权限'}
             </div>
         );
     }
@@ -299,7 +299,7 @@ const renderMenuTree = (reference, tree, i18n, expandedKeys, selectedNames) => {
         childrenToRender.push({
             id: `${tree.id}-nav-shortcut`,
             type: 'NAV-MENU',
-            text: '快捷方式',
+            text: i18n.shortcut || '快捷方式',
             name: `${tree.name}-NAV-SHORTCUT`,
             virtual: true,
             children: navMenus.sort((a, b) => (a.order || 0) - (b.order || 0))
@@ -463,9 +463,19 @@ class WebMenu extends React.PureComponent {
         // $ready = true 且 $loading = false 才渲染数据
         // $loading 初始为 undefined，加载中为 true，完成为 false
         if (!$ready || $loading === true || $loading === undefined) {
+            // 高度计算：视口高度 - 头部区域(约80px) - 按钮区(约60px) - 内边距
+            const spinHeight = 'calc(100vh - 200px)';
             return (
-                <div style={{padding: 24, textAlign: 'center', color: '#999'}}>
-                    {i18n.loading || '加载中...'}
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: spinHeight,
+                    minHeight: 300
+                }}>
+                    <Spin size="large" tip={i18n.loading || '加载中...'}>
+                        <div style={{width: 300, height: spinHeight}}/>
+                    </Spin>
                 </div>
             );
         }
@@ -530,7 +540,7 @@ class WebMenu extends React.PureComponent {
                     onCancel={() => this.setState({$viewVisible: false, $viewExpandedKeys: new Set()})}
                     width={600}
                     styles={{
-                        body: {maxHeight: 500, overflowY: 'auto', padding: 16}
+                        body: {maxHeight: 500, overflowY: 'auto', padding: '4px 8px'}
                     }}
                     footer={
                         <div style={{
@@ -549,7 +559,7 @@ class WebMenu extends React.PureComponent {
                     }
                 >
                     {/* 权限树 */}
-                    {renderViewTree($menuTrees, $selectedNames, $viewExpandedKeys, this.handleViewToggle, primaryColor)}
+                    {renderViewTree($menuTrees, $selectedNames, $viewExpandedKeys, this.handleViewToggle, primaryColor, i18n)}
                 </Modal>
             </div>
         );

@@ -45,7 +45,16 @@ const rxWindow = (reference) => (callbackFn) => {
     }
 }
 const rxMenuClick = (reference) => (menuKey) => {
-    reference.setState({$activeMenu: menuKey});
+    // 切换菜单时重置加载状态，让子组件重新加载数据
+    reference.setState({
+        $activeMenu: menuKey,
+        $loading: undefined,
+        $menuTrees: [],
+        $permTrees: [],
+        $selectedNames: new Set(),
+        $selectedIds: new Set(),
+        $expandedKeys: new Set(),
+    });
 }
 export default {
     rxTabClick,

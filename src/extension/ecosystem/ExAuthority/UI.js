@@ -8,7 +8,6 @@ import "./Cab.norm.scss";
 
 const UCA_NAME = "ExAuthority";
 const componentInit = (reference) => {
-    const {$inited = {}} = reference.props;
     // GET /api/authority/region/:type
     reference.setState({$ready: true});
 }

@@ -31,7 +31,7 @@ class Component extends React.PureComponent {
     render() {
         return Ex.ylCard(this, () => {
             return (
-                <Row gutter={6}>
+                <Row gutter={8}>
                     <Col span={4}>
                         {Jsx.renderMenu(this)}
                     </Col>

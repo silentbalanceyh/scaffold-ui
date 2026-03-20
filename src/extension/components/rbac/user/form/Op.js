@@ -2,7 +2,7 @@ import Ex from 'ex';
 import Ux from "ux";
 
 const $opAdd = (reference) => params => {
-    params['password'] = Ux.encryptMD5(params['password']);
+    params['password'] = params['password']
     Ex.form(reference).add(params, {
         uri: "/api/user",
         dialog: "added",
@@ -28,7 +28,7 @@ const $opWizard = (reference) => params =>
     );
 const $opPassword = (reference) => params => {
     const request = Ux.valueRequest(params);
-    request.password = Ux.encryptMD5(params['npassword']);
+    request.password = params['npassword']
     Ex.form(reference).save(request, {
         uri: "/api/user/:key",
         dialog: "savedMy"

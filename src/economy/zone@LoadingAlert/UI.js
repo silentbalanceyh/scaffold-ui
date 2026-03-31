@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * # LoadingAlert
  * ## 使用

@@ -1,3 +1,4 @@
+import React from 'react';
 import abs from './interface.abyss';
 import ajax from './interface.ajax';
 import constant from './constant';

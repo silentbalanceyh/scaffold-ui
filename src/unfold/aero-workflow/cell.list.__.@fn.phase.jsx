@@ -1,3 +1,4 @@
+import React from 'react';
 import Ux from "ux";
 import {TxPhase} from '../aero-extenion';
 import __CFG from './workflow.__.fn.config.norm';

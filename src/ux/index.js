@@ -1,1 +1,1 @@
-export default from "./index.entry";
+export {default} from "./index.entry";

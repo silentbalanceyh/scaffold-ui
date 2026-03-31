@@ -1,3 +1,4 @@
+import React from 'react';
 import v4InputItem from './antd4.__.@fn.v4.input.item';
 import v4InputJsx from './antd4.__.@fn.v4.input.jsx';
 import v4InputEvent from './antd4.__.@fn.v4.input.event';

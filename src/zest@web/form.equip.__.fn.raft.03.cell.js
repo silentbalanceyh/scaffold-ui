@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from './zero.module.dependency';
 import __ADJ from './form.__.fn.adjust.special';
 import __Rdr from './form.equip.__.fn.raft.04.render';

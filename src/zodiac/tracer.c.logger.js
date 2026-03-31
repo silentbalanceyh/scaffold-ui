@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from './zero.module.dependency';
 
 const _layout = (layoutType = {}, window, dft = true) => {

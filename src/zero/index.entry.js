@@ -1,3 +1,4 @@
+import React from 'react';
 import func_office_index from './variant-office';
 
 import func_rapid_sex_batch from './rapid.fn.sex.batch';

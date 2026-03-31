@@ -1,3 +1,4 @@
+import React from 'react';
 // UI_LAYOUT 表访问
 // 子类表单需要使用，如 IxDatabase, IxIntegration 等
 import __Zu from 'zet';

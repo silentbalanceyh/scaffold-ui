@@ -1,3 +1,4 @@
+import React from 'react';
 // 直接读取 Dialog 专用
 
 /**

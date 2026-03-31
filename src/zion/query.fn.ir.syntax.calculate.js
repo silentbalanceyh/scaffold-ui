@@ -1,3 +1,4 @@
+import React from 'react';
 /*
  * 多路径合并计算（双向同步）
  * 1. 列过滤：根据 $condition / $terms 计算 $qr

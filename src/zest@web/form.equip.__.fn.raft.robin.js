@@ -1,3 +1,4 @@
+import React from 'react';
 // @ts-nocheck
 import __Zn from './zero.module.dependency';
 import __STEP_01 from './form.equip.__.fn.raft.01.entry';

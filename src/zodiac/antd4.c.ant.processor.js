@@ -1,3 +1,4 @@
+import React from 'react';
 import __PLX from './antd4.field.__.fn.plx.complex';
 import __PURE from './antd4.field.__.fn._.pure';
 import __ON from './antd4.field.__.fn.on.event';

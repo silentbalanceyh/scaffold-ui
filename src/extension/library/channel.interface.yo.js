@@ -1,3 +1,4 @@
+import React from 'react';
 /*
  * -------------> Component规范
  * 「一个组件传入到另外一个组件的基本规范参考此文件」：

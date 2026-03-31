@@ -1,3 +1,4 @@
+import React from 'react';
 import func_antd4_html_effective from './antd4.fn.html.effective';
 import func_antd4_message_reply from './antd4.fn.message.reply';
 import func_antd4_v4_patch from './antd4.fn.v4.patch';

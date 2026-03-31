@@ -1,3 +1,4 @@
+import React from 'react';
 /*
  * 根据分辨率计算核心高度
  * 1）width > 1400 的宽度：默认 - 48

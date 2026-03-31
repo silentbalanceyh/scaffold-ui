@@ -1,3 +1,4 @@
+import React from 'react';
 import serialFn from './cell.list.__.@fn.serial';
 import phaseFn from './cell.list.__.@fn.phase';
 

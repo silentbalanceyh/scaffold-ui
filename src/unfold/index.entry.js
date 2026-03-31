@@ -1,3 +1,4 @@
+import React from 'react';
 import func_ably_setting_yi from './ably.setting.fn.yi';
 import func_ably_setting_yo from './ably.setting.fn.yo';
 import func_ably_setting_yo_header from './ably.setting.fn.yo.pro.header';

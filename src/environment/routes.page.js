@@ -1,43 +1,93 @@
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import React, {PureComponent} from "react";
+import React, {PureComponent, useEffect, useState} from "react";
 // Ant Design
-import {theme} from 'antd';
+import {theme, Spin} from 'antd';
 import Ux from "ux";
 // Redux ( Store )
 // Zero Framework ( Model & Ux )
 import {Dsl} from "entity";
 // ----------------------------- Route Data ----------------------------------
-import Container from "../container";
-import Component from "../components";
 import storeGlobal from "./store";
 import ROUTE_DATA from "../route";
 // ----------------------------- import above ----------------------------------
 const {useToken} = theme;
 // ----------------------------- hooks function component ----------------------------------
 
-const getContainer = (module, page) => {
+const toRouteKey = (modulePath, prefix) => {
+    const relative = modulePath
+        .replace(prefix, "")
+        .replace(/\/UI\.(js|jsx|ts|tsx)$/, "");
+    return relative
+        .replace(/\./g, '')
+        .replace(/-/g, '$')
+        .replace(/\//g, '_');
+};
+
+const buildLoaderMap = (modules, prefix) => {
+    const loaderMap = {};
+    Object.keys(modules).forEach((modulePath) => {
+        loaderMap[toRouteKey(modulePath, prefix)] = modules[modulePath];
+    });
+    return loaderMap;
+};
+
+const CONTAINER_LOADERS = buildLoaderMap(
+    import.meta.glob(["../container/**/UI.js"]),
+    "../container"
+);
+const COMPONENT_LOADERS = {
+    ...buildLoaderMap(
+        import.meta.glob(["../components/**/UI.js"]),
+        "../components"
+    ),
+    ...buildLoaderMap(
+        import.meta.glob(["../extension/components/**/UI.js"]),
+        "../extension/components"
+    ),
+    ...buildLoaderMap(
+        import.meta.glob(["../extension/cerebration/**/UI.js"]),
+        "../extension/cerebration"
+    ),
+};
+
+const getContainerKey = (module, page) => {
     const keyContainer = `_${module}_${page}`;
-    if (Container[keyContainer]) {
-        return Container[keyContainer];
+    if (CONTAINER_LOADERS[keyContainer]) {
+        return keyContainer;
     }
     if (ROUTE_DATA[keyContainer]) {
-        return Container[ROUTE_DATA[keyContainer]]
+        return ROUTE_DATA[keyContainer];
     }
-    return Container[ROUTE_DATA.defined];
-}
-const getComponent = (module, page, type) => {
+    return ROUTE_DATA.defined;
+};
+
+const getComponentKey = (module, page) => {
     // 先做 Container 基本运算
     page = page.replace("-", "$");  // 特殊规则
-    const keyComponent = `_${module}_${page}`;
-    if (Component[keyComponent]) {
-        return Component[keyComponent];
+    return `_${module}_${page}`;
+};
+
+const createMissingComponent = (keyComponent) => class Component extends PureComponent {
+    render() {
+        return (<div>{keyComponent} 页面未找到！</div>);
     }
-    return class Component extends PureComponent {
-        render() {
-            return (<div>${keyComponent} 页面未找到！</div>);
-        }
-    }
-}
+};
+
+const loadPagePair = async (module, page) => {
+    const keyContainer = getContainerKey(module, page);
+    const keyComponent = getComponentKey(module, page);
+    const layoutLoader = CONTAINER_LOADERS[keyContainer] || CONTAINER_LOADERS[ROUTE_DATA.defined];
+    const componentLoader = COMPONENT_LOADERS[keyComponent];
+    const [layoutModule, componentModule] = await Promise.all([
+        layoutLoader(),
+        componentLoader ? componentLoader() : Promise.resolve({default: createMissingComponent(keyComponent)}),
+    ]);
+    return {
+        Layout: layoutModule.default || layoutModule,
+        Page: componentModule.default || componentModule,
+    };
+};
+
 const renderPage = (Layout, Page, useHook = {}) => {
     const {token, location, navigate, params} = useHook;
     // DataRouter Building;
@@ -62,6 +112,44 @@ const renderPage = (Layout, Page, useHook = {}) => {
         </div>
     );
 };
+
+const renderLoading = () => (
+    <div style={{padding: 48, textAlign: "center"}}>
+        <Spin size="large"/>
+    </div>
+);
+
+const useResolvedPage = (module, page) => {
+    const [state, setState] = useState({
+        ready: false,
+        Layout: null,
+        Page: null,
+    });
+
+    useEffect(() => {
+        let active = true;
+        setState({
+            ready: false,
+            Layout: null,
+            Page: null,
+        });
+        loadPagePair(module, page).then(({Layout, Page}) => {
+            if (active) {
+                setState({
+                    ready: true,
+                    Layout,
+                    Page,
+                });
+            }
+        });
+        return () => {
+            active = false;
+        };
+    }, [module, page]);
+
+    return state;
+};
+
 const PageAuthorized = (props) => {
     const token = useToken();
     const location = useLocation();
@@ -88,9 +176,11 @@ const PageAuthorized = (props) => {
     //     initializeApp(params.app)
     // }, [params.app]);
 
-    const Container = getContainer(params.module, params.page);
-    const Component = getComponent(params.module, params.page);
-    return renderPage(Container, Component, {token, location, navigate, params});
+    const resolved = useResolvedPage(params.module, params.page);
+    if (!resolved.ready) {
+        return renderLoading();
+    }
+    return renderPage(resolved.Layout, resolved.Page, {token, location, navigate, params});
 }
 
 const PageLogin = (props) => {
@@ -98,13 +188,13 @@ const PageLogin = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const params = useParams();
-    // _login_index
-    const Container = getContainer("login", "index");
-    // _login_index
-    const Component = getComponent("login", "index");
+    const resolved = useResolvedPage("login", "index");
     const path = location.pathname;
     if ("/" === path) {
-        return renderPage(Container, Component, {token, location, navigate, params});
+        if (!resolved.ready) {
+            return renderLoading();
+        }
+        return renderPage(resolved.Layout, resolved.Page, {token, location, navigate, params});
     }
     return false;
 }

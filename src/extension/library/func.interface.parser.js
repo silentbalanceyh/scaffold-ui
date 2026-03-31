@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zu from 'zet';
 /*
  * 统一配置解析器

@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from './zero.module.dependency';
 import __CB from './rapid.fn.sex.configuration';
 import {DialogButton} from "zi";

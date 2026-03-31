@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * ## 「组件」`CheckTransfer`
  *

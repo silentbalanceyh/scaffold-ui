@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from './zero.uca.dependency';
 import __JSX from './column.__.fn.jsx.segment';
 import __NORM from './column.__.fn.norm.text';

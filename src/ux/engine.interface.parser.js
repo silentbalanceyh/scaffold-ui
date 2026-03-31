@@ -1,3 +1,4 @@
+import React from 'react';
 // 导入外层执行
 import __Zo from 'zo';
 // --------------------- parsing 基础方法

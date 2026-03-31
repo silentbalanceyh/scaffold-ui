@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zs from 'zs';
 
 /**

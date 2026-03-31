@@ -1,3 +1,4 @@
+import React from 'react';
 import __FI from './aero.__.fn.fabric.internal';
 import Ux from 'ux';
 

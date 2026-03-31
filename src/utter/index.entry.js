@@ -1,3 +1,4 @@
+import React from 'react';
 import func_idyl_rs_state from './idyl.fn.rs.state';
 import func_idyl_rx_container_batch from './idyl.fn.rx.container.batch';
 import func_idyl_rx_container_tab from './idyl.fn.rx.container.tab';

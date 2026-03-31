@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from 'zone';
 import {_Debugger, _Logger} from 'zo';
 

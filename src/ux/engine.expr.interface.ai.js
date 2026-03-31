@@ -1,3 +1,4 @@
+import React from 'react';
 // 导入当前目录
 // 导入内部 ai 解析器
 import __Zo from 'zo';

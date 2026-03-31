@@ -1,3 +1,4 @@
+import React from 'react';
 import __IS_DECISION from './fn.under.is.decision';
 import __IS_BUSINESS from './fn.under.is.business';
 import __V from './fn.assort.value.typed';

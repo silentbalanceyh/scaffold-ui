@@ -1,3 +1,4 @@
+import React from 'react';
 const _generate = (code, info, error) => () => Promise.reject({code, error, info});
 const error001 = _generate(-200001, "应用程序数据读取失败！",
     "Application ( X_APP ) Has not been initialized ！");

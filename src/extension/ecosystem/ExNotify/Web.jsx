@@ -1,3 +1,4 @@
+import React from 'react';
 import Ux from 'ux';
 import {Drawer, List} from "antd";
 import {InfoCircleOutlined} from "@ant-design/icons";

@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from './zero.module.dependency';
 import __Fm from './form.submit.fn.data.io';
 

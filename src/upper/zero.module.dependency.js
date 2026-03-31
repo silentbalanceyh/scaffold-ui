@@ -1,1 +1,1 @@
-export default from 'zet';
+export {default} from 'zet';

@@ -1,3 +1,4 @@
+import React from 'react';
 import marked from 'marked';
 import renderHTML from 'react-render-html';
 import hljs from 'highlight.js';

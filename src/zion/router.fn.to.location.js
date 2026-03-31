@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from './zero.module.dependency';
 import {_Session, _Storage} from 'zo';
 import __QM from './router.__.fn.query.norm';

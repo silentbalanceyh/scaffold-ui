@@ -1,3 +1,4 @@
+import React from 'react';
 import func_arrange_value_complex from './fn.arrange.value.complex';
 import func_arrange_value_stdn from './fn.arrange.value.stdn';
 import func_arrange_element_tree from './fn.arrange.element.tree';

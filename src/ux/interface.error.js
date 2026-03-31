@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from 'zone';
 
 // eslint-disable-next-line import/no-anonymous-default-export

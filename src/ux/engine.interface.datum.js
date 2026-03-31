@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zi from 'zi';
 import __Zo from 'zo';
 import __Zn from 'zone';

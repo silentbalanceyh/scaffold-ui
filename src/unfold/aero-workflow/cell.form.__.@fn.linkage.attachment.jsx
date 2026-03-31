@@ -1,3 +1,4 @@
+import React from 'react';
 import Ux from 'ux';
 
 export default (ref) => (reference, jsx) => {

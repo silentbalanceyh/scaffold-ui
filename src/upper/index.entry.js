@@ -1,3 +1,4 @@
+import React from 'react';
 import func_boundary_ui_container from './boundary.fn.ui.container';
 import func_boundary_web_segment from './boundary.fn.web.segment'
 import func_boundary_yl_channel_control from './boundary.fn.yl.channel.control';

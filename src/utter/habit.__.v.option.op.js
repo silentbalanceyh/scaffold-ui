@@ -1,3 +1,4 @@
+import React from 'react';
 export default {
     /*
      * 关于 plugin 的说明

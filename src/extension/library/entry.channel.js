@@ -1,3 +1,4 @@
+import React from 'react';
 import Tpl from './channel.interface.yl';
 import Yi from './channel.interface.yi';
 import Yu from './channel.interface.yu';

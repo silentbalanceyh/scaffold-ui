@@ -1,3 +1,4 @@
+import React from 'react';
 import entry from './index.entry';
 
 export {default as zero} from './annotation.a.zero';

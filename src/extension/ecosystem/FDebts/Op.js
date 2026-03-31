@@ -1,3 +1,4 @@
+import React from 'react';
 import Ux from 'ux';
 import {Checkbox, Input} from 'antd';
 

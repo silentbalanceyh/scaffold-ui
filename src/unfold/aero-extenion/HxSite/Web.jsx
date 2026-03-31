@@ -1,3 +1,4 @@
+import React from 'react';
 import {Card, Tree} from "antd";
 import "./Cab.norm.scss";
 import Ux from "ux";

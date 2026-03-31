@@ -1,3 +1,4 @@
+import React from 'react';
 import func_annotation_anno_util from './annotation.fn.anno.util';
 import func_annotation_anno_error from './annotation.fn.anno.error';
 

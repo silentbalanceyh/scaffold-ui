@@ -1,3 +1,4 @@
+import React from 'react';
 import Rdr from './ego.__.fn.kin.list.table.segment';
 import Evt from './ego.fn.kin.event';
 import Ux from 'ux';

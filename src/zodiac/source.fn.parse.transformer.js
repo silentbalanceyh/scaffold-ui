@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from './zero.module.dependency';
 import __DQR from './source.datum.fn.element.qr';
 import __APP from './store.fn.is.configuration';

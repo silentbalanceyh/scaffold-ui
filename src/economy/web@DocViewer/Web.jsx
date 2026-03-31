@@ -1,3 +1,4 @@
+import React from 'react';
 import {DocumentEditor} from "@onlyoffice/document-editor-react";
 import Ux from 'ux';
 

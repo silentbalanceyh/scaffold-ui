@@ -1,1 +1,1 @@
-export default from '../zero.module.dependency';
+export {default} from '../zero.module.dependency';

@@ -1,3 +1,4 @@
+import React from 'react';
 import phaseFn from './cell.form.__.@fn.phase';
 import monitorHistoryFn from './cell.form.__.@fn.monitor.history';
 import monitorBpmnFn from './cell.form.__.@fn.monitor.bpmn';

@@ -2,7 +2,8 @@ import __Zn from './zero.module.dependency';
 import __AI_UI from './form.__.fn.ai.ui.equip';
 import __AI_IT from './form.__.fn.it.ui.analyze';
 import {_Logger} from 'zo';
-import {Form} from 'antd';
+import { Form } from 'antd';
+import React from 'react';
 // Unlock for DialogEditor
 // Old -> import UcaField from "./variant-uca";
 import UcaField from "./variant-uca/render.__.ai.hidden";

@@ -1,3 +1,4 @@
+import React from 'react';
 import __Zn from './zero.module.dependency';
 import __v4Initial from './antd4.__.@fn.v4.initial.value';
 

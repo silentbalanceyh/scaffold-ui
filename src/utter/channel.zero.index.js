@@ -1,3 +1,4 @@
+import React from 'react';
 import yoAmbient from './channel.@fn.yo.ambient';
 import yoDynamic from './channel.@fn.yo.dynamic';
 import yoRender from './channel.@fn.yo.render';

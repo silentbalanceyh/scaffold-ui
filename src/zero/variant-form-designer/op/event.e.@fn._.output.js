@@ -1,3 +1,4 @@
+import React from 'react';
 import St from './out.entry';
 import __Zn from '../zero.uca.dependency';
 /*

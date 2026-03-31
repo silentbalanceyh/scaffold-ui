@@ -1,3 +1,4 @@
+import React from 'react';
 import {Dsl} from 'entity';
 import __Zn from '../zero.uca.dependency';
 

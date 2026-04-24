@@ -10,7 +10,7 @@
                         "field": "aiSelect",
                         "jsx": {
                             "config": {
-                                "datum": "source=pay.type,key=code,label=name"
+                                "datum": "source=fm.term,key=code,label=name"
                             }
                         }
                     }

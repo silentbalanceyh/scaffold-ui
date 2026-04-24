@@ -37,14 +37,14 @@ const __seekPath = (path, reference) => {
     }
     return pageUri;
 }
-const __seekDeeply = (path, menuData, reference, visited = new Set()) => {
+const __seekDeeply = (path, menuData, reference) => {
     const {$router} = reference.props;
     const target = $router.from();
-    if (!target || visited.has(target)) {
+    if (!target) {
+        // 彻底停止
         return null;
     }
-    visited.add(target);
-    return seekUri(target, menuData, reference, visited);
+    return seekUri(target, menuData, reference);
 }
 /*
  * 根据当前页面检查是否密码修改页，密码修改页是账号第一次登录系统的页面
@@ -91,7 +91,7 @@ const seekActive = (menuData = [], analyzed = [], reference = {}) => {
         return analyzed;
     }
 }
-const seekUri = (path, menuData = [], reference, visited = new Set()) => {
+const seekUri = (path, menuData = [], reference) => {
     // 根据 path 查找唯一路由
     const pageUri = __seekPath(path, reference);
     let analyzed = seekSource(menuData).filter(item => pageUri.startsWith(item.uri));
@@ -129,7 +129,7 @@ const seekUri = (path, menuData = [], reference, visited = new Set()) => {
         /*
          * 深度检索，取 target 执行相关处理
          */
-        const page = __seekDeeply(path, menuData, reference, visited);
+        const page = __seekDeeply(path, menuData, reference);
         if (!page) {
             /*
              * 密码页检查
@@ -139,6 +139,8 @@ const seekUri = (path, menuData = [], reference, visited = new Set()) => {
             }
         }
         return page;
+        // 此处直接抛异常，属于配置错
+        // return new Error("菜单配置不符合规范，无法解析路由，请检查！！");
     }
 }
 // eslint-disable-next-line import/no-anonymous-default-export

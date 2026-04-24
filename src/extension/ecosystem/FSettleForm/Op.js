@@ -44,7 +44,7 @@ export default {
                 const payment = request.payment;
                 const $payment = [];
                 payment.forEach(each => {
-                    const found = Ux.elementUniqueDatum(reference, "pay.type", "code", each.name);
+                    const found = Ux.elementUniqueDatum(reference, "fm.term", "code", each.name);
                     if (found) {
                         const record = {};
                         record.amount = each.amount;
@@ -90,9 +90,11 @@ export default {
         Object.assign(values, amountAttach);
 
         values.payment = [];
+        const mod = Ux.isMod('mHotel');
+        const term = Ux.elementUniqueDatum(reference, "fm.term", 'id', mod.pPay);
         values.payment.push({
-            key: "Cash",
-            name: "Cash",
+            key: term.name,
+            name: term.name,
             amount: values.amountActual
         })
         return values;

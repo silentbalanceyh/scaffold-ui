@@ -27,6 +27,12 @@ const payGap = (params = {}) => {
             amountAddon.amountGap = 0;
         }
     }
+    if (!amountAddon.hasOwnProperty("amountActual")) {
+        amountAddon.amountActual = amount;
+    }
+    if (!amountAddon.hasOwnProperty("amountGap")) {
+        amountAddon.amountGap = 0;
+    }
     return amountAddon;
 }
 /*

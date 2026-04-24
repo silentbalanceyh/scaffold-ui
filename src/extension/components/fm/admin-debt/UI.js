@@ -48,9 +48,18 @@ export default Ui.smartList({
     },
 
     componentInit: (reference) => {
-        Ex.yiAssist(reference)
-            .then(Ux.ready)
-            .then(Ux.pipe(reference));
+        Ex.yiAssist(reference).then(state => {
+            // 解析 data 字段中的 JSON 字符串
+            if (state.$a_fm_term.data) {
+                let fmTerm = typeof state.$a_fm_term.data === 'string' ? JSON.parse(state.$a_fm_term.data) : state.$a_fm_term.data;
+                // 过滤 fm.term 数据，只保留 P01 的子类（leaf=true 且 code 以 P01. 开头）
+                fmTerm = fmTerm.filter(item =>
+                    item.leaf && item.code && item.code.startsWith('P01.')
+                );
+                state.$a_fm_term.data = JSON.stringify(fmTerm);
+            }
+            return Ux.ready(state);
+        }).then(Ux.pipe(reference))
     },
     yoOp: () => ({
         // 批量处理

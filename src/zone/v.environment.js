@@ -1,8 +1,50 @@
 import Immutable from "immutable";
 
-Object.freeze(process.env);
+// 运行时配置合并：优先使用 window.g 中的配置
+const getRuntimeEnv = () => {
+    // 创建环境变量副本
+    const env = {};
 
-const ENV = Immutable.fromJS(process.env).toJS();
+    // 从 process.env 复制所有属性（define 替换的值已经在这里）
+    try {
+        const rawEnv = Immutable.fromJS(process.env).toJS();
+        Object.assign(env, rawEnv);
+    } catch (e) {
+        console.warn('Failed to copy process.env:', e);
+    }
+
+    // 运行时从 window.g 覆盖配置（window.g 优先级更高）
+    if (typeof window !== 'undefined' && window.g) {
+        Object.keys(window.g).forEach(key => {
+            const value = window.g[key];
+            if (value !== undefined && value !== null && value !== '') {
+                if (key.startsWith('Z_')) {
+                    // 移除 Z_ 前缀存储（如 Z_ENDPOINT -> ENDPOINT）
+                    const envKey = key.substring(2);
+                    env[envKey] = value;
+                } else {
+                    env[key] = value;
+                }
+            }
+        });
+    }
+
+    // 确保关键变量有默认值
+    env.CSS_FONT = env.CSS_FONT || env.Z_CSS_FONT || "14";
+    env.CSS_COLOR = env.CSS_COLOR || env.Z_CSS_COLOR || "#36648b";
+    env.CSS_RADIUS = env.CSS_RADIUS || env.Z_CSS_RADIUS || "4";
+    env.CSS_SHADOW = env.CSS_SHADOW || env.Z_CSS_SHADOW || "true";
+    env.CSS_SKIN_MODULE = env.CSS_SKIN_MODULE || env.Z_CSS_SKIN_MODULE || "HM";
+    env.CSS_SKIN_NAME = env.CSS_SKIN_NAME || env.Z_CSS_SKIN_NAME || "NormLight";
+    env.LANGUAGE = env.LANGUAGE || env.Z_LANGUAGE || "cn";
+    env.ENDPOINT = env.ENDPOINT || env.Z_ENDPOINT || "";
+    env.APP = env.APP || env.Z_APP || "";
+    env.TITLE = env.TITLE || env.Z_TITLE || "";
+
+    return env;
+};
+
+const ENV = getRuntimeEnv();
 // eslint-disable-next-line
 for (const key in ENV) {
     if (ENV.hasOwnProperty(key)) {

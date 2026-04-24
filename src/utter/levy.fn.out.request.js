@@ -73,18 +73,28 @@ const inPrePay = (reference, params = {}, config = {}, pAsync = false) => {
         eAmount = "pay",       // Err：金额检查失败时抛错，检查每一行金额是否为0，若为0则抛错
     } = config;
     // 检查 payment.length
-    if (0 === payment.length) {
+    const amountNormalized = Ux.valueFloat(amountActual, 0.0, pDigit);
+    const paymentEffective = (payment || []).filter(each =>
+        each && 0 !== Ux.valueFloat(each.amount, 0.0, pDigit)
+    );
+
+    // 冲抵为 0：允许 payment 为空（无需再付/再退）
+    if (0 === amountNormalized && 0 === paymentEffective.length) {
+        return pAsync ? Promise.resolve({}) : false;
+    }
+
+    if (0 === paymentEffective.length) {
         const data = outMessage(reference, eEmpty, pAsync);
         return outError(reference, data, {pFlow, pAsync});
     }
     // 检查 payment 中的 name / amount
     let sum = 0;
-    for (let idx = 0; idx < payment.length; idx++) {
-        if (!payment[idx].name || !payment[idx].amount) {
+    for (let idx = 0; idx < paymentEffective.length; idx++) {
+        if (!paymentEffective[idx].name) {
             const data = outMessage(reference, ePay, pAsync);
             return outError(reference, data, {pFlow, pAsync});
         }
-        sum += Ux.valueFloat(payment[idx].amount, 0.0, pDigit);
+        sum += Ux.valueFloat(paymentEffective[idx].amount, 0.0, pDigit);
     }
     /**
      * 新的三合一验证流程
@@ -93,7 +103,7 @@ const inPrePay = (reference, params = {}, config = {}, pAsync = false) => {
      * - FLOOR / 零头舍弃
      * - CEIL / 零头入进
      */
-    if (parseFloat(parseFloat(amountActual).toFixed(2)) !== parseFloat(sum.toFixed(2))) {
+    if (parseFloat(parseFloat(amountNormalized).toFixed(2)) !== parseFloat(sum.toFixed(2))) {
         const data = outMessage(reference, eAmount, pAsync);
         return outError(reference, data, {pFlow, pAsync});
     }

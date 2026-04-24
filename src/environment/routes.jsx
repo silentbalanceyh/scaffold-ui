@@ -1,0 +1,28 @@
+import React from "react";
+// App Pages
+// React Router ( V6 )
+import {Route, Routes} from "react-router-dom";
+// Redux ( Store )
+// Zero Framework ( Model & Ux )
+// Moment.js Fix
+import 'moment/locale/zh-cn';
+import moment from 'moment';
+import PageRoute from "./routes.page";
+
+// ----------------------------- Route Data ----------------------------------
+moment.locale('zh-cn');
+
+
+// ----------------------------- hooks function component ----------------------------------
+export default (
+    <Routes>
+        {/* 格式1：直接的 /module/page 页面，且不需要授权 */}
+        <Route path={"/"} element={<PageRoute authorized={false}/>}/>
+        <Route path={"/login/index"} element={<PageRoute authorized={false}/>}/>
+        <Route path={"/:app/login/index"} element={<PageRoute authorized={false}/>}/>
+        {/* 格式2：直接的 /module/page 页面 */}
+        <Route path={"/:app/:module/:page"} element={<PageRoute/>}/>
+        {/* 格式3：直接的 /module/page/:type 页面 */}
+        <Route path={"/:app/:module/:page/:type"} element={<PageRoute/>}/>
+    </Routes>
+);

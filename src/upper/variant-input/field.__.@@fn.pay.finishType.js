@@ -25,10 +25,12 @@ export default (ref, required) => {
                     const values = __Fn.payGap(input);
                     // rounded 和 payment 的还原
                     values.payment = [];
+                    const pay =  Ux.isMod('mHotel')
+                    const term = Ux.elementUniqueDatum(reference, "fm.term", 'id', pay.pPay);
                     values.payment.push({
-                        key: "Cash",
-                        name: "Cash",
-                        amount: input.amountActual
+                        key: term.name,
+                        name: term.name,
+                        amount: values.amountActual
                     })
                     Object.assign(params, values);
                 }
@@ -47,10 +49,12 @@ export default (ref, required) => {
                 // rounded 和 payment 的还原
                 values.rounded = rounded;
                 values.payment = [];
+                const pay =  Ux.isMod('mHotel')
+                const term = Ux.elementUniqueDatum(reference, "fm.term", 'id', pay.pPay);
                 values.payment.push({
-                    key: "Cash",
-                    name: "Cash",
-                    amount: input.amountActual
+                    key: term.name,
+                    name: term.name,
+                    amount: values.amountActual
                 })
                 Object.assign(params, values);
             }

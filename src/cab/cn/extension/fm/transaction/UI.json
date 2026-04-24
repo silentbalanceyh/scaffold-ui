@@ -10,6 +10,14 @@
                 ]
             },
             "group": "type"
+        },
+        "fmTrem": {
+            "uri": "/api/type/categories/:type",
+            "method": "GET",
+            "magic": {
+                "type": "FIX:fm.term"
+            },
+            "group": "type"
         }
     },
     "_grid": {

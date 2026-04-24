@@ -109,7 +109,6 @@ export default {
             value,
             display,
         } = config;
-        console.log($gData);
         const values = $gData.map(item => item[field])
             .reduce((pre, cur) => pre.includes(cur) ? pre : pre.concat(cur), []);
         const sData = Ux.onDatum(reference, source)

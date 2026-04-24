@@ -222,7 +222,8 @@ const PageLogin = (props) => {
     const params = useParams();
     const resolved = useResolvedPage("login", "index");
     const path = location.pathname;
-    if ("/" === path) {
+    const isLoginPath = "/" === path || path.endsWith("/login/index");
+    if (isLoginPath) {
         if (!resolved.ready) {
             return renderLoading();
         }

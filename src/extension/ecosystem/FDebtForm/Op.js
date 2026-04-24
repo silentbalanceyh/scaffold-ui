@@ -44,7 +44,7 @@ export default {
                     const payment = request.payment;
                     const $payment = [];
                     payment.forEach(each => {
-                        const found = Ux.elementUniqueDatum(reference, "pay.type", "code", each.name);
+                        const found = Ux.elementUniqueDatum(reference, "fm.term", "name", each.name);
                         if (found) {
                             const record = {};
                             record.amount = each.amount;
@@ -80,14 +80,6 @@ export default {
         });
         formValues.amount = formValues.amountActual;
         Object.assign(formValues, amountAttach);
-
-        formValues.payment = [];
-        formValues.payment.push({
-            key: "Cash",
-            name: "Cash",
-            amount: formValues.amountActual
-        })
-
         return formValues;
     },
     yiPage: (reference) => {

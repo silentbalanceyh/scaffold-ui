@@ -23,6 +23,14 @@ class Component extends React.PureComponent {
             const { $inited = {}} = this.props;
             const { $customer = {}} = this.state;
             const formValues = Op.yoValue($inited, $customer);
+            formValues.payment = [];
+            const mod = Ux.isMod('mHotel');
+            const term = Ux.elementUniqueDatum(this, "fm.term", 'id', mod.pPay);
+            formValues.payment.push({
+                key: term.name,
+                name: term.name,
+                amount: formValues.amountActual
+            })
             const form = Ex.yoForm(this, null, formValues);
             const { rxClose } = this.props;
             return (

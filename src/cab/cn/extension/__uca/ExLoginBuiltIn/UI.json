@@ -66,12 +66,12 @@
                         "rules": [
                             {
                                 "required": true,
-                                "message": "请输入验证码！"
+                                "message": "请输入4位图片验证码！"
                             }
                         ]
                     },
                     "optionJsx": {
-                        "placeholder": "验证码",
+                        "placeholder": "4位验证码，仅含2-9数字",
                         "prefix": {
                             "type": "code"
                         },

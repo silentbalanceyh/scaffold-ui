@@ -5,16 +5,16 @@ filename: "CLAUDE-FRONT.md"
 
 # CLAUDE-FRONT — Frontend & Structure Rules Summary
 
-> This document is a distilled summary of **frontend, structure, and requirement** Cursor rules (non–r2-backend-\*) for use in work-claude. All listed rules have **`alwaysApply: true`**: they are always in effect for frontend, .r2mo layout, and requirement authoring. The canonical definitions live in `.cursor/rules/*.mdc`; this file gives an AI enough context to reason correctly from the summary alone.
+> This document is a distilled summary of **frontend, structure, and requirement** Cursor rules (non–r2-backend-\*) for use in work-claude. All listed rules have **`alwaysApply: true`**: they are always in effect for frontend, .r2mo layout, and requirement authoring. The canonical definitions live in `.cursor/rules/*.md`; this file gives an AI enough context to reason correctly from the summary alone.
 
 ---
 
-## Core rule: Missing .mdc files
+## Core rule: Missing .md files
 
-**When using this document or following the index:** Referenced `.mdc` files (e.g. under `.cursor/rules/`) **may not exist** in the current workspace (e.g. rules not installed or different project layout). When processing:
+**When using this document or following the index:** Referenced `.md` files (e.g. under `.cursor/rules/`) **may not exist** in the current workspace (e.g. rules not installed or different project layout). When processing:
 
-- **If a referenced .mdc file does not exist:** Treat that rule as absent; ignore it and continue. Do not error, block, or assume the file will appear later.
-- **Rely on this .md summary** for behavior when the corresponding .mdc is missing; the summaries in this file are self-contained enough to apply without the .mdc.
+- **If a referenced .md file does not exist:** Treat that rule as absent; ignore it and continue. Do not error, block, or assume the file will appear later.
+- **Rely on this .md summary** for behavior when the corresponding .md is missing; the summaries in this file are self-contained enough to apply without the .md.
 
 ---
 
@@ -22,20 +22,20 @@ filename: "CLAUDE-FRONT.md"
 
 | Rule file | Purpose | Full path |
 | :--- | :--- | :--- |
-| r2-frontend-rust | Rust frontend (Leptos/Tauri/Tailwind) dev & conventions | [.cursor/rules/r2-frontend-rust.mdc](.cursor/rules/r2-frontend-rust.mdc) |
-| r2-structure-r2mo | .r2mo directory semantics, source-of-truth, output locations | [.cursor/rules/r2-structure-r2mo.mdc](.cursor/rules/r2-structure-r2mo.mdc) |
-| r2-structure-requirement | Requirement doc templates & authoring (module/page) | [.cursor/rules/r2-structure-requirement.mdc](.cursor/rules/r2-structure-requirement.mdc) |
-| r2-structure-src | Repo src / src-tauri layout, tech stack, output locations | [.cursor/rules/r2-structure-src.mdc](.cursor/rules/r2-structure-src.mdc) |
+| r2-frontend-rust | Rust frontend (Leptos/Tauri/Tailwind) dev & conventions | [.cursor/rules/r2-frontend-rust.md](.cursor/rules/r2-frontend-rust.md) |
+| r2-structure-r2mo | .r2mo directory semantics, source-of-truth, output locations | [.cursor/rules/r2-structure-r2mo.md](.cursor/rules/r2-structure-r2mo.md) |
+| r2-structure-requirement | Requirement doc templates & authoring (module/page) | [.cursor/rules/r2-structure-requirement.md](.cursor/rules/r2-structure-requirement.md) |
+| r2-structure-src | Repo src / src-tauri layout, tech stack, output locations | [.cursor/rules/r2-structure-src.md](.cursor/rules/r2-structure-src.md) |
 
 ---
 
 ## 2. Why “Always-Applied” Matters
 
-Each rule’s `.mdc` has **`alwaysApply: true`**. For an AI:
+Each rule’s `.md` has **`alwaysApply: true`**. For an AI:
 
 - **Assume these rules apply** whenever you work on frontend code, `.r2mo` paths, or requirement documents (module/page), unless the user explicitly says otherwise.
 - **Do not** invent APIs, models, or UI behavior not backed by requirements or `.r2mo`; do not write requirement output under `/.r2mo/requirements/` unless explicitly asked.
-- When in doubt, **prefer the full .mdc** via the index; this doc is a shortcut, not a replacement.
+- When in doubt, **prefer the full .md** via the index; this doc is a shortcut, not a replacement.
 
 ---
 
@@ -103,5 +103,5 @@ Each rule’s `.mdc` has **`alwaysApply: true`**. For an AI:
 
 ## 7. How to Use This Document
 
-- **Frontend or requirement tasks:** Assume all four rules above apply. Use this summary to choose paths, templates, and behavior; open the indexed `.mdc` files when you need full section lists, examples, or anti-patterns.
+- **Frontend or requirement tasks:** Assume all four rules above apply. Use this summary to choose paths, templates, and behavior; open the indexed `.md` files when you need full section lists, examples, or anti-patterns.
 - **Cross-team:** API and domain models are defined in `.r2mo`; keep requirement docs and `metadata.yaml` / `page.yaml` annotations aligned with those specs.

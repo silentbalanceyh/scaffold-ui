@@ -37,10 +37,14 @@ const yuRouter = (reference, virtualRef, callbackFn) => {
 const yuContainer = (reference, virtualRef = {}) => {
     if (Ux.isRoute(reference.props, virtualRef.props)) {
         /*
-         * 这行代码会引起闪屏的BUG
-         * reference.setState({$ready: false});
+         * 优化闪屏问题：
+         * 当前路由格式为 /:app/:module/:page，所有页面都是静态页面
+         * 静态页面之间切换时，不需要重建 Container
+         * 页面组件通过自己的 yuRouter 处理路由参数变化
+         * 
+         * 注：动态页面（/ui/module/page 格式）已废弃，如需恢复请重新添加判断逻辑
          */
-        __Yi.yiContainer(reference);
+        // 不重建 Container，避免闪屏
     }
 };
 export default {

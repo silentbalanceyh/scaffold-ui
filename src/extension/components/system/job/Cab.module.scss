@@ -14,6 +14,17 @@
         padding-left: 6px;
         line-height: 32px;
       }
+
+      .uc_red {
+        background-color: #f50;
+        border-color: #f50;
+        color: white;
+        &:hover {
+          background-color: #ff7a45 !important;
+          border-color: #ff7a45 !important;
+          color: white !important;
+        }
+      }
     }
 
     .job-menu {

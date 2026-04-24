@@ -124,24 +124,56 @@ const useResolvedPage = (module, page) => {
         ready: false,
         Layout: null,
         Page: null,
+        containerKey: null,
     });
 
     useEffect(() => {
         let active = true;
-        setState({
-            ready: false,
-            Layout: null,
-            Page: null,
-        });
-        loadPagePair(module, page).then(({Layout, Page}) => {
-            if (active) {
-                setState({
-                    ready: true,
-                    Layout,
-                    Page,
+        
+        const keyContainer = getContainerKey(module, page);
+        const keyComponent = getComponentKey(module, page);
+        
+        // Container 相同且 Layout 已加载，只更新 Page
+        if (state.containerKey === keyContainer && state.Layout) {
+            const componentLoader = COMPONENT_LOADERS[keyComponent];
+            if (componentLoader) {
+                componentLoader().then((componentModule) => {
+                    if (active) {
+                        setState(prev => ({
+                            ...prev,
+                            Page: componentModule.default || componentModule,
+                        }));
+                    }
                 });
+            } else {
+                // Page 不存在
+                if (active) {
+                    setState(prev => ({
+                        ...prev,
+                        Page: createMissingComponent(keyComponent),
+                    }));
+                }
             }
-        });
+        } else {
+            // Container 变化或首次加载
+            setState({
+                ready: false,
+                Layout: null,
+                Page: null,
+                containerKey: null,
+            });
+            loadPagePair(module, page).then(({Layout, Page}) => {
+                if (active) {
+                    setState({
+                        ready: true,
+                        Layout,
+                        Page,
+                        containerKey: keyContainer,
+                    });
+                }
+            });
+        }
+        
         return () => {
             active = false;
         };

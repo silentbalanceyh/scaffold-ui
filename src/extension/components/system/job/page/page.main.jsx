@@ -3,7 +3,7 @@ import {Col, Row, Table} from "antd";
 import React from "react";
 import renderTool from "./page.main.tool";
 import renderMenu from './page.main.menu';
-import {ExDeploy} from "ei";
+import {LoadingAlert} from "web";
 import __ from '../Cab.module.scss';
 
 export default (reference) => {
@@ -19,7 +19,7 @@ export default (reference) => {
     configTable.pagination = $pagination;
     return (
         <div className={__.upg_system_job}>
-            <ExDeploy alert={alert} $width={1050} step={4}/>
+            {alert ? <LoadingAlert $alert={alert}/> : false}
             {renderTool(reference)}
             <Row>
                 <Col span={4}>

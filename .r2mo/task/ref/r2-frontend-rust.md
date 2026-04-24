@@ -7,7 +7,7 @@ alwaysApply: true
 # Rust Frontend Development Guide — Core Tasks
 
 This rule keeps Rust frontend work **implementation-focused** and aligned with `.r2mo` specifications.
-**Core Constraint**: UI code MUST follow `.r2mo` requirements, API, domain, and design inputs. Structure reference: `r2-structure-r2mo.mdc`, `r2-structure-src.mdc`.
+**Core Constraint**: UI code MUST follow `.r2mo` requirements, API, domain, and design inputs. Structure reference: `r2-structure-r2mo.md`, `r2-structure-src.md`.
 
 **Tech Stack**: Leptos (CSR) + Tauri + Tailwind + Trunk.
 
@@ -39,7 +39,7 @@ This rule keeps Rust frontend work **implementation-focused** and aligned with `
 
 ## 3. Project Structure Essentials
 
-**Page Module Layout** (from `r2-structure-src.mdc`):
+**Page Module Layout** (from `r2-structure-src.md`):
 ```
 src/pages/{module}/
 ├── mod.rs

@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import {spawnSync} from "node:child_process";
+import {spawn} from "node:child_process";
 import {fileURLToPath} from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -9,6 +9,11 @@ const outDir = path.join(projectRoot, "node_modules/.vite/aisz-framework");
 const manifestPath = path.join(outDir, "manifest.json");
 const viteBin = path.join(projectRoot, "node_modules/vite/bin/vite.js");
 
+// 并发构建限制（避免内存爆炸）
+const MAX_CONCURRENT_BUILD = 4;
+
+// 预打包框架模块（排除需要频繁修改的业务模块，让 HMR 精确追踪）
+// 排除列表：zet (src/utter) - 业务代码，需要实时热更新
 const FRAMEWORK_DIRS = [
     {alias: "env-icon", srcDir: "src/environment/icon"},
     {alias: "lang", srcDir: "src/cab"},
@@ -22,7 +27,7 @@ const FRAMEWORK_DIRS = [
     {alias: "zei", srcDir: "src/unfold"},
     {alias: "zep", srcDir: "src/upper"},
     {alias: "utils", srcDir: "src/utils"},
-    {alias: "zet", srcDir: "src/utter"},
+    // {alias: "zet", srcDir: "src/utter"},  // 排除：业务模块，需要 HMR
     {alias: "zero", srcDir: "src/zero"},
     {alias: "zi", srcDir: "src/zion"},
     {alias: "zmr", srcDir: "src/zither@em"},
@@ -43,9 +48,20 @@ const resolveEntry = (dirPath) => {
     return candidates.find((candidate) => fs.existsSync(candidate)) || null;
 };
 
-const fingerprintDir = (dirPath) => {
+// 优化的 fingerprint 计算：只检查入口文件和最近修改的文件
+const fingerprintDirFast = (dirPath) => {
     if (!fs.existsSync(dirPath)) return "missing";
+    
+    const entry = resolveEntry(dirPath);
+    if (!entry) return "no-entry";
+    
+    // 快速指纹：入口文件 mtime + 目录下最近10个修改文件的 mtime
     const items = [];
+    const entryStat = fs.statSync(entry);
+    items.push(`entry:${entryStat.mtimeMs}`);
+    
+    // 收集目录下所有文件，按 mtime 排序取最近的
+    const files = [];
     const walk = (current) => {
         const entries = fs.readdirSync(current, {withFileTypes: true});
         for (const entry of entries) {
@@ -55,12 +71,17 @@ const fingerprintDir = (dirPath) => {
                 walk(full);
             } else {
                 const stat = fs.statSync(full);
-                items.push(`${path.relative(projectRoot, full)}:${stat.mtimeMs}`);
+                files.push({path: full, mtime: stat.mtimeMs});
             }
         }
     };
     walk(dirPath);
-    return items.sort().join("|");
+    
+    // 取最近修改的10个文件（足够检测变化）
+    const recentFiles = files.sort((a, b) => b.mtime - a.mtime).slice(0, 10);
+    recentFiles.forEach((f) => items.push(`${path.basename(f.path)}:${f.mtime}`));
+    
+    return items.join("|");
 };
 
 const readManifest = () => {
@@ -76,62 +97,103 @@ const writeManifest = (manifest) => {
     fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
 };
 
-const buildAlias = (alias, entry) => {
-    const outputFile = path.join(outDir, `${alias}.js`);
-    const outputDir = path.dirname(outputFile);
-    fs.mkdirSync(outputDir, {recursive: true});
+// 异步构建（使用 spawn 而不是 spawnSync）
+const buildAliasAsync = (alias, entry) => {
+    return new Promise((resolve) => {
+        const outputFile = path.join(outDir, `${alias}.js`);
+        const outputDir = path.dirname(outputFile);
+        fs.mkdirSync(outputDir, {recursive: true});
 
-    const result = spawnSync(process.execPath, [
-        viteBin,
-        "build",
-        "--config",
-        "vite.config.mjs",
-        "--mode",
-        "development",
-    ], {
-        cwd: projectRoot,
-        stdio: "pipe",
-        env: {
-            ...process.env,
-            AISZ_PREBUNDLE_BUILD: "true",
-            AISZ_PREBUNDLE_ENTRY: path.relative(projectRoot, entry),
-            AISZ_PREBUNDLE_FILE: alias,
-            AISZ_PREBUNDLE_ALIAS: alias,
-            NODE_ENV: "development",
-            GENERATE_SOURCEMAP: "true",
-        },
-        encoding: "utf8",
+        const child = spawn(process.execPath, [
+            viteBin,
+            "build",
+            "--config",
+            "vite.config.mjs",
+            "--mode",
+            "development",
+        ], {
+            cwd: projectRoot,
+            stdio: "pipe",
+            env: {
+                ...process.env,
+                AISZ_PREBUNDLE_BUILD: "true",
+                AISZ_PREBUNDLE_ENTRY: path.relative(projectRoot, entry),
+                AISZ_PREBUNDLE_FILE: alias,
+                AISZ_PREBUNDLE_ALIAS: alias,
+                NODE_ENV: "development",
+                GENERATE_SOURCEMAP: "true",
+            },
+        });
+
+        let stderr = "";
+        let stdout = "";
+
+        child.stderr.on("data", (data) => stderr += data);
+        child.stdout.on("data", (data) => stdout += data);
+
+        child.on("close", (code) => {
+            if (code !== 0) {
+                resolve({
+                    ok: false,
+                    error: (stderr || stdout || "vite build failed").trim(),
+                });
+                return;
+            }
+
+            const builtFile = path.join(outDir, `${alias}.js`);
+            const builtMap = path.join(outDir, `${alias}.js.map`);
+            if (!fs.existsSync(builtFile)) {
+                resolve({ok: false, error: `missing output ${builtFile}`});
+                return;
+            }
+            if (!fs.existsSync(builtMap)) {
+                resolve({ok: false, error: `missing sourcemap ${builtMap}`});
+                return;
+            }
+            resolve({ok: true});
+        });
+
+        child.on("error", (err) => {
+            resolve({ok: false, error: err.message});
+        });
     });
-
-    if (result.status !== 0) {
-        return {
-            ok: false,
-            error: (result.stderr || result.stdout || "vite build failed").trim(),
-        };
-    }
-
-    const builtFile = path.join(outDir, `${alias}.js`);
-    const builtMap = path.join(outDir, `${alias}.js.map`);
-    if (!fs.existsSync(builtFile)) {
-        return {ok: false, error: `missing output ${builtFile}`};
-    }
-    if (!fs.existsSync(builtMap)) {
-        return {ok: false, error: `missing sourcemap ${builtMap}`};
-    }
-    return {ok: true};
 };
 
-const main = () => {
+// 并发构建队列
+const runConcurrentBuilds = async (tasks) => {
+    const results = [];
+    const executing = [];
+    
+    for (const task of tasks) {
+        const promise = buildAliasAsync(task.alias, task.entry).then((result) => {
+            executing.splice(executing.indexOf(promise), 1);
+            return {alias: task.alias, result, fingerprint: task.fingerprint, srcDir: task.srcDir, entry: task.entry};
+        });
+        
+        results.push(promise);
+        executing.push(promise);
+        
+        // 达到并发限制，等待一个完成
+        if (executing.length >= MAX_CONCURRENT_BUILD) {
+            await Promise.race(executing);
+        }
+    }
+    
+    return Promise.all(results);
+};
+
+const main = async () => {
     if (!fs.existsSync(viteBin)) {
         console.error("[prebundle] vite binary not found");
         process.exit(1);
     }
 
     const manifest = readManifest();
-    const updated = [];
+    const buildTasks = [];
     const skipped = [];
-    const failed = [];
 
+    // 第一阶段：收集需要构建的任务（快速检查）
+    console.log("[prebundle] scanning modules...");
     for (const {alias, srcDir} of FRAMEWORK_DIRS) {
         const absDir = path.join(projectRoot, srcDir);
         if (!fs.existsSync(absDir)) {
@@ -145,11 +207,12 @@ const main = () => {
             continue;
         }
 
-        const fingerprint = fingerprintDir(absDir);
+        const fingerprint = fingerprintDirFast(absDir);
         const cached = manifest[alias];
         const outputFile = path.join(outDir, `${alias}.js`);
         const outputMap = path.join(outDir, `${alias}.js.map`);
 
+        // 缓存命中检查
         if (
             cached &&
             cached.fingerprint === fingerprint &&
@@ -160,8 +223,28 @@ const main = () => {
             continue;
         }
 
-        process.stdout.write(`[prebundle] building ${alias}... `);
-        const result = buildAlias(alias, entry);
+        buildTasks.push({alias, entry, fingerprint, srcDir});
+    }
+
+    if (buildTasks.length === 0) {
+        console.log(`[prebundle] all modules cached, skipped=${skipped.length}`);
+        return;
+    }
+
+    // 第二阶段：并行构建
+    console.log(`[prebundle] building ${buildTasks.length} modules (concurrency: ${MAX_CONCURRENT_BUILD})...`);
+    const startTime = Date.now();
+    
+    const buildResults = await runConcurrentBuilds(buildTasks);
+    
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
+    console.log(`[prebundle] build time: ${elapsed}s`);
+
+    // 第三阶段：更新 manifest 和统计
+    const updated = [];
+    const failed = [];
+
+    for (const {alias, result, fingerprint, srcDir, entry} of buildResults) {
         if (result.ok) {
             manifest[alias] = {
                 fingerprint,
@@ -170,10 +253,8 @@ const main = () => {
                 entry: path.relative(projectRoot, entry),
             };
             updated.push(alias);
-            process.stdout.write("done\n");
         } else {
             failed.push({alias, error: result.error});
-            process.stdout.write("failed\n");
         }
     }
 
@@ -191,4 +272,7 @@ const main = () => {
     }
 };
 
-main();
+main().catch((err) => {
+    console.error("[prebundle] fatal error:", err);
+    process.exit(1);
+});

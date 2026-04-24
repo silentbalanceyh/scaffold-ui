@@ -4,9 +4,9 @@ title: 分析当前项目
 ---
 ## 项目基础分析
 
-分析当前项目，包括技术栈、项目结构、基础信息、环境变量、打包部署等，参考 .r2mo/task/ref/r2-structure-src.mdc 写一份新的（英文版）基于当前框架的新的 mdc：r2-structure-antd.mdc
+分析当前项目，包括技术栈、项目结构、基础信息、环境变量、打包部署等，参考 .r2mo/task/ref/r2-structure-src.md 写一份新的（英文版）基于当前框架的新的 mdc：r2-structure-antd.md
 
-分析当前项目，主要侧重于开发上下文，参考 .r2mo/task/ref/r2-frontend-rust.mdc 写一份新的（英文版）将当前项目作为目标项目书写新的 mdc：r2-frontend-antd.mdc
+分析当前项目，主要侧重于开发上下文，参考 .r2mo/task/ref/r2-frontend-rust.md 写一份新的（英文版）将当前项目作为目标项目书写新的 mdc：r2-frontend-antd.md
 
 ## 核心Claude.md
 

@@ -1,7 +1,7 @@
 ```yaml
 ---
 description: Project structure guide for extracting source-of-truth layout, tech stack, and risks from this repository.
-globs: r2-structure-src.mdc, STRUCTURE.md, Cargo.toml, src/**, src-tauri/**, Trunk.toml, tailwind.config.js, README*.md
+globs: r2-structure-src.md, STRUCTURE.md, Cargo.toml, src/**, src-tauri/**, Trunk.toml, tailwind.config.js, README*.md
 alwaysApply: true
 ---
 

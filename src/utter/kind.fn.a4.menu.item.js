@@ -132,10 +132,14 @@ const a4MenuDash = (menuData = [], reference, type) => {
     } else {
         source = menuData; // a4MenuPick(menuData, type);
     }
-    // 找到当前页
+    /**
+     * 根据当前应用查找应用旗下的核心数据
+     */
+    const appAt = $router._("app");
+    console.log(appAt);
     const found = source
         .filter(item => Ux.Env.MENU_TYPE.BAG === item.type)
-        .filter(item => 0 <= $router.path().indexOf(item.uri));
+        .filter(item => appAt === item.appId);
     if (1 !== found.length) {
         throw new Error("首页配置有误，请检查首页！！")
     }

@@ -27,7 +27,7 @@
   border: solid 1px $color;
   color: white;
   &:not(:disabled):hover, &:not(:disabled):active {
-    opacity: 0.7;
+    background-color: $color-active;
     border: solid 1px $color-active !important;
     color: white;
 

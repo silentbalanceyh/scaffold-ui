@@ -17,8 +17,13 @@ if (!NODE_ENV) {
     );
 }
 
+const customDotenvFile = process.env.AISZ_ENV_FILE
+    ? path.resolve(process.cwd(), process.env.AISZ_ENV_FILE)
+    : null;
+
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 const dotenvFiles = [
+    customDotenvFile,
     `${paths.dotenv}.${NODE_ENV}.local`,
     // Don't include `.env.local` for `test` environment
     // since normally you expect tests to produce the same
@@ -26,7 +31,7 @@ const dotenvFiles = [
     NODE_ENV !== 'test' && `${paths.dotenv}.local`,
     `${paths.dotenv}.${NODE_ENV}`,
     paths.dotenv,
-].filter(Boolean);
+].filter(Boolean).filter((file, index, list) => list.indexOf(file) === index);
 
 // Load environment variables from .env* files. Suppress warnings using silent
 // if this file is missing. dotenv will never modify any environment variables

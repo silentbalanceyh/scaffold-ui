@@ -1,0 +1,473 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1777111854481,
+  "projectRoot": "/Users/lang/zero-cloud/app-zero/zero-ecotope/zero-ui",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "tsconfig.json"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "react",
+        "version": "18.3.1",
+        "category": "frontend"
+      },
+      {
+        "name": "react-dom",
+        "version": "18.3.1",
+        "category": "frontend"
+      },
+      {
+        "name": "webpack",
+        "version": "5.104.1",
+        "category": "build"
+      }
+    ],
+    "packageManager": "npm",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "npm run build",
+    "testCommand": "npm test",
+    "lintCommand": null,
+    "devCommand": "npm run start",
+    "scripts": {
+      "prebuild": "sh scripts/zrun-generate.sh",
+      "build": "node scripts/build.js",
+      "prestart": "sh scripts/zrun-generate.sh",
+      "start": "node scripts/start.js",
+      "prestartwin": "call scripts/zrun-generate.bat",
+      "startwin": "node scripts/start.js",
+      "test": "node scripts/test.js"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": "type-based"
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "public",
+      "scripts",
+      "src"
+    ],
+    "gitBranches": {
+      "defaultBranch": "master",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "config": {
+      "path": "config",
+      "purpose": "Configuration files",
+      "fileCount": 8,
+      "lastAccessed": 1777111854427,
+      "keyFiles": [
+        "env.js",
+        "getHttpsConfig.js",
+        "modules.js",
+        "paths.js",
+        "pnpTs.js"
+      ]
+    },
+    "document": {
+      "path": "document",
+      "purpose": null,
+      "fileCount": 7,
+      "lastAccessed": 1777111854463,
+      "keyFiles": [
+        "OPTIMIZATION.md",
+        "OPTIMIZATION_COMPLETE.md",
+        "OPTIMIZATION_README.md",
+        "OPTIMIZATION_SUMMARY.md",
+        "SCRIPT_INTEGRATION.md"
+      ]
+    },
+    "public": {
+      "path": "public",
+      "purpose": "Public files",
+      "fileCount": 6,
+      "lastAccessed": 1777111854466,
+      "keyFiles": [
+        "favicon.ico",
+        "index.html",
+        "logo192.png",
+        "logo512.png",
+        "manifest.json"
+      ]
+    },
+    "running": {
+      "path": "running",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1777111854467,
+      "keyFiles": []
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 20,
+      "lastAccessed": 1777111854468,
+      "keyFiles": [
+        "build.js",
+        "ensure-generated.mjs",
+        "rename-js-to-jsx.mjs",
+        "start.js",
+        "test.js"
+      ]
+    },
+    "src": {
+      "path": "src",
+      "purpose": "Source code",
+      "fileCount": 4,
+      "lastAccessed": 1777111854468,
+      "keyFiles": [
+        "index.js",
+        "logo.svg",
+        "route.json"
+      ]
+    },
+    "src/app": {
+      "path": "src/app",
+      "purpose": "Application code",
+      "fileCount": 2,
+      "lastAccessed": 1777111854469,
+      "keyFiles": [
+        "index.d.ts",
+        "index.js"
+      ]
+    },
+    "src/components": {
+      "path": "src/components",
+      "purpose": "UI components",
+      "fileCount": 1,
+      "lastAccessed": 1777111854471,
+      "keyFiles": [
+        "index.js"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "config/webpack.config.js",
+      "accessCount": 3,
+      "lastAccessed": 1777112540687,
+      "type": "file"
+    },
+    {
+      "path": "config/modules.js",
+      "accessCount": 3,
+      "lastAccessed": 1777112634676,
+      "type": "file"
+    },
+    {
+      "path": "src/ux/index.js",
+      "accessCount": 3,
+      "lastAccessed": 1777112634756,
+      "type": "file"
+    },
+    {
+      "path": "src/ux/index.entry.js",
+      "accessCount": 3,
+      "lastAccessed": 1777112644908,
+      "type": "file"
+    },
+    {
+      "path": "config/env.js",
+      "accessCount": 2,
+      "lastAccessed": 1777112538827,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 2,
+      "lastAccessed": 1777112539110,
+      "type": "file"
+    },
+    {
+      "path": "tsconfig.json",
+      "accessCount": 2,
+      "lastAccessed": 1777112539188,
+      "type": "file"
+    },
+    {
+      "path": ".env.development",
+      "accessCount": 2,
+      "lastAccessed": 1777112539223,
+      "type": "file"
+    },
+    {
+      "path": ".env.production",
+      "accessCount": 2,
+      "lastAccessed": 1777112540105,
+      "type": "file"
+    },
+    {
+      "path": "src/route.json",
+      "accessCount": 2,
+      "lastAccessed": 1777112540667,
+      "type": "file"
+    },
+    {
+      "path": "src/skin/index.entry.js",
+      "accessCount": 2,
+      "lastAccessed": 1777112540865,
+      "type": "file"
+    },
+    {
+      "path": "config/paths.js",
+      "accessCount": 2,
+      "lastAccessed": 1777112570330,
+      "type": "file"
+    },
+    {
+      "path": "src/economy/index.js",
+      "accessCount": 2,
+      "lastAccessed": 1777112634940,
+      "type": "file"
+    },
+    {
+      "path": "src/index.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112035728,
+      "type": "file"
+    },
+    {
+      "path": ".babelrc",
+      "accessCount": 1,
+      "lastAccessed": 1777112036166,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/routes.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112052327,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/routes.jsx",
+      "accessCount": 1,
+      "lastAccessed": 1777112052359,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/routes.page.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112052549,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/store.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112052875,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/workers.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112053041,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/actions.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112053097,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/datum.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112058554,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/combiner.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112058692,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/state.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112058935,
+      "type": "file"
+    },
+    {
+      "path": "src/environment/reducers.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112059251,
+      "type": "file"
+    },
+    {
+      "path": "src/cab/index.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112066566,
+      "type": "file"
+    },
+    {
+      "path": "src/container/login/index/UI.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112083110,
+      "type": "file"
+    },
+    {
+      "path": "src/container/zo/admin/UI.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112083199,
+      "type": "file"
+    },
+    {
+      "path": "src/components/login/index/UI.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112083482,
+      "type": "file"
+    },
+    {
+      "path": "src/components/main/index/UI.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112083576,
+      "type": "file"
+    },
+    {
+      "path": "src/app/action/Epic.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112083764,
+      "type": "file"
+    },
+    {
+      "path": "src/app/action/Ajax.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112083928,
+      "type": "file"
+    },
+    {
+      "path": "src/ux/interface.ajax.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112089816,
+      "type": "file"
+    },
+    {
+      "path": "src/skin/index.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112090176,
+      "type": "file"
+    },
+    {
+      "path": "src/extension/README.md",
+      "accessCount": 1,
+      "lastAccessed": 1777112090351,
+      "type": "file"
+    },
+    {
+      "path": "src/entity@em/Dsl.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777112112065,
+      "type": "file"
+    },
+    {
+      "path": "src/entity@em/index.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777112112183,
+      "type": "file"
+    },
+    {
+      "path": "src/zodiac/lighting.__.fn.ajax.infrastructure.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112119980,
+      "type": "file"
+    },
+    {
+      "path": "src/zodiac/lighting.option.__.fn.header.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112120469,
+      "type": "file"
+    },
+    {
+      "path": "src/entity@em/rx/Rx.Etat.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777112129082,
+      "type": "file"
+    },
+    {
+      "path": "src/extension/library/Types.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112138119,
+      "type": "file"
+    },
+    {
+      "path": "src/extension/library/Epic.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112138222,
+      "type": "file"
+    },
+    {
+      "path": "config/webpackDevServer.config.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112138722,
+      "type": "file"
+    },
+    {
+      "path": "src/ux/constant.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112138782,
+      "type": "file"
+    },
+    {
+      "path": "src/container/login/index/Cab.json",
+      "accessCount": 1,
+      "lastAccessed": 1777112145744,
+      "type": "file"
+    },
+    {
+      "path": "src/zoe@em/index.ts",
+      "accessCount": 1,
+      "lastAccessed": 1777112146010,
+      "type": "file"
+    },
+    {
+      "path": "src/container/zo/admin/Cab.json",
+      "accessCount": 1,
+      "lastAccessed": 1777112146177,
+      "type": "file"
+    },
+    {
+      "path": "src/ui/index.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112146486,
+      "type": "file"
+    },
+    {
+      "path": "src/ui/ui.page.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112153188,
+      "type": "file"
+    },
+    {
+      "path": "src/extension/library/channel.interface.yi.js",
+      "accessCount": 1,
+      "lastAccessed": 1777112153285,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

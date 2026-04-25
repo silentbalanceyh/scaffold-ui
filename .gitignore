@@ -37,6 +37,8 @@ package-lock.json
 .configs/
 # Zero Ai 工具箱移除
 .zero/
+# OMC 状态文件
+.omc/
 document/doc-web    # 去文档
 # -------------------------------- Zero UI
 # 此文件可直接从 .env.development.tpl 转换，所以此处不带

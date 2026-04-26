@@ -33,6 +33,11 @@ const __ajaxEnd = (reference, redux, error) => () => {
 };
 const ajaxError = (reference, error = {}, redux = false) => {
     const {data = {}} = error;
+    if (401 === data.status) {
+        __ajaxEnd(reference, redux, error)();
+        __Zn.toUnauthorized(reference);
+        return;
+    }
     if (data.code < 0 && data.info) {
         /*
          * Server -- 这种情况下，错误信息来源于服务端

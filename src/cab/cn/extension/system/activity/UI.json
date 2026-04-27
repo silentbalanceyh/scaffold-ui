@@ -5,7 +5,8 @@
             "pager": "1,14",
             "sorter": "createdAt=DESC",
             "criteria": {
-                "sigma": "PROP:app.sigma"
+                "sigma": "PROP:app.sigma",
+                "type": "ACTIVITY"
             }
         },
         "options": {

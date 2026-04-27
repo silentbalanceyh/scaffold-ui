@@ -5,6 +5,7 @@
             "pager": "1,14",
             "sorter": "createdAt=DESC",
             "criteria": {
+                "type": "SYSTEM"
             }
         },
         "options": {

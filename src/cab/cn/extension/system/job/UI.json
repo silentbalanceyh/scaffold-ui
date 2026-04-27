@@ -73,7 +73,7 @@
             "placeholder": "任务名称/任务备注"
         },
         "switcher": {
-            "children": "关闭任务轮询"
+            "children": "关闭自动刷新"
         },
         "button": {
             "refresh": "刷新",
@@ -82,7 +82,7 @@
         "checked": {
             "FIXED": "定时任务",
             "ONCE": "一次性任务",
-            "PLAN": "轮询任务"
+            "FORMULA": "周期任务"
         }
     },
     "_table": {
@@ -109,7 +109,7 @@
             {
                 "metadata": "type,任务类型,MAPPING",
                 "$mapping": {
-                    "PLAN": "轮询任务,clock-circle,,#1874CD",
+                    "FORMULA": "周期任务,clock-circle,,#1874CD",
                     "ONCE": "一次性任务,thunderbolt,,#D02090",
                     "FIXED": "定时任务,calendar,,#228B22"
                 },

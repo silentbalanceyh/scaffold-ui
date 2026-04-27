@@ -41,11 +41,18 @@ const renderButton = (reference, tool = {}) => {
 const renderChecked = (reference, tool = {}) => {
     const {checked = {}} = tool;
     const {$condChecked = []} = reference.state;
+    const normalizedChecked = $condChecked.map(item => "PLAN" === item ? "FORMULA" : item);
+    const normalizedOptions = Object.keys(checked).reduce((options, key) => {
+        const normalizedKey = "PLAN" === key ? "FORMULA" : key;
+        const normalizedText = "轮询任务" === checked[key] ? "周期任务" : checked[key];
+        options[normalizedKey] = normalizedText;
+        return options;
+    }, {});
     return (
         <Checkbox.Group onChange={Event.onChecked(reference)}
-                        value={$condChecked}>
-            {Object.keys(checked).map(key => {
-                const text = checked[key];
+                        value={normalizedChecked}>
+            {Object.keys(normalizedOptions).map(key => {
+                const text = normalizedOptions[key];
                 return (
                     <Checkbox value={key} key={key} children={text}/>
                 )

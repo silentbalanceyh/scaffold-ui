@@ -8,6 +8,8 @@ const Cmn = {
     ...__NORM,
 }
 
+const normalizeKey = (value) => "string" === typeof value ? value.trim() : value;
+
 const renderItem = (value, params = {}) => {
     const {
         parsed = {},
@@ -16,7 +18,7 @@ const renderItem = (value, params = {}) => {
         column = {}
     } = params;
     const attrsCopied = __Zn.clone(attrs);
-    let item = parsed[value];                                            // 1. 根据值提取 item
+    let item = parsed[normalizeKey(value)];                              // 1. 根据值提取 item
     if (!item) item = {};
     const normalizedIcon = Cmn.normIcon(item);                           // 2. icon 的规范化
     const normalizedText = Cmn.normText(item.text, column, record);      // 3.格式化文字

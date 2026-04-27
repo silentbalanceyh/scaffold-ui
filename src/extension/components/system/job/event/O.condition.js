@@ -1,5 +1,8 @@
 import Ux from 'ux';
 
+const normalizeType = (type) => "PLAN" === type ? "FORMULA" : type;
+const normalizeTypes = (types = []) => types.map(normalizeType);
+
 const onSearch = (reference) => (searchText) => {
     const {$query = {}} = reference.state;
     if (searchText) {
@@ -13,11 +16,19 @@ const onSearch = (reference) => (searchText) => {
     Ux.of(reference).in({
         $query,
         $condText: searchText,
-    }).loading(false).done();
+    }).loading().done();
     // reference.?etState({$query, $condText: searchText, $loading: true});
 }
-const onRefresh = (reference) => () =>
-    Ux.of(reference).loading(false).done();
+const onRefresh = (reference) => () => {
+    const {$query = {}} = reference.state;
+    if ($query.criteria) {
+        delete $query.criteria['type,i'];
+    }
+    Ux.of(reference).in({
+        $query,
+        $condChecked: []
+    }).loading().done();
+};
 // reference.?etState({$loading: true});
 const onClean = (reference) => (event) => {
     Ux.prevent(event);
@@ -29,7 +40,7 @@ const onClean = (reference) => (event) => {
         $query,
         /* 选中控制专用 */
         $condMenu: [], $condText: "", $condChecked: [],
-    }).loading(false).done();
+    }).loading().done();
     // reference.?etState({
     //     $query,
     //     /* 选中控制专用 */
@@ -39,16 +50,17 @@ const onClean = (reference) => (event) => {
 }
 const onChecked = (reference) => (checked) => {
     const {$query = {}} = reference.state;
-    if (0 === checked.length) {
+    const normalized = normalizeTypes(checked);
+    if (0 === normalized.length) {
         // 所有任务
         delete $query.criteria['type,i'];
     } else {
-        $query.criteria['type,i'] = checked;
+        $query.criteria['type,i'] = normalized;
     }
     Ux.of(reference).in({
         $query,
-        $condChecked: checked
-    }).loading(false).done();
+        $condChecked: normalized
+    }).loading().done();
     // reference.?etState({$query, $condChecked: checked, $loading: true});
 }
 const onSelected = (reference) => (item) => {
@@ -64,7 +76,7 @@ const onSelected = (reference) => (item) => {
     Ux.of(reference).in({
         $query, $condMenu: [item.key], // $loading: true,
         $pagination,
-    }).loading(false).done()
+    }).loading().done()
     // reference.?etState({
     //     $query, $condMenu: [item.key], $loading: true,
     //     $pagination,

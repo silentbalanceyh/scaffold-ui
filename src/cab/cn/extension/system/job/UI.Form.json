@@ -36,7 +36,7 @@
                     "metadata": "type,任务类型,16,,aiRadio",
                     "optionJsx.config.items": [
                         "ONCE,一次性任务",
-                        "PLAN,轮询任务",
+                        "FORMULA,周期任务",
                         "FIXED,定时任务"
                     ]
                 }
@@ -47,7 +47,7 @@
                     "metadata": "duration,间隔时间,,,,normalize=number:6,addonAfter=秒",
                     "optionJsx.depend.enabled": {
                         "type": [
-                            "PLAN",
+                            "FORMULA",
                             "FIXED"
                         ]
                     }

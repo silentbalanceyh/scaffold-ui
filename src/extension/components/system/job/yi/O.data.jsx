@@ -22,6 +22,13 @@ const yiQuery = (reference) => {
 
 }
 
+const normalizeJobType = (record = {}) => {
+    if ("string" === typeof record.type) {
+        record.type = record.type.trim().toUpperCase();
+    }
+    return record;
+};
+
 const yiData = (reference, state = {}) => {
     /*
      * 查询条件
@@ -35,7 +42,7 @@ const yiData = (reference, state = {}) => {
          * $data：       数据
          * $current：    当前页码
          */
-        state.$data = Ux.valueArray(data);
+        state.$data = Ux.valueArray(data).map(normalizeJobType);
         state.$pagination = Ux.toPagination(data, query, {
             size: "small",
             showTotal: (count) => {

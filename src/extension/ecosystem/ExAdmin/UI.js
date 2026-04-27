@@ -49,6 +49,7 @@ const componentInit = (reference) => {
         }
     }).then(Ux.ready).then(Ux.pipe(reference));
 };
+const SWITCH_EVENT = "zero:route-switching";
 
 @Ux.zero(Ux.rxEtat(require("./Cab.json"))
     .cab("UI")
@@ -58,21 +59,55 @@ class Component extends React.PureComponent {
     displayName = UCA_NAME;
     state = {
         $collapsed: true, // 默认将菜单收起来
+        $switching: false,
+    };
+    __switchingTimer = null;
+
+    __switching = (event = {}) => {
+        if (this.__switchingTimer) {
+            clearTimeout(this.__switchingTimer);
+        }
+        const detail = event.detail ? event.detail : {};
+        detail.handled = true;
+        const ready = Ux.isFunction(detail.ready) ? detail.ready : () => false;
+        const onReady = () => window.requestAnimationFrame(() => window.requestAnimationFrame(ready));
+        if (!this.state.$switching) {
+            this.setState({$switching: true}, onReady);
+        } else {
+            onReady();
+        }
+    };
+
+    __switchingDone = () => {
+        if (this.__switchingTimer) {
+            clearTimeout(this.__switchingTimer);
+        }
+        this.__switchingTimer = setTimeout(() => {
+            this.setState({$switching: false});
+            this.__switchingTimer = null;
+        }, 420);
     };
 
     componentDidMount() {
         componentInit(this);
+        window.addEventListener(SWITCH_EVENT, this.__switching);
         Ux.DevTool(this).on();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (Ux.isRoute(this.props, prevProps)) {
             Ex.yoProActive(this, {state: prevState})
+            this.__switchingDone();
             Ux.DevTool(this).clean();
         }
     }
 
     componentWillUnmount() {
+        window.removeEventListener(SWITCH_EVENT, this.__switching);
+        if (this.__switchingTimer) {
+            clearTimeout(this.__switchingTimer);
+            this.__switchingTimer = null;
+        }
         Ux.DevTool(this).off();
     }
 
@@ -91,15 +126,21 @@ class Component extends React.PureComponent {
             const attrPage = Ex.yoProPageHeader(this);
 
             const {children} = this.props;
+            const {$switching = false} = this.state;
             return (
                 <div id="up-layout" {...attrMix}>
                     <ProConfigProvider hashed={false}>
                         <ProLayout {...attrLayout}>
                             {children ? (
                                 <PageContainer {...attrPage}>
-                                    <WaterMark {...attrWater}>
-                                        {React.cloneElement(children, attrChildren)}
-                                    </WaterMark>
+                                    <div className={"uex_ExAdmin_content"}>
+                                        <WaterMark {...attrWater}>
+                                            {React.cloneElement(children, attrChildren)}
+                                        </WaterMark>
+                                        {$switching ? (
+                                            <div className={"uex_ExAdmin_switching"}/>
+                                        ) : false}
+                                    </div>
                                 </PageContainer>
                             ) : false}
                             {attrDrawer ? (<SettingDrawer {...attrDrawer}/>) : false}

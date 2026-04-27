@@ -359,7 +359,7 @@ const messageConfirm = (content, onOk, width = 600) =>
  * @param {boolean} redux 是否启用了 redux 流程写 redux 的树形数据
  */
 const ajaxError = (reference, error = {}, redux = false) =>
-    __Zo.ajaxError(reference, error, redux);
+    __Zo.ajaxError(reference, error, redux, __Zi.toUnauthorized);
 
 const ajaxReject = (reference, key, data = {}) =>
     __Zo.ajaxReject(reference, key, data);

@@ -31,11 +31,13 @@ const __ajaxEnd = (reference, redux, error) => () => {
     // 3. 防重复提交
     __Zn.ambFormEnd(reference);
 };
-const ajaxError = (reference, error = {}, redux = false) => {
+const ajaxError = (reference, error = {}, redux = false, unauthorized) => {
     const {data = {}} = error;
     if (401 === data.status) {
         __ajaxEnd(reference, redux, error)();
-        __Zn.toUnauthorized(reference);
+        if (__Zn.isFunction(unauthorized)) {
+            unauthorized(reference);
+        }
         return;
     }
     if (data.code < 0 && data.info) {

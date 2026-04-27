@@ -25,5 +25,20 @@
     .ant-pro-grid-content.ant-pro-grid-content-wide {
       max-width: 100% !important;
     }
+
+    &_content {
+      position: relative;
+      min-height: 100%;
+    }
+
+    &_switching {
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      min-height: 100%;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: saturate(88%) blur(1.5px);
+      pointer-events: all;
+    }
   }
 }

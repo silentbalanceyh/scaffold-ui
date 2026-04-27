@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color";
 
 @mixin _unit_ant_btn_primary($color, $height, $width, $font) {
   :global {
@@ -26,17 +27,34 @@
   background-color: $color;
   border: solid 1px $color;
   color: white;
-  &:not(:disabled):hover, &:not(:disabled):active {
-    background-color: $color-active;
-    border: solid 1px $color-active !important;
+  transition: background-color 0.18s ease-out, border-color 0.18s ease-out, box-shadow 0.18s ease-out, transform 0.18s ease-out;
+
+  span, svg {
     color: white;
+  }
 
-    span {
-      color: white;
+  &:not(:disabled):not(.ant-btn-disabled):hover,
+  &:not(:disabled):not(.ant-btn-disabled):focus {
+    background-color: color.mix($color-active, $color, 58%) !important;
+    border: solid 1px color.mix($color-active, $color, 58%) !important;
+    color: white !important;
+    box-shadow: 0 0 0 2px rgba($color, 0.24), 0 4px 10px rgba($color, 0.22);
+    transform: translateY(-1px);
+
+    span, svg {
+      color: white !important;
     }
+  }
 
-    svg {
-      color: white;
+  &:not(:disabled):not(.ant-btn-disabled):active {
+    background-color: color.scale($color, $lightness: -12%) !important;
+    border: solid 1px color.scale($color, $lightness: -12%) !important;
+    color: white !important;
+    box-shadow: 0 0 0 2px rgba($color, 0.18);
+    transform: translateY(0);
+
+    span, svg {
+      color: white !important;
     }
   }
 }

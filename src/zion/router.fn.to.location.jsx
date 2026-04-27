@@ -5,6 +5,29 @@ import __QM from './router.__.fn.query.norm';
 
 const Cv = __Zn.Env;
 const REGEX = /^\/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}(\/|$)/;
+const ROUTE_SWITCH_EVENT = "zero:route-switching";
+const toSwitching = (callback) => {
+    if ("undefined" === typeof window) {
+        callback();
+        return;
+    }
+    let called = false;
+    const detail = {
+        handled: false,
+        ready: () => {
+            if (!called) {
+                called = true;
+                callback();
+            }
+        }
+    };
+    window.dispatchEvent(new CustomEvent(ROUTE_SWITCH_EVENT, {detail}));
+    if (detail.handled) {
+        window.setTimeout(detail.ready, 800);
+    } else {
+        detail.ready();
+    }
+};
 const toRoute = (reference = {}, uri = "", params = {}) => {
     __Zn.fxTerminal(!uri, 10072, uri);
     __Zn.fxTerminal(!reference.hasOwnProperty(Cv.K_NAME._PROPS)
@@ -77,7 +100,7 @@ const toRoute = (reference = {}, uri = "", params = {}) => {
      */
     const normalized = __QM.queryNorm(normalizedUri, external);
     const {$router} = reference.props;
-    $router.to(normalized, internal);
+    toSwitching(() => $router.to(normalized, internal));
 };
 
 const toLogout = (cleanApp = true) => {

@@ -7,7 +7,13 @@ import __Rv from './allocation.__.fn.resolve.navigation';
  * https://github.com/ant-design/pro-components/issues/6534
  * This issue does not impact the usage when you set `itemClick`.
  */
-const __rxAppClick = (reference) => (props = {}) => {
+const __rxAppClose = (popoverRef) => {
+    const trigger = popoverRef && popoverRef.current;
+    if (trigger && Ux.isFunction(trigger.click)) {
+        trigger.click();
+    }
+}
+const __rxAppClick = (reference) => (props = {}, popoverRef) => {
     const {data = {}} = props;
     if (data.uri) {
         /*
@@ -17,6 +23,7 @@ const __rxAppClick = (reference) => (props = {}) => {
          * -- undefined: navigate to the `Desktop` menu.
          * -- menuId: navigate to the correct menu ( Build the menu tree ).
          */
+        __rxAppClose(popoverRef);
         const locator = _Locator.create(reference);
         locator.goApp(data);
         // .then(item => Ux.toRoute(reference, item.uri));

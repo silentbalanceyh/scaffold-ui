@@ -2,6 +2,7 @@
 
 > FORBIDDEN for direct import. Listed for graph navigation and debugging only.
 > Always use `Ux` or `entity` instead.
+> Framework-internal changes must also follow `module-dependency.md`.
 
 ## Module Map
 
@@ -24,6 +25,21 @@
 Ux (ux/) ← aggregates: zero/, zion/, zodiac/, zone/, zest@web/
 entity (entity@em/) ← aggregates: zoe@em/, zither@em/
 ```
+
+## Dependency Direction
+
+For framework work, internal modules are not peer-to-peer. The core lower-layer
+order is:
+
+```text
+zero -> zest@web -> zion -> zither@em -> zodiac -> zoe@em -> zone
+```
+
+Imports may move only to the right in this order. For example, `zodiac` may use
+`zone`, but `zodiac` must not import `zion`, `zest@web`, `zero`, `ux`, `ui`,
+`extension`, or `economy`.
+
+Use `zero.module.dependency.js` as the module-local gateway when it exists.
 
 ## File Naming Convention
 

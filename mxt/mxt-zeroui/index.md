@@ -11,6 +11,7 @@ Load when the task targets zero-ui frontend development, page creation, form/lis
 | Task touches... | Read first | Then |
 |---|---|---|
 | Import boundary / alias map | `architecture.md` | task-specific doc |
+| Framework module dependency / reverse imports / `zero.module.dependency.js` | `module-dependency.md` | `architecture.md` |
 | `Ux.ajax*` / `Ux.micro*` | `ux-ajax.md` | `ux-callback.md` |
 | `Ux.message*` / `Ux.ajax2*` / `Ux.ajaxEager` | `ux-callback.md` | — |
 | `Ux.async*` / `Ux.callback` / `Ux.responser` | `ux-async.md` | — |
@@ -54,7 +55,7 @@ Load when the task targets zero-ui frontend development, page creation, form/lis
 | `Z_*` env vars / `.env` | `environment.md` | — |
 | Login flow / ACL / token (frontend) | `auth-acl.md` | `ux-acl.md` |
 | `_assist` / `_magic` / Cab.json form configs | `config-driven.md` | `ux-form.md` |
-| `zero/` `zion/` `zodiac/` `zone/` (debug only) | `internal-modules.md` | — |
+| `zero/` `zion/` `zodiac/` `zone/` (debug only) | `internal-modules.md` | `module-dependency.md` |
 | `ai sync` / new app creation | `new-app-checklist.md` | `architecture.md` |
 | Error codes / top 10 AI mistakes | `errors-pitfalls.md` | — |
 
@@ -62,4 +63,5 @@ Load when the task targets zero-ui frontend development, page creation, form/lis
 
 1. `architecture.md` — three-tier boundary + alias map
 2. `errors-pitfalls.md` — top 10 mistakes to avoid
-3. Task-specific doc from table above
+3. `module-dependency.md` — framework module order + reverse dependency rules
+4. Task-specific doc from table above

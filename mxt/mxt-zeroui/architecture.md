@@ -8,6 +8,10 @@
 | **External (SDK)** | NO — import only | `ux`, `ex`, `ei`, `web`, `oi`, `ui`, `lang`, `skin`, `entity` |
 | **Internal** | FORBIDDEN | `zero/`, `zion/`, `zodiac/`, `zone/`, `zoe@em/`, `zither@em/`, `zest@web/` |
 
+This page describes the application-facing import boundary. Framework-internal
+module order and reverse dependency rules are maintained in
+`module-dependency.md`.
+
 ## Complete Alias Map
 
 ### Application Tier (developer edits)
@@ -54,3 +58,8 @@
 Ux (ux/) ← aggregates: zero/, zion/, zodiac/, zone/, zest@web/
 entity (entity@em/) ← aggregates: zoe@em/, zither@em/
 ```
+
+Do not read this aggregate chain as permission for lower modules to import
+upper modules. Inside framework source, follow the one-way dependency order in
+`module-dependency.md` and route lower-layer access through
+`zero.module.dependency.js` where the module provides one.

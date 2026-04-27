@@ -14,4 +14,4 @@
 | `web-` | 3 | form, layout, render |
 | `ui-` | 1 | toolkit |
 | `entity-` | 1 | dsl |
-| cross-cut | 10 | architecture, i18n, skin-styling, routing, redux-state, environment, auth-acl, config-driven, internal-modules, new-app-checklist, errors-pitfalls |
+| cross-cut | 11 | architecture, module-dependency, i18n, skin-styling, routing, redux-state, environment, auth-acl, config-driven, internal-modules, new-app-checklist, errors-pitfalls |

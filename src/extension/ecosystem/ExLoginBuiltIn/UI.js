@@ -91,12 +91,8 @@ const componentInit = (reference) => {
     Ux.of(reference).in(state).ready().done();
     const user = Ux.isLogged();
     if (Ux.isNotEmpty(user)) {
-        // 清除遗留数据
-        Ux.Session.remove([
-            Ux.Env.KEY_USER,
-            Ux.Env.PAGE_MENU,
-            Ux.Env.PAGE_AT,
-        ])
+        // 强制清除遗留会话，确保验证码请求不受残留 token 影响
+        Ux.toLogout(false);
     }
 }
 

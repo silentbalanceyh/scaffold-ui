@@ -90,7 +90,7 @@ export default {
     MOCK: __BOOLEAN("DEV_MOCK"),                        // DEV_MOCK
     SIGN: __BOOLEAN_EQ(ENV['SIGN']),
 
-    ENTRY_LOGIN: ENV['ENTRY_LOGIN'] || "/login/index",     // 登录页
-    ENTRY_ADMIN: ENV['ENTRY_ADMIN'] || "/main/index",      // 管理页
-    ENTRY_FIRST: ENV['ENTRY_FIRST'] || "/personal/secure", // 首次登录更改密码
+    ENTRY_LOGIN: `${process.env.ENTRY_LOGIN}`,     // 登录页
+    ENTRY_ADMIN: `${process.env.ENTRY_ADMIN}`,     // 管理页
+    ENTRY_FIRST: `${process.env.ENTRY_FIRST}`,     // 首次登录更改密码
 }

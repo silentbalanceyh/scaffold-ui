@@ -106,23 +106,37 @@ const handleParam = (params = {}, options = {}) => {
         return requestBody;
     }
 };
-/**
- * FIX-BUG: （主键修复）特殊标准化方法
- * - 如果 Cv 中配置了 META_ID 属性，则将 body 中的 key 字段转换为 META_ID 字段
- * @param body 请求参数体
- * @private
- */
+const __normKey = (node) => {
+    if (!node || typeof node !== 'object') return;
+    const metaId = Cv['META_ID'];
+    if (!metaId) return;
+    if (Array.isArray(node)) {
+        node.forEach(item => __normKey(item));
+        return;
+    }
+    const renames = [];
+    Object.keys(node).forEach(key => {
+        const value = node[key];
+        if (value && typeof value === 'object') {
+            __normKey(value);
+        }
+        if ('key' === key) {
+            node[metaId] = value;
+        } else if (0 < key.indexOf(',') && 'key' === key.split(',')[0]) {
+            const rest = key.substring(key.indexOf(','));
+            renames.push({from: key, to: metaId + rest});
+        }
+    });
+    renames.forEach(({from, to}) => {
+        node[to] = node[from];
+        delete node[from];
+    });
+};
 const __handleBody = (body = {}) => {
     if (!__Zn.isObject(body) && !__Zn.isArray(body)) {
         return body;
     }
-    const metaId = Cv['META_ID'];
-    __Zn.itAmb(body, record => {
-        // 1. META_ID 定义转换
-        if (!!metaId && record.hasOwnProperty('key')) {
-            record[metaId] = record.key;
-        }
-    });
+    __normKey(body);
     return __Zn.wayO2S(body);
 }
 // eslint-disable-next-line import/no-anonymous-default-export
